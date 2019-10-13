@@ -233,4 +233,4 @@ echo memory_get_usage() . "\n"; // 389032
 
 #### 2019.8.28 php composer --ignore-platform-reqs 可忽略平台约束 例如win下升级 而composer.json require 一些win没有的扩展
 
-#### 2019.10.11 http https 代理解析协议端口时 需要解析 CONNECT HOST 的端口
+#### 2019.10.11 http https 代理解析协议端口时 需要解析 CONNECT HOST 的端口 
