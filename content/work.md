@@ -141,7 +141,7 @@ worker 将自动退出，进程退出后会释放所有内存和资源。
 1. 重写 App\Exceptions\Handler::render 同一验证失败json输出
 2. 也可以重写request header 因为是非ajax才会302
 
-- laravel-s phpredis hscan bug
+- laravel PhpRedisConnection hscan bug
 ```php
     $it = null;
     $redis->setOption(\Redis::OPT_SCAN, \Redis::SCAN_RETRY);
@@ -151,7 +151,7 @@ worker 将自动退出，进程退出后会释放所有内存和资源。
         }
     }
 ```
-laravel框架封装的问题，需要调用$redis->client(),而不是直接使用phpredis的
+laravel框架封装的问题，需要调用$redis->client(),而不是直接使用phpredis，$it 需要引用，PhpRedisConnection 使用 __call 调用存在bug
 
 #### 2019.6.19 数组参数签名前，最好使用 ksort 排序
 
@@ -234,3 +234,15 @@ echo memory_get_usage() . "\n"; // 389032
 #### 2019.8.28 php composer --ignore-platform-reqs 可忽略平台约束 例如win下升级 而composer.json require 一些win没有的扩展
 
 #### 2019.10.11 http https 代理解析协议端口时 需要解析 CONNECT HOST 的端口 
+
+#### 2019.11.27 php apcu ttl 在cli下不过期的问题，需要设置apc.use_request_time=0
+
+```php
+// cli 下运行
+$bar = date('Y-m-d H:i:s');
+var_dump(apcu_store('foo', $bar, 3));
+sleep(4);
+var_dump(apcu_fetch('foo'));
+// apc.use_request_time=1 不过期
+// 使用请求时间来淘汰缓存
+```
