@@ -1,0 +1,245 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=generator content="Hugo 0.68.1"><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><title>PHP7 Array | 江湖义气的博客</title><meta property="og:title" content="PHP7 Array - 江湖义气的博客"><meta property="og:type" content="article"><meta property="article:published_time" content="2019-10-11T22:29:21+08:00"><meta property="article:modified_time" content="2019-10-11T22:29:21+08:00"><meta name=Keywords content="PHP,Swoole,Web开发"><meta name=description content="PHP7 Array"><meta name=author content="江湖义气"><meta property="og:url" content="https://blog.wenjy.top/post/2019-10-11-php7-array/"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=stylesheet href=/css/normalize.css><link rel=stylesheet href=/css/prism.css><link rel=stylesheet href=/css/style.css><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js></script></head><body><header id=header class=clearfix><div class=container><div class=col-group><div class=site-name><a id=logo href=https://blog.wenjy.top>江湖义气的博客</a><p class=description>回首往事，不会因为虚度年华而悔恨，也不会因为碌碌无为而感到羞愧。</p></div><div><nav id=nav-menu class=clearfix><a class=current href=https://blog.wenjy.top>首页</a>
+<a href=https://blog.wenjy.top/archives/ title=归档>归档</a>
+<a href=https://blog.wenjy.top/about/ title=关于>关于</a></nav></div></div></div></header><div id=body><div class=container><div class=col-group><div class=col-8 id=main><div class=res-cons><article class=post><header><h1 class=post-title>PHP7 Array</h1></header><date class="post-meta meta-date">2019年10月11日</date><div class=post-meta><span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span> 阅读</span></span></div><div class=post-content><h2 id=php7数组的实现>PHP7数组的实现</h2><h3 id=php数组是一个有序的字典它必须同时满足下面两个语义>PHP数组是一个有序的字典，它必须同时满足下面两个语义</h3><ol><li><p>PHP数组是一个字典，存储着键-值（key-value）对，通过键可以快速地找到对应的值，键可以是整形、字符串。</p></li><li><p>PHP数组是有序的，这个有序是指插入顺序，即遍历数组的时候，遍历元素的顺序应该和插入的顺序一致。</p></li></ol><p>为了实现语义1，PHP使用 HashTable 来存储 key-value ，但是 HashTable 只能保证语义1</p><ul><li>php使用了带h值的 HashTable</li></ul><blockquote><p>key/value -> hash1函数 -> h值 -> hash2函数 -> slotN -> bucket()</p></blockquote><p>示意图：</p><p><img src=../../static/images/hash_table_h.jpeg alt=示意图></p><ol><li><p>bucket里面增加了 h 字段</p></li><li><p>hash函数拆分成 hash1 和 hash2 函数，hash1 将 key 映射成 h值，hash2 将 h 值映射为 slot 的索引值</p></li><li><p>bucket 里的 key 作为字符串key</p></li></ol><blockquote><p>HashTable 的key可能为数字，也可能是字符串，如果是数字那么 h值就代表数字key，如果是字符串，计算出h值，key1和key2比较时
+先比较它们的h值是否相等，如果相等在比较key1和key2是否相等，因为大部分场景，不同字符串的h值都不会相等，这样提高了 HashTable
+的插入、查找速度。</p></blockquote><h3 id=数组的基本结构>数组的基本结构</h3><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> _zend_array zend_array;
+<span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> _zend_array HashTable;
+
+<span style=color:#998;font-style:italic>//Bucket：散列表中存储的元素
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> _Bucket {
+    zval              val; <span style=color:#998;font-style:italic>//存储的具体value，这里嵌入了一个zval，而不是一个指针
+</span><span style=color:#998;font-style:italic></span>    zend_ulong        h;   <span style=color:#998;font-style:italic>//key根据times 33计算得到的哈希值，或者是数值索引编号
+</span><span style=color:#998;font-style:italic></span>    zend_string      <span style=color:#000;font-weight:700>*</span>key; <span style=color:#998;font-style:italic>//存储元素的key
+</span><span style=color:#998;font-style:italic></span>} Bucket;
+
+<span style=color:#998;font-style:italic>//HashTable结构
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> _zend_array HashTable;
+<span style=color:#000;font-weight:700>struct</span> _zend_array {
+    zend_refcounted_h gc;   <span style=color:#998;font-style:italic>// 引用计数相关
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#000;font-weight:700>union</span> {
+        <span style=color:#000;font-weight:700>struct</span> {
+            ZEND_ENDIAN_LOHI_4(
+                    zend_uchar    flags,    <span style=color:#998;font-style:italic>// 
+</span><span style=color:#998;font-style:italic></span>                    zend_uchar    nApplyCount,  <span style=color:#998;font-style:italic>// 递归遍历计数，为了解决循环引用导致死循环的问题
+</span><span style=color:#998;font-style:italic></span>                    zend_uchar    nIteratorsCount,  <span style=color:#998;font-style:italic>// 迭代器计数器
+</span><span style=color:#998;font-style:italic></span>                    zend_uchar    reserve)
+        } v;
+        uint32_t flags;
+    } u;
+    uint32_t          nTableMask; <span style=color:#998;font-style:italic>//哈希值计算掩码，等于nTableSize的负值(nTableMask = -nTableSize)
+</span><span style=color:#998;font-style:italic></span>    Bucket           <span style=color:#000;font-weight:700>*</span>arData;     <span style=color:#998;font-style:italic>//存储元素数组，指向第一个Bucket（连续的内存）
+</span><span style=color:#998;font-style:italic></span>    uint32_t          nNumUsed;   <span style=color:#998;font-style:italic>//已用Bucket数
+</span><span style=color:#998;font-style:italic></span>    uint32_t          nNumOfElements; <span style=color:#998;font-style:italic>//哈希表有效元素数
+</span><span style=color:#998;font-style:italic></span>    uint32_t          nTableSize;     <span style=color:#998;font-style:italic>//哈希表总大小，为2的n次方
+</span><span style=color:#998;font-style:italic></span>    uint32_t          nInternalPointer; <span style=color:#998;font-style:italic>// 全局游标 与 reset/key/current/next/prev函数有关
+</span><span style=color:#998;font-style:italic></span>    zend_long         nNextFreeElement; <span style=color:#998;font-style:italic>//下一个可用的数值索引,如:arr[] = 1;arr[&#34;a&#34;] = 2;arr[] = 3;  则nNextFreeElement = 2;
+</span><span style=color:#998;font-style:italic></span>    dtor_func_t       pDestructor;  <span style=color:#998;font-style:italic>// 析构函数
+</span><span style=color:#998;font-style:italic></span>};
+
+</code></pre></td></tr></table></div></div><ul><li>bucket结构分析</li></ul><ol><li><p>val 对应 HashTable 设计中的 value 始终是 zval类型（当zval是 IS_PTR类型时，可以通过 zval.value.ptr（指针）指向任何数据类型）</p></li><li><p>h 对应 HashTable 设计中的 h 表示数字key 或者字符串的 h值</p></li><li><p>key 对应 HashTable 设计中的 key</p></li></ol><ul><li>bucket按使用分类</li></ul><ol><li><p>未使用 初始化时都是未使用</p></li><li><p>有效 有数据的bucket</p></li><li><p>无效 被删除的bucket</p></li></ol><p>数组的示意图：</p><p><img src=https://github.com/pangudashu/php7-internal/raw/master/img/zend_hash_1.png alt=示意图></p><h3 id=为什么-ntablemask-为负数>为什么 nTableMask 为负数？</h3><blockquote><p>php7在分配bucket内存的时候，在bucket数组的前面额外多申请了一些内存，这段内存是一个索引数组（索引表），
+数组里面的没一个元素代表一个slot，存放着每个slot链表的第一个bucket在bucket数组中的下标。如果当前slot没有任何bucket元素，
+那么索引值为 -1 。</p></blockquote><blockquote><p>这里一个巧妙的设计是索引数组仍然通过 HashTable.arData 来引用，由于索引数组和bucket数组是连续的内存，
+因此 arData[0&mldr;n-1]表示bucket数组元素，((uint32_t*)(arData))[-1&mldr;-n]表示索引数组元素，也就是对应的slot。</p></blockquote><ul><li>为了得到介于[-1&mldr;-n]之间的数组下标，hash2函数按照下面来计算的（nIndex 就是 slot 值）</li></ul><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>nIndex <span style=color:#000;font-weight:700>=</span> h <span style=color:#000;font-weight:700>|</span> ht<span style=color:#000;font-weight:700>-&gt;</span>nTableMask;
+</code></pre></td></tr></table></div></div><p>以 nTableSize=8 为例， nTableMask=-8 二进制表示为：</p><p>11111111 11111111 11111111 11111000 -8</p><p>任何整数和它进行按位或之后的结果只有以下8种，恰好满足 [-n, -1]的取值范围：</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#099>11111111</span> <span style=color:#099>11111111</span> <span style=color:#099>11111111</span> <span style=color:#099>11111000</span>   <span style=color:#000;font-weight:700>-</span><span style=color:#099>8</span>
+<span style=color:#099>11111111</span> <span style=color:#099>11111111</span> <span style=color:#099>11111111</span> <span style=color:#099>11111001</span>   <span style=color:#000;font-weight:700>-</span><span style=color:#099>7</span>
+<span style=color:#099>11111111</span> <span style=color:#099>11111111</span> <span style=color:#099>11111111</span> <span style=color:#099>11111010</span>   <span style=color:#000;font-weight:700>-</span><span style=color:#099>6</span>
+<span style=color:#099>11111111</span> <span style=color:#099>11111111</span> <span style=color:#099>11111111</span> <span style=color:#099>11111011</span>   <span style=color:#000;font-weight:700>-</span><span style=color:#099>5</span>
+<span style=color:#099>11111111</span> <span style=color:#099>11111111</span> <span style=color:#099>11111111</span> <span style=color:#099>11111100</span>   <span style=color:#000;font-weight:700>-</span><span style=color:#099>4</span>
+<span style=color:#099>11111111</span> <span style=color:#099>11111111</span> <span style=color:#099>11111111</span> <span style=color:#099>11111101</span>   <span style=color:#000;font-weight:700>-</span><span style=color:#099>3</span>
+<span style=color:#099>11111111</span> <span style=color:#099>11111111</span> <span style=color:#099>11111111</span> <span style=color:#099>11111110</span>   <span style=color:#000;font-weight:700>-</span><span style=color:#099>2</span>
+<span style=color:#099>11111111</span> <span style=color:#099>11111111</span> <span style=color:#099>11111111</span> <span style=color:#099>11111111</span>   <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>
+</code></pre></td></tr></table></div></div><h3 id=packed-array-和-hash-array-的区别>packed array 和 hash array 的区别</h3><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php>$a = [1, 2, 3]; // packed array
+$b = [&#39;a&#39; =&gt; &#39;a&#39;, &#39;b&#39; =&gt; &#39;b&#39;]; // hash array
+</code></pre></td></tr></table></div></div><ol><li>内存的本质区别</li></ol><p>脚本1：</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
+<span style=color:teal>$memory_start</span> <span style=color:#000;font-weight:700>=</span> memory_get_usage();
+<span style=color:teal>$test</span> <span style=color:#000;font-weight:700>=</span> [];
+<span style=color:#000;font-weight:700>for</span> (<span style=color:teal>$i</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; <span style=color:teal>$i</span> <span style=color:#000;font-weight:700>&lt;=</span> <span style=color:#099>20000</span>; <span style=color:teal>$i</span><span style=color:#000;font-weight:700>++</span>) {
+    <span style=color:teal>$test</span>[<span style=color:teal>$i</span>] <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>;
+}
+
+<span style=color:#000;font-weight:700>echo</span> memory_get_usage() <span style=color:#000;font-weight:700>-</span> <span style=color:teal>$memory_start</span>, <span style=color:#d14>&#34;bytes</span><span style=color:#d14>\n</span><span style=color:#d14>&#34;</span>; <span style=color:#998;font-style:italic>// 1052728bytes
+</span></code></pre></td></tr></table></div></div><p>脚本2：</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
+<span style=color:teal>$memory_start</span> <span style=color:#000;font-weight:700>=</span> memory_get_usage();
+<span style=color:teal>$test</span> <span style=color:#000;font-weight:700>=</span> [];
+<span style=color:#000;font-weight:700>for</span> (<span style=color:teal>$i</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#099>20000</span>; <span style=color:teal>$i</span> <span style=color:#000;font-weight:700>&gt;=</span> <span style=color:#099>0</span>; <span style=color:teal>$i</span><span style=color:#000;font-weight:700>--</span>) {
+    <span style=color:teal>$test</span>[<span style=color:teal>$i</span>] <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>;
+}
+
+<span style=color:#000;font-weight:700>echo</span> memory_get_usage() <span style=color:#000;font-weight:700>-</span> <span style=color:teal>$memory_start</span>, <span style=color:#d14>&#34;bytes</span><span style=color:#d14>\n</span><span style=color:#d14>&#34;</span>; <span style=color:#998;font-style:italic>// 1179704bytes
+</span></code></pre></td></tr></table></div></div><ol start=2><li>packed array</li></ol><ul><li><p>key全是数字</p></li><li><p>key按插入顺序排序，仍然是递增的</p></li><li><p>每个key-value 的存储位置都是确定的，都存在bucket数组的第key个元素上</p></li><li><p>不需要索引索引数组 key=NULL</p></li></ul><blockquote><p>利用了bucket数组的连续的特点，对于某些只有数字的key的场景进行了优化，由于不在需要索引数组，
+从内存空间上节省了 (nTableSize-2) * sizeof(uint32_t) 个字节，直接操作bucket数组，性能也有所提升。</p></blockquote><h3 id=hash冲突解决>hash冲突解决</h3><blockquote><p>链地址法(php采用) 开放地址法，链地址法就是将同一个slot中的bucket通过链表连接起来</p></blockquote><p>hash array 的做法是，不单独维护一个双链表，而是把每个冲突的 idx 存储在 bucket 的 zval.u2.next 中，
+插入的时候把老的value存储的地址(idx)放到新的value的next中，再把新的value的存储地址更新到索引数组中。</p><p>假如 第1、2、3个bucket发生hash冲突</p><ol><li><p>插入第1个bucket，对应的 nIndex=-3 那么此时 nIndex=-3 的位置为1</p></li><li><p>插入第2个bucket，对应的 nIndex=-3，与第1个冲突，令 nIndex=-3 的位置为2，同时将第2个bucket中
+zval 的 u2.next=1，这样在查找第1个bucket的key对应的 nIndex时，找到第2个bucket，校验 key值不同，
+取 u2.next 的值 1，取第1个bucket中的内容，校验key一致，返回</p></li><li><p>插入第3个bucket，与第1 2 冲突，同样 令 nIndex=-3 的位置为3 同时将第3个bucket中zval 的 u2.next=2</p></li></ol><h3 id=扩容和-rehash-操作>扩容和 rehash 操作</h3><blockquote><p>数组再重置一个key时并不会真正触发删除操作，只是做一个标识，删除是在扩容和重进索引时触发</p></blockquote><ol><li><p>hash array 的容量的分配是固定的，初始化的时每次申请的是 2^n 的容量，范围为 2^3 - 0x80000000</p></li><li><p>当容量足够时直接执行插入操作</p></li><li><p>当容量不够时(nNumUsed >= nTableSize)，检查已删除元素所占的比例，假如达到阈值，则将已删除的元素从HashTable中移除
+并重建索引，如果未达到阈值则进行扩容，扩容为当前大小的2倍，将当前的bucket复制到新的空间，然后重建索引。</p></li><li><p>重建索引后，有足够空余空间后再执行插入操作。</p></li></ol><h3 id=zval-的基本结构>zval 的基本结构</h3><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#998;font-style:italic>//zend_types.h
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> _zval_struct     zval;
+
+<span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>union</span> _zend_value {
+    zend_long         lval;    <span style=color:#998;font-style:italic>//int整形
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#458;font-weight:700>double</span>            dval;    <span style=color:#998;font-style:italic>//浮点型
+</span><span style=color:#998;font-style:italic></span>    zend_refcounted  <span style=color:#000;font-weight:700>*</span>counted;
+    zend_string      <span style=color:#000;font-weight:700>*</span>str;     <span style=color:#998;font-style:italic>//string字符串
+</span><span style=color:#998;font-style:italic></span>    zend_array       <span style=color:#000;font-weight:700>*</span>arr;     <span style=color:#998;font-style:italic>//array数组
+</span><span style=color:#998;font-style:italic></span>    zend_object      <span style=color:#000;font-weight:700>*</span>obj;     <span style=color:#998;font-style:italic>//object对象
+</span><span style=color:#998;font-style:italic></span>    zend_resource    <span style=color:#000;font-weight:700>*</span>res;     <span style=color:#998;font-style:italic>//resource资源类型
+</span><span style=color:#998;font-style:italic></span>    zend_reference   <span style=color:#000;font-weight:700>*</span>ref;     <span style=color:#998;font-style:italic>//引用类型，通过&amp;$var_name定义的
+</span><span style=color:#998;font-style:italic></span>    zend_ast_ref     <span style=color:#000;font-weight:700>*</span>ast;     <span style=color:#998;font-style:italic>//下面几个都是内核使用的value
+</span><span style=color:#998;font-style:italic></span>    zval             <span style=color:#000;font-weight:700>*</span>zv;       <span style=color:#998;font-style:italic>// zval 类型
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#458;font-weight:700>void</span>             <span style=color:#000;font-weight:700>*</span>ptr;      <span style=color:#998;font-style:italic>// 指针类型，可以指向任何类型
+</span><span style=color:#998;font-style:italic></span>    zend_class_entry <span style=color:#000;font-weight:700>*</span>ce;       <span style=color:#998;font-style:italic>// class 类型
+</span><span style=color:#998;font-style:italic></span>    zend_function    <span style=color:#000;font-weight:700>*</span>func;     <span style=color:#998;font-style:italic>// function 类型
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#000;font-weight:700>struct</span> {
+        uint32_t w1;
+        uint32_t w2;
+    } ww;
+} zend_value;
+
+<span style=color:#000;font-weight:700>struct</span> _zval_struct {
+    zend_value        value; <span style=color:#998;font-style:italic>//变量实际的value
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#000;font-weight:700>union</span> {
+        <span style=color:#000;font-weight:700>struct</span> {
+            ZEND_ENDIAN_LOHI_4( <span style=color:#998;font-style:italic>//这个是为了兼容大小字节序，小字节序就是下面的顺序，大字节序则下面4个顺序翻转
+</span><span style=color:#998;font-style:italic></span>                zend_uchar    type,         <span style=color:#998;font-style:italic>//变量类型
+</span><span style=color:#998;font-style:italic></span>                zend_uchar    type_flags,  <span style=color:#998;font-style:italic>//类型掩码，不同的类型会有不同的几种属性，内存管理会用到
+</span><span style=color:#998;font-style:italic></span>                zend_uchar    const_flags,  <span style=color:#998;font-style:italic>// 常量类型的标记
+</span><span style=color:#998;font-style:italic></span>                zend_uchar    reserved)     <span style=color:#998;font-style:italic>//call info，zend执行流程会用到
+</span><span style=color:#998;font-style:italic></span>        } v;
+        uint32_t type_info; <span style=color:#998;font-style:italic>//上面4个值的组合值，可以直接根据type_info取到4个对应位置的值
+</span><span style=color:#998;font-style:italic></span>    } u1;
+    <span style=color:#000;font-weight:700>union</span> {
+        uint32_t     next;                 <span style=color:#998;font-style:italic>//哈希表中解决哈希冲突时用到，记录冲突的下一个位置
+</span><span style=color:#998;font-style:italic></span>        uint32_t     cache_slot;           <span style=color:#998;font-style:italic>/* 运行时的缓存 */</span>
+        uint32_t     lineno;               <span style=color:#998;font-style:italic>/* 对于zend_ast_zval存行号应用在AST节点上 */</span>
+        uint32_t     num_args;             <span style=color:#998;font-style:italic>/* EX(This) 函数调用时传入的参数个数 */</span>
+        uint32_t     fe_pos;               <span style=color:#998;font-style:italic>/* foreach 的位置 每执行一次 +1 再次调用 foreach 重置*/</span>
+        uint32_t     fe_iter_idx;          <span style=color:#998;font-style:italic>/* foreach 游标的标记 针对的是对象 */</span>
+        uint32_t     access_flags;          <span style=color:#998;font-style:italic>/* 对象类的访问标记 public protected private */</span>
+        uint32_t     property_guard;          <span style=color:#998;font-style:italic>/* 单一属性保护 防止类中魔术方法的循环调用 */</span>
+    } u2;
+};
+
+</code></pre></td></tr></table></div></div><h3 id=string-的结构>String 的结构</h3><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#000;font-weight:700>struct</span> _zend_string {
+	zend_refcounted_h gc;
+	zend_ulong        h;                <span style=color:#998;font-style:italic>/* 避免了在数组操作中hash值的重复计算 */</span>
+	size_t            len;  <span style=color:#998;font-style:italic>// 已使用的内存字符串长度，可以保证二进制读取安全 &#39;\0&#39;
+</span><span style=color:#998;font-style:italic></span>	<span style=color:#458;font-weight:700>char</span>              val[<span style=color:#099>1</span>];       <span style=color:#998;font-style:italic>// 柔性数组
+</span><span style=color:#998;font-style:italic></span>};
+</code></pre></td></tr></table></div></div></div><div class=post-archive><ul class=post-copyright><li><strong>原文作者：</strong><a rel=author href=https://blog.wenjy.top>江湖义气</a></li><li style=word-break:break-all><strong>原文链接：</strong><a href=https://blog.wenjy.top/post/2019-10-11-php7-array/>https://blog.wenjy.top/post/2019-10-11-php7-array/</a></li><li><strong>版权声明：</strong>本作品采用<a rel=license href=https://creativecommons.org/licenses/by-nc-nd/4.0/>知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li></ul></div><br><div class=post-archive><h2>See Also</h2><ul class=listing><li><a href=/post/2019-10-11-linux-lock/>Lock</a></li><li><a href=/archives/archives/>Archives</a></li><li><a href=/about/about/>About</a></li><li><a href=/search/>搜索</a></li></ul></div><div class="post-meta meta-tags">没有标签</div></article><div class="post bg-white"><script src=https://utteranc.es/client.js repo=wenjy/blog issue-term=pathname theme=github-light crossorigin=anonymous async></script></div></div></div><div id=secondary><section class=widget><form id=search action=//www.google.com/search method=get accept-charset=utf-8 target=_blank _lpchecked=1><input type=text name=q maxlength=20 placeholder=Search>
+<input type=hidden name=sitesearch value=https://blog.wenjy.top>
+<button type=submit class="submit icon-search"></button></form></section><section class=widget><h3 class=widget-title>最近文章</h3><ul class=widget-list><li><a href=https://blog.wenjy.top/post/2019-10-11-mysql-index/ title=Mysql>Mysql</a></li><li><a href=https://blog.wenjy.top/post/2019-10-11-linux-lock/ title=Lock>Lock</a></li><li><a href=https://blog.wenjy.top/post/2019-10-11-php7-array/ title="PHP7 Array">PHP7 Array</a></li></ul></section><section class=widget><h3 class=widget-title style=color:red>福利派送</h3><ul class=widget-list><li><a href target=_blank style=color:red></a></li></ul></section><section class=widget><h3 class=widget-title>分类</h3><ul class=widget-list></ul></section><section class=widget><h3 class=widget-title>标签</h3><div class=tagcloud></div></section><section class=widget><h3 class=widget-title>友情链接</h3><ul class=widget-list><li><a target=_blank href=https://mikelin.cn title="MIKELIN | 关注科技，弘扬互联网精神！">MIKELIN</a></li><li><a target=_blank href=https://blog.wenjy.top title=江湖义气的网络日志>江湖义气的网络日志</a></li></ul></section><section class=widget><h3 class=widget-title>其它</h3><ul class=widget-list><li><a href=https://blog.wenjy.top/index.xml>文章 RSS</a></li></ul></section></div></div></div></div><footer id=footer><div class=container>&copy; 2020 <a href=https://blog.wenjy.top>江湖义气的博客 By 江湖义气</a>.
+Powered by <a rel="nofollow noreferer noopener" href=https://gohugo.io target=_blank>Hugo</a>.
+<a href=https://www.flysnow.org/ target=_blank>Theme</a> based on <a href=https://github.com/rujews/maupassant-hugo target=_blank>maupassant</a>.</div></footer><script type=text/javascript>(function(){$("pre code").parent().addClass("line-numbers")}());window.MathJax={tex2jax:{inlineMath:[['$','$']],processEscapes:true}};</script><script type=text/javascript src=/js/prism.js async></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><a id=rocket href=#top></a><script type=text/javascript src="/js/totop.js?v=0.0.0" async></script><script type=text/javascript src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async></script></body></html>
