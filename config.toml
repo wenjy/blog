@@ -38,8 +38,15 @@ summaryLength = 140
 ## 配置代码高亮
 [markup]
   [markup.highlight]
-    lineNos = true
-    style = "github"
+    codeFences = true
+    guessSyntax = false
+    hl_Lines = ""
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = true
+    style = "monokai"
+    tabWidth = 4
 
 [menu]
   [[menu.main]]
