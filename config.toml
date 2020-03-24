@@ -2,15 +2,15 @@ baseURL = "https://blog.wenjy.top"
 languageCode = "zh-CN"
 title = "江湖义气的博客"
 theme = "maupassant"
-googleAnalytics = ""  # UA-XXXXXXXX-X
+#googleAnalytics = ""  # UA-XXXXXXXX-X
 
 ## 保持分类的原始名字（false会做转小写处理）
 preserveTaxonomyNames = true
 ## 是否禁止URL Path转小写
 disablePathToLower = true
 
-hasCJKLanguage = true
-summaryLength = 140
+#hasCJKLanguage = true
+summaryLength = 50
 
 #disqusShortname = "yourdiscussshortname"  ## 是否开启disqus评论，不要和utteranc同时开启
 
@@ -38,15 +38,8 @@ summaryLength = 140
 ## 配置代码高亮
 [markup]
   [markup.highlight]
-    codeFences = true
-    guessSyntax = false
-    hl_Lines = ""
-    lineNoStart = 1
-    lineNos = false
-    lineNumbersInTable = true
-    noClasses = true
-    style = "monokai"
-    tabWidth = 4
+    lineNos = true
+    style = "github"
 
 [menu]
   [[menu.main]]

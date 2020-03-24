@@ -1,5 +1,5 @@
 ---
-title: "Lock"
+title: "Linux Lock的原理"
 date: 2019-10-11T22:29:21+08:00
 draft: false
 ---
