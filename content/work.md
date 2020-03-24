@@ -246,3 +246,33 @@ var_dump(apcu_fetch('foo'));
 // apc.use_request_time=1 不过期
 // 使用请求时间来淘汰缓存
 ```
+
+#### 2019.12.12 reids scan 命令在数据量比较少时例如count指定的返回偏差较大，大数据集时count相差不大
+
+可使用yield遍历整个数据集
+
+```php
+$key = 'test_set_111222';
+$items = [];
+for ($i = 0; $i < 1000; $i++) {
+    $items[] = $i;
+}
+$this->redis->sAdd($key1, ...$items);
+foreach ($this->get($key, 20) as $item) {
+    var_dump($item);
+}
+function get($key, int $count) : Generator
+{
+    $this->redis->setOption(\Redis::OPT_SCAN, \Redis::SCAN_RETRY);
+    $it = null;
+    while ($item = $this->redis->client()->sScan($key, $it, '*', $count)) {
+        yield $item;
+    }
+}
+```
+
+#### 2020-1-2 下载文件可以使用 header X-Accel-Redirect 来实现nginx层下载，控制速度，减少IO
+
+#### 2020-3-24 Wireshark卡死的原因居然是 有道词典的取词功能造成的
+
+[wireshark为什么会卡死？](https://segmentfault.com/a/1190000019913529)
