@@ -33,7 +33,7 @@ theme = "maupassant"
 [[params.links]]
   title = "江湖义气的网络日志"
   name = "江湖义气的网络日志"
-  url = "https://wenjy.top"
+  url = "https://blog.wenjy.top"
 
 [params.utteranc]
     enable = true
