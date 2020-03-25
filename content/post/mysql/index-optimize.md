@@ -1,4 +1,5 @@
 ---
+url: /2019/10/11/mysql-index-optimize.html
 title: "Mysql 索引学习"
 date: 2019-10-11T22:30:57+08:00
 draft: false
@@ -36,7 +37,7 @@ InnoDB(根据主键引用被索引的行，索引和数据同一个文件)、MyI
 ```
 
 - 建如下表测试索引排序
-```sql
+```mysql
 CREATE TABLE `test` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `realname` varchar(10) NOT NULL DEFAULT '',

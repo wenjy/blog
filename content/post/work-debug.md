@@ -1,4 +1,5 @@
 ---
+url: /2019/01/01/work-debug.html
 title: "工作中遇到的问题+踩过的坑"
 date: 2019-10-11T22:31:57+08:00
 draft: false
