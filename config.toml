@@ -42,8 +42,8 @@ summaryLength = 140
     hl_Lines = ""
     lineNoStart = 1
     lineNos = true
-    lineNumbersInTable = false
-    noClasses = true
+#    lineNumbersInTable = false
+#    noClasses = true
     tabWidth = 4
     style = "github"
 
