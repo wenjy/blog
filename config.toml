@@ -39,7 +39,7 @@ summaryLength = 140
 [markup]
   [markup.highlight]
 #    codeFences = true
-    hl_Lines = ""
+#    hl_Lines = ""
 #    lineNoStart = 1
     lineNos = true
 #    lineNumbersInTable = false
