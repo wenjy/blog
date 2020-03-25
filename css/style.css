@@ -99,12 +99,10 @@ mark {
     background: #fffdd1;
 }
 pre, code {
-    background:#f8f8f8;
     font-family:Menlo, Monaco, Consolas, "Lucida Console", "Courier New", monospace;
     font-size:.92857em;
 }
 pre {
-    margin: 2em 0;
     overflow:auto;
     border: 1px solid #ddd;
     display: block;
@@ -374,17 +372,19 @@ textarea {
     border-bottom: 1px solid #eee;
     overflow: hidden;
 }
-/* .post-content pre, .comment-content pre {
-    max-height: 320px;
-} */
-.post-content pre, .comment-content pre {
-    padding: 1em 1.5em;
+.post-content pre{
+    padding: 1em;
 }
-.post-content p code, .comment-content p code {
+.post-content code{
     display:inline;
-    margin:0 5px;
-    padding:3px 5px;
-    border: 1px solid #ddd;
+}
+.post-content p code{
+    display:inline;
+    padding: .2em .4em;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(27,31,35,.10);
+    border-radius: 3px;
 }
 .post-content p {
     margin:0 0 1.1em;
@@ -1049,29 +1049,4 @@ table tr th, table tr td {
     border: 1px solid #CCC;
     padding: 0.5em 1em;
     text-align: left;
-}
-/* toc*/
-.toc-article {
-    border: 1px solid #bbb;
-    border-radius: 7px;
-    margin: 1.1em 0 0 2em;
-    padding: 0.7em 0.7em 0 0.7em;
-    max-width: 40%;
-    line-height: 1em;
-    float: right;  
-}
-.toc-title {
-    font-size: 120%; 
-}
-#TableOfContents {
-    
-}
-#TableOfContents ul {
-    padding: 0;
-    margin: 0.5em;
-    line-height: 1.8em;
-}
-
-#TableOfContents li {
-    list-style-type: none; 
 }
