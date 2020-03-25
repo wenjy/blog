@@ -38,8 +38,13 @@ summaryLength = 140
 ## 配置代码高亮
 [markup]
   [markup.highlight]
-    lineNos = false
-    lineNumbersInTable = true
+    codeFences = true
+    hl_Lines = ""
+    lineNoStart = 1
+    lineNos = true
+    lineNumbersInTable = false
+    noClasses = true
+    tabWidth = 4
     style = "github"
 
 ## 默认、分类标签等
