@@ -2,7 +2,7 @@ baseURL = "https://blog.wenjy.top"
 languageCode = "zh-CN"
 title = "江湖义气的博客"
 theme = "maupassant"
-#googleAnalytics = ""  # UA-XXXXXXXX-X
+googleAnalytics = "UA-161796130-1"  # UA-XXXXXXXX-X
 
 ## 保持分类的原始名字（false会做转小写处理）
 preserveTaxonomyNames = true
