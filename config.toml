@@ -39,6 +39,7 @@ summaryLength = 140
 [markup]
   [markup.highlight]
     lineNos = false
+    lineNumbersInTable = true
     style = "github"
 
 ## 默认、分类标签等
