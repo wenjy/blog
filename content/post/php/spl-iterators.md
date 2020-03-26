@@ -10,6 +10,10 @@ categoryes_weight: 100
 ---
 [PHP文档](https://www.php.net/manual/zh/spl.iterators.php)
 
+```
+PHP SPL 提供一系列迭代器以遍历不同的对象，有些比较实用（如ArrayAccess），有些比较鸡肋，从来没有使用过。
+```
+
 ## Iterator
 
 实现一个最简单的迭代器接口

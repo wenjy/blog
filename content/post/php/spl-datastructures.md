@@ -10,6 +10,11 @@ categoryes_weight: 100
 ---
 [PHP文档](https://www.php.net/manual/zh/spl.datastructures.php)
 
+```
+这里主要学习，PHP SPL 提供了一套标准的数据结构。
+它们按底层实现进行分组, 通常定义了它们的一般应用领域
+```
+
 ## SplDoublyLinkedList
 
 双向链表

@@ -287,3 +287,7 @@ function get($key, int $count) : Generator
 ## Wireshark卡死的原因居然是 有道词典的取词功能造成的
 
 [wireshark为什么会卡死？](https://segmentfault.com/a/1190000019913529)
+
+## socket_set_option 参数顺序
+
+SO_REUSEPORT 必须在 bind() 函数之前设置
