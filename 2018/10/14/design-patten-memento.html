@@ -1,0 +1,248 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=generator content="Hugo 0.68.3"><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><title>设计模式(14)-备忘录模式 | 江湖义气的博客</title><meta property="og:title" content="设计模式(14)-备忘录模式 - 江湖义气的博客"><meta property="og:type" content="article"><meta property="article:published_time" content="2018-10-14T22:31:57+08:00"><meta property="article:modified_time" content="2018-10-14T22:31:57+08:00"><meta name=Keywords content="PHP,Swoole,Web开发,Golang,Linux,MySql,Vue"><meta name=description content="设计模式(14)-备忘录模式"><meta name=author content="江湖义气"><meta property="og:url" content="https://blog.wenjy.top/2018/10/14/design-patten-memento.html"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=stylesheet href=/css/normalize.css><link rel=stylesheet href=/css/prism.css><link rel=stylesheet href=/css/style.css><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js></script></head><body><header id=header class=clearfix><div class=container><div class=col-group><div class=site-name><a id=logo href=https://blog.wenjy.top>江湖义气的博客</a><p class=description>专注PHP开发。愿回首往事，不会因为虚度年华而悔恨，也不会因为碌碌无为而感到羞愧。</p></div><div><nav id=nav-menu class=clearfix><a class=current href=https://blog.wenjy.top>首页</a>
+<a href=https://blog.wenjy.top/archives/ title=归档>归档</a>
+<a href=https://blog.wenjy.top/about/ title=关于>关于</a></nav></div></div></div></header><div id=body><div class=container><div class=col-group><div class=col-8 id=main><div class=res-cons><article class=post><header><h1 class=post-title>设计模式(14)-备忘录模式</h1></header><date class="post-meta meta-date">2018年10月14日</date><div class=post-meta><span>|</span>
+<span class=meta-category><a href=https://blog.wenjy.top/categories/PHP>PHP</a></span></div><div class=post-meta><span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span> 阅读</span></span></div><div class=post-content><p><a href=https://github.com/wenjy/design_patten_php/blob/master/src/Memento.php>备忘录模式</a></p><h2 id=简介>简介</h2><pre><code>在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。
+这样以后就可以将该对象恢复都原先保存的状态。
+
+备忘录模式比较适用于功能比较复杂的，但需要维护或记录属性历史的类，或者需要保存的属性
+只是众多属性中的一小部分时， Originator 可以根据保存的 Memento 信息还原到前一状态。
+
+如果在某个系统中使用命令模式时，需要实现命令的撤销功能，那么命令模式可以使用备忘录模式来存储
+可撤销操作的状态。
+
+当角色的状态改变的时候，有可能这个状态无效，这时候就可以使用暂时储存起来的备忘录将状态复原
+</code></pre><h2 id=代码示例>代码示例</h2><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">103
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">104
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">105
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">106
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">107
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">108
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">109
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">110
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">111
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">112
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">113
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
+<span style=color:#d14>/**
+</span><span style=color:#d14> * 负责创建一个备忘录 Memento 用以记录当前时刻它的内部状态，并可以使用备忘录恢复内部状态
+</span><span style=color:#d14> *
+</span><span style=color:#d14> * Class Originator
+</span><span style=color:#d14> */</span>
+<span style=color:#000;font-weight:700>class</span> <span style=color:#458;font-weight:700>Originator</span>
+{
+    <span style=color:#000;font-weight:700>private</span> <span style=color:teal>$state</span>;
+
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * @return mixed
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>getState</span>()
+    {
+        <span style=color:#000;font-weight:700>return</span> <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>state</span>;
+    }
+
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * @param mixed $state
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>setState</span>(<span style=color:teal>$state</span>)
+    {
+        <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>state</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$state</span>;
+    }
+
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>createMemento</span>()
+    {
+        <span style=color:#000;font-weight:700>return</span> (<span style=color:#000;font-weight:700>new</span> Memento(<span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>state</span>));
+    }
+
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>setMemento</span>(Memento <span style=color:teal>$memento</span>)
+    {
+        <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>state</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$memento</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>getState</span>();
+    }
+
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>show</span>()
+    {
+        <span style=color:#000;font-weight:700>echo</span> <span style=color:#d14>&#39;State:&#39;</span> <span style=color:#000;font-weight:700>.</span> <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>state</span> <span style=color:#000;font-weight:700>.</span> PHP_EOL;
+    }
+}
+
+<span style=color:#d14>/**
+</span><span style=color:#d14> * 负责存储 Originator 对象的内部状态，并可以防止 Originator 以外的其他对象访问备忘录 Memento
+</span><span style=color:#d14> *
+</span><span style=color:#d14> * Class Memento
+</span><span style=color:#d14> */</span>
+<span style=color:#000;font-weight:700>class</span> <span style=color:#458;font-weight:700>Memento</span>
+{
+    <span style=color:#000;font-weight:700>private</span> <span style=color:teal>$state</span>;
+
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * Memento constructor.
+</span><span style=color:#d14>     * @param $state
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> __construct(<span style=color:teal>$state</span>)
+    {
+        <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>state</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$state</span>;
+    }
+
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * @return mixed
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>getState</span>()
+    {
+        <span style=color:#000;font-weight:700>return</span> <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>state</span>;
+    }
+
+}
+
+<span style=color:#d14>/**
+</span><span style=color:#d14> * 负责保存备忘录 Memento
+</span><span style=color:#d14> *
+</span><span style=color:#d14> * Class Caretaker
+</span><span style=color:#d14> */</span>
+<span style=color:#000;font-weight:700>class</span> <span style=color:#458;font-weight:700>Caretaker</span>
+{
+    <span style=color:#000;font-weight:700>private</span> <span style=color:teal>$memento</span>;
+
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * @return mixed
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>getMemento</span>()
+    {
+        <span style=color:#000;font-weight:700>return</span> <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>memento</span>;
+    }
+
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * @param mixed $memento
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>setMemento</span>(<span style=color:teal>$memento</span>)
+    {
+        <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>memento</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$memento</span>;
+    }
+
+}
+
+<span style=color:#998;font-style:italic>// 初始状态
+</span><span style=color:#998;font-style:italic></span><span style=color:teal>$o</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> Originator();
+<span style=color:teal>$o</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>setState</span>(<span style=color:#d14>&#39;on&#39;</span>);
+<span style=color:teal>$o</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>show</span>();
+
+<span style=color:#998;font-style:italic>// 保存备忘录
+</span><span style=color:#998;font-style:italic></span><span style=color:teal>$c</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> Caretaker();
+<span style=color:teal>$c</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>setMemento</span>(<span style=color:teal>$o</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>createMemento</span>());
+
+<span style=color:#998;font-style:italic>// 结束状态
+</span><span style=color:#998;font-style:italic></span><span style=color:teal>$o</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>setState</span>(<span style=color:#d14>&#39;off&#39;</span>);
+<span style=color:teal>$o</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>show</span>();
+
+<span style=color:#998;font-style:italic>// 还原状态
+</span><span style=color:#998;font-style:italic></span><span style=color:teal>$o</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>setMemento</span>(<span style=color:teal>$c</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>getMemento</span>());
+<span style=color:teal>$o</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>show</span>();
+</code></pre></td></tr></table></div></div></div><div class=post-archive><ul class=post-copyright><li><strong>原文作者：</strong><a rel=author href=https://blog.wenjy.top>江湖义气</a></li><li style=word-break:break-all><strong>原文链接：</strong><a href=https://blog.wenjy.top/2018/10/14/design-patten-memento.html>https://blog.wenjy.top/2018/10/14/design-patten-memento.html</a></li><li><strong>版权声明：</strong>本作品采用<a rel=license href=https://creativecommons.org/licenses/by-nc-nd/4.0/>知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li></ul></div><br><div class=post-archive><h2>See Also</h2><ul class=listing><li><a href=/2018/10/13/design-patten-mediator.html>设计模式(13)-中介者模式</a></li><li><a href=/2018/10/12/design-patten-interpreter.html>设计模式(12)-解释器模式</a></li><li><a href=/2018/10/11/design-patten-flyweight.html>设计模式(11)-享元模式</a></li><li><a href=/2018/10/10/design-patten-factory-method.html>设计模式(10)-工厂方法模式</a></li><li><a href=/2018/10/09/design-patten-facade.html>设计模式(9)-外观模式</a></li></ul></div><div class="post-meta meta-tags"><ul class=clearfix><li><a href=https://blog.wenjy.top/tags/PHP>PHP</a></li><li><a href=https://blog.wenjy.top/tags/DesignPatten>DesignPatten</a></li></ul></div></article><div class="post bg-white"><script src=https://utteranc.es/client.js repo=wenjy/blog issue-term=pathname theme=github-light crossorigin=anonymous async></script></div></div></div><div id=secondary><section class=widget><form id=search action=//www.google.com/search method=get accept-charset=utf-8 target=_blank _lpchecked=1><input type=text name=q maxlength=20 placeholder=Search>
+<input type=hidden name=sitesearch value=https://blog.wenjy.top>
+<button type=submit class="submit icon-search"></button></form></section><section class=widget><h3 class=widget-title>最近文章</h3><ul class=widget-list><li><a href=https://blog.wenjy.top/2019/01/01/work-debug.html title=工作中遇到的问题+踩过的坑>工作中遇到的问题+踩过的坑</a></li><li><a href=https://blog.wenjy.top/2019/10/11/mysql-index-optimize.html title="Mysql 索引学习">Mysql 索引学习</a></li><li><a href=https://blog.wenjy.top/2019/10/11/linux-lock-principle.html title="Linux Lock的原理">Linux Lock的原理</a></li><li><a href=https://blog.wenjy.top/2019/10/11/php7-array.html title=PHP7数组的实现>PHP7数组的实现</a></li><li><a href=https://blog.wenjy.top/2019/04/01/algorithms-consistent-hash.html title=算法-一致性Hash>算法-一致性Hash</a></li><li><a href=https://blog.wenjy.top/2019/04/01/algorithms-probability.html title=算法-简单的概率算法>算法-简单的概率算法</a></li><li><a href=https://blog.wenjy.top/2019/04/01/algorithms-circuit-breaker.html title=算法-简易模拟熔断器>算法-简易模拟熔断器</a></li><li><a href=https://blog.wenjy.top/2019/03/01/algorithms-binary_search.html title=算法-二分查找>算法-二分查找</a></li><li><a href=https://blog.wenjy.top/2019/03/01/algorithms-bubble-sort.html title=算法-冒泡排序>算法-冒泡排序</a></li><li><a href=https://blog.wenjy.top/2019/03/01/algorithms-merge-sort.html title=算法-归并排序>算法-归并排序</a></li></ul></section><section class=widget><h3 class=widget-title style=color:red>福利派送</h3><ul class=widget-list><li><a href target=_blank style=color:red></a></li></ul></section><section class=widget><h3 class=widget-title>分类</h3><ul class=widget-list><li><a href=https://blog.wenjy.top/categories/Algorithms/>Algorithms(9)</a></li><li><a href=https://blog.wenjy.top/categories/Linux/>Linux(1)</a></li><li><a href=https://blog.wenjy.top/categories/MySQL/>MySQL(1)</a></li><li><a href=https://blog.wenjy.top/categories/PHP/>PHP(38)</a></li></ul></section><section class=widget><h3 class=widget-title>标签</h3><div class=tagcloud><a href=https://blog.wenjy.top/tags/Algorithms/>Algorithms</a>
+<a href=https://blog.wenjy.top/tags/DesignPatten/>DesignPatten</a>
+<a href=https://blog.wenjy.top/tags/Linux/>Linux</a>
+<a href=https://blog.wenjy.top/tags/MySQL/>MySQL</a>
+<a href=https://blog.wenjy.top/tags/PHP/>PHP</a></div></section><section class=widget><h3 class=widget-title>友情链接</h3><ul class=widget-list><li><a target=_blank href=https://mikelin.cn title="MIKELIN | 关注科技，弘扬互联网精神！">MIKELIN</a></li><li><a target=_blank href=https://blog.wenjy.top title=江湖义气的网络日志>江湖义气的网络日志</a></li></ul></section><section class=widget><h3 class=widget-title>其它</h3><ul class=widget-list><li><a href=https://blog.wenjy.top/index.xml>文章 RSS</a></li></ul></section></div></div></div></div><footer id=footer><div class=container>&copy; 2020 <a href=https://blog.wenjy.top>江湖义气的博客 By 江湖义气</a>.
+Powered by <a rel="nofollow noreferer noopener" href=https://gohugo.io target=_blank>Hugo</a>.
+<a href=https://www.flysnow.org/ target=_blank>Theme</a> based on <a href=https://github.com/rujews/maupassant-hugo target=_blank>maupassant</a>.</div></footer><script type=text/javascript>(function(){$("pre code").parent().addClass("line-numbers")}());window.MathJax={tex2jax:{inlineMath:[['$','$']],processEscapes:true}};</script><script type=text/javascript src=/js/prism.js async></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><a id=rocket href=#top></a><script type=text/javascript src="/js/totop.js?v=0.0.0" async></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-161796130-1','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script type=text/javascript src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async></script></body></html>
