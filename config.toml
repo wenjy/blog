@@ -49,16 +49,21 @@ summaryLength = 81
   category = "categories"
 
 [menu]
+   [[menu.main]]
+     identifier = "tools"
+     name = "工具"
+     url = "/tools/"
+     weight = 2
   [[menu.main]]
     identifier = "archives"
     name = "归档"
     url = "/archives/"
-    weight = 2
+    weight = 3
   [[menu.main]]
     identifier = "about"
     name = "关于"
     url = "/about/"
-    weight = 3
+    weight = 4
 
 # 友情链接
 [[params.links]]

@@ -5,7 +5,7 @@ date: 2018-10-12T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]
 tags_weight: 100
-categories: ["PHP"]
+categories: ["PHP", "DesignPatten"]
 categoryes_weight: 100
 ---
 
