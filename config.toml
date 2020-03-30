@@ -40,7 +40,7 @@ summaryLength = 81
 ## 配置代码高亮
 [markup]
   [markup.highlight]
-    lineNos = false
+    lineNos = true
     style = "github"
 
 ## 默认、分类标签等
