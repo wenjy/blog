@@ -17,7 +17,82 @@ var t=postToc.offset().top-20,a={start:{position:"absolute",top:t},process:{posi
 第三，在维护一个遗留的大型系统时，可能这个系统以及非常难以维护和扩展了，可以为新系统开发一个外观 Facade 类，
 来提供设计粗糙或高度复杂的遗留代码的比较清晰简单的接口，让新系统与 Facade 对象交互，
 Facade 与遗留代码交互所有复杂的工作
-</code></pre><h2 id=代码示例>代码示例</h2><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
+</code></pre><h2 id=代码示例>代码示例</h2><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">75
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
 <span style=color:#000;font-weight:700>class</span> <span style=color:#458;font-weight:700>SubSystemOne</span>
 {
     <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>methodOne</span>()
@@ -92,7 +167,7 @@ Facade 与遗留代码交互所有复杂的工作
 <span style=color:teal>$facade</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> Facade();
 <span style=color:teal>$facade</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>methodA</span>();
 <span style=color:teal>$facade</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>methodB</span>();
-</code></pre></div></div><div class=post-archive><ul class=post-copyright><li><strong>原文作者：</strong><a rel=author href=https://blog.wenjy.top>江湖义气</a></li><li style=word-break:break-all><strong>原文链接：</strong><a href=https://blog.wenjy.top/2018/10/09/design-patten-facade.html>https://blog.wenjy.top/2018/10/09/design-patten-facade.html</a></li><li><strong>版权声明：</strong>本作品采用<a rel=license href=https://creativecommons.org/licenses/by-nc-nd/4.0/>知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li></ul></div><br><div class=post-archive><h2>See Also</h2><ul class=listing><li><a href=/2018/10/08/design-patten-decorator.html>设计模式(8)-装饰模式</a></li><li><a href=/2018/10/07/design-patten-composite.html>设计模式(7)-组合模式</a></li><li><a href=/2018/10/06/design-patten-command.html>设计模式(6)-命令模式</a></li><li><a href=/2018/10/05/design-patten-chain-of-responsibility.html>设计模式(5)-职责链模式</a></li><li><a href=/2018/10/04/design-patten-builder.html>设计模式(4)-建造者模式</a></li></ul></div><div class="post-meta meta-tags"><ul class=clearfix><li><a href=https://blog.wenjy.top/tags/PHP>PHP</a></li><li><a href=https://blog.wenjy.top/tags/DesignPatten>DesignPatten</a></li></ul></div></article><div class="post bg-white"><script src=https://utteranc.es/client.js repo=wenjy/blog issue-term=pathname theme=github-light crossorigin=anonymous async></script></div></div></div><div id=secondary><section class=widget><form id=search action=https://blog.wenjy.top/search/ method=get accept-charset=utf-8 target=_blank _lpchecked=1><input type=text name=q maxlength=20 placeholder=Search>
+</code></pre></td></tr></table></div></div></div><div class=post-archive><ul class=post-copyright><li><strong>原文作者：</strong><a rel=author href=https://blog.wenjy.top>江湖义气</a></li><li style=word-break:break-all><strong>原文链接：</strong><a href=https://blog.wenjy.top/2018/10/09/design-patten-facade.html>https://blog.wenjy.top/2018/10/09/design-patten-facade.html</a></li><li><strong>版权声明：</strong>本作品采用<a rel=license href=https://creativecommons.org/licenses/by-nc-nd/4.0/>知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li></ul></div><br><div class=post-archive><h2>See Also</h2><ul class=listing><li><a href=/2018/10/08/design-patten-decorator.html>设计模式(8)-装饰模式</a></li><li><a href=/2018/10/07/design-patten-composite.html>设计模式(7)-组合模式</a></li><li><a href=/2018/10/06/design-patten-command.html>设计模式(6)-命令模式</a></li><li><a href=/2018/10/05/design-patten-chain-of-responsibility.html>设计模式(5)-职责链模式</a></li><li><a href=/2018/10/04/design-patten-builder.html>设计模式(4)-建造者模式</a></li></ul></div><div class="post-meta meta-tags"><ul class=clearfix><li><a href=https://blog.wenjy.top/tags/PHP>PHP</a></li><li><a href=https://blog.wenjy.top/tags/DesignPatten>DesignPatten</a></li></ul></div></article><div class="post bg-white"><script src=https://utteranc.es/client.js repo=wenjy/blog issue-term=pathname theme=github-light crossorigin=anonymous async></script></div></div></div><div id=secondary><section class=widget><form id=search action=https://blog.wenjy.top/search/ method=get accept-charset=utf-8 target=_blank _lpchecked=1><input type=text name=q maxlength=20 placeholder=Search>
 <input type=hidden name=sitesearch value=https://blog.wenjy.top>
 <button type=submit class="submit icon-search"></button></form></section><section class=widget><h3 class=widget-title>最近文章</h3><ul class=widget-list><li><a href=https://blog.wenjy.top/2020/03/29/linux-file-permission.html title=Linux文件目录权限>Linux文件目录权限</a></li><li><a href=https://blog.wenjy.top/2020/3/26/git-command.html title="Git 常用命令">Git 常用命令</a></li><li><a href=https://blog.wenjy.top/2020/3/26/linux-command.html title="Linux 常用命令">Linux 常用命令</a></li><li><a href=https://blog.wenjy.top/2019/01/01/work-debug.html title=工作中遇到的问题+踩过的坑>工作中遇到的问题+踩过的坑</a></li><li><a href=https://blog.wenjy.top/2019/10/11/mysql-index-optimize.html title="Mysql 索引学习">Mysql 索引学习</a></li><li><a href=https://blog.wenjy.top/2019/10/11/linux-lock-principle.html title="Linux Lock的原理">Linux Lock的原理</a></li><li><a href=https://blog.wenjy.top/2019/10/11/php7-array.html title=PHP7数组的实现>PHP7数组的实现</a></li><li><a href=https://blog.wenjy.top/2019/04/01/algorithms-consistent-hash.html title=算法-一致性Hash>算法-一致性Hash</a></li><li><a href=https://blog.wenjy.top/2019/04/01/algorithms-probability.html title=算法-简单的概率算法>算法-简单的概率算法</a></li><li><a href=https://blog.wenjy.top/2019/04/01/algorithms-circuit-breaker.html title=算法-简易模拟熔断器>算法-简易模拟熔断器</a></li></ul></section><section class=widget><h3 class=widget-title style=color:red>福利派送</h3><ul class=widget-list><li><a href target=_blank style=color:red></a></li></ul></section><section class=widget><h3 class=widget-title>分类</h3><ul class=widget-list><li><a href=https://blog.wenjy.top/categories/Algorithms/>Algorithms (9)</a></li><li><a href=https://blog.wenjy.top/categories/DesignPatten/>DesignPatten (25)</a></li><li><a href=https://blog.wenjy.top/categories/Git/>Git (1)</a></li><li><a href=https://blog.wenjy.top/categories/Linux/>Linux (3)</a></li><li><a href=https://blog.wenjy.top/categories/MySQL/>MySQL (1)</a></li><li><a href=https://blog.wenjy.top/categories/PHP/>PHP (38)</a></li></ul></section><section class=widget><h3 class=widget-title>标签</h3><div class=tagcloud><a href=https://blog.wenjy.top/tags/Algorithms/>Algorithms</a>
 <a href=https://blog.wenjy.top/tags/DesignPatten/>DesignPatten</a>
