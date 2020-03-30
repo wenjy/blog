@@ -23,6 +23,7 @@ summaryLength = 81
   subtitle = "专注PHP开发。愿回首往事，不会因为虚度年华而悔恨，也不会因为碌碌无为而感到羞愧。"
   keywords = "PHP,Swoole,Web开发,Golang,Linux,MySql,Vue"
   description = "一枚小小的程序员，在这里记录工作、学习中遇到的问题和解决方法...学到的一些东西"
+  beian = "桂ICP备17000652号-2"
   busuanzi = true #启用不算子网页统计
 #  googleAd = "ca-pub-4031353640611810"  #ca-pub-xxxxxxxxxxxxxx
   localSearch = true # 启用本地搜索
@@ -39,7 +40,7 @@ summaryLength = 81
 ## 配置代码高亮
 [markup]
   [markup.highlight]
-    lineNos = true
+    lineNos = false
     style = "github"
 
 ## 默认、分类标签等
