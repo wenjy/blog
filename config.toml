@@ -24,6 +24,7 @@ summaryLength = 81
   keywords = "PHP,Swoole,Web开发,Golang,Linux,MySql,学习笔记"
   description = "一枚小小的程序员，在这里记录工作、学习中遇到的问题和解决方法...学到的一些东西"
   beian = "桂ICP备17000652号-2"
+  baiduLinksubmit = true
   busuanzi = true #启用不算子网页统计
 #  googleAd = "ca-pub-4031353640611810"  #ca-pub-xxxxxxxxxxxxxx
   localSearch = true # 启用本地搜索
