@@ -1,5 +1,5 @@
 ---
-url: /2020/4/1/http-response-status-codes.html
+url: /2020/04/01/http-response-status-codes.html
 title: "HTTP 响应状态码"
 keywords: "HTTP响应状态码"
 description: "HTTP 响应状态码"

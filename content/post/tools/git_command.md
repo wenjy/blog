@@ -1,5 +1,5 @@
 ---
-url: /2020/3/26/git-command.html
+url: /2020/03/26/git-command.html
 title: "Git 常用命令"
 keywords: "Git 常用命令"
 description: "Git 常用命令"

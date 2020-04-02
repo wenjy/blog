@@ -1,5 +1,5 @@
 ---
-url: /2020/3/26/linux-command.html
+url: /2020/03/26/linux-command.html
 title: "Linux 常用命令"
 keywords: "Linux 常用命令"
 description: "Linux 常用命令"
