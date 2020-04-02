@@ -1,6 +1,8 @@
 ---
 url: /2020/03/29/linux-file-permission.html
 title: "Linux文件目录权限"
+keywords: "Linux,文件目录权限"
+description: "Linux文件目录权限"
 date: 2020-03-29T19:29:11+08:00
 draft: false
 tags: ["Linux"]

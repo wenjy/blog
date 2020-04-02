@@ -1,6 +1,8 @@
 ---
 url: /2018/10/11/design-patten-flyweight.html
 title: "设计模式(11)-享元模式"
+keywords: "设计模式,享元模式"
+description: "享元模式"
 date: 2018-10-11T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

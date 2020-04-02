@@ -1,6 +1,8 @@
 ---
 url: /2018/10/23/design-patten-visitor.html
 title: "设计模式(23)-访问者模式"
+keywords: "设计模式,访问者模式"
+description: "访问者模式"
 date: 2018-10-23T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

@@ -1,6 +1,8 @@
 ---
 url: /2020/4/1/http-response-status-codes.html
 title: "HTTP 响应状态码"
+keywords: "HTTP响应状态码"
+description: "HTTP 响应状态码"
 date: 2020-04-01T22:53:12+08:00
 draft: false
 tags: ["Http"]

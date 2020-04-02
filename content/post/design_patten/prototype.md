@@ -1,6 +1,8 @@
 ---
 url: /2018/10/17/design-patten-prototype.html
 title: "设计模式(17)-原型模式"
+keywords: "设计模式,原型模式"
+description: "原型模式"
 date: 2018-10-17T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

@@ -1,6 +1,8 @@
 ---
 url: /2018/10/07/design-patten-composite.html
 title: "设计模式(7)-组合模式"
+keywords: "设计模式,组合模式"
+description: "组合模式"
 date: 2018-10-07T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

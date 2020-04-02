@@ -1,6 +1,8 @@
 ---
 url: /2019/04/01/algorithms-circuit-breaker.html
 title: "算法-简易模拟熔断器"
+keywords: "算法,熔断器"
+description: "算法熔断器"
 date: 2019-04-01T22:31:57+08:00
 draft: false
 tags: ["PHP", "Algorithms"]

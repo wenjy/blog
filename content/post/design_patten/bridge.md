@@ -1,6 +1,8 @@
 ---
 url: /2018/10/03/design-patten-bridge.html
 title: "设计模式(3)-桥接模式"
+keywords: "设计模式,桥接模式"
+description: "桥接模式"
 date: 2018-10-03T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

@@ -1,6 +1,8 @@
 ---
 url: /2019/10/11/php7-array.html
 title: "PHP7数组的实现"
+keywords: "PHP7数组的实现"
+description: "PHP7数组的实现"
 date: 2019-10-11T22:29:21+08:00
 draft: false
 tags: ["PHP"]

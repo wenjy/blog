@@ -1,6 +1,8 @@
 ---
 url: /2019/03/01/algorithms-select-sort.html
 title: "算法-选择排序"
+keywords: "算法,选择排序"
+description: "选择排序"
 date: 2019-03-01T22:31:57+08:00
 draft: false
 tags: ["PHP", "Algorithms"]

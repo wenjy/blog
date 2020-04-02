@@ -1,6 +1,8 @@
 ---
 url: /2018/10/18/design-patten-proxy.html
 title: "设计模式(18)-代理模式"
+keywords: "设计模式,代理模式"
+description: "代理模式"
 date: 2018-10-18T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

@@ -1,6 +1,8 @@
 ---
 url: /2018/10/20/design-patten-state-work.html
 title: "设计模式(20)-状态模式2"
+keywords: "设计模式,状态模式"
+description: "状态模式"
 date: 2018-10-20T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

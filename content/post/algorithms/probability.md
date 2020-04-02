@@ -1,6 +1,8 @@
 ---
 url: /2019/04/01/algorithms-probability.html
 title: "算法-简单的概率算法"
+keywords: "算法,简单的概率算法"
+description: "简单的概率算法"
 date: 2019-04-01T22:31:57+08:00
 draft: false
 tags: ["PHP", "Algorithms"]

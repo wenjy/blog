@@ -1,6 +1,8 @@
 ---
 url: /2018/10/04/design-patten-builder.html
 title: "设计模式(4)-建造者模式"
+keywords: "设计模式,建造者模式"
+description: "建造者模式"
 date: 2018-10-04T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

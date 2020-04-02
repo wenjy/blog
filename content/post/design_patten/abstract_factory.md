@@ -1,6 +1,8 @@
 ---
 url: /2018/10/01/design-patten-abstract-factory.html
 title: "设计模式(1)-抽象工厂模式"
+keywords: "设计模式,抽象工厂模式"
+description: "抽象工厂模式"
 date: 2018-10-01T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

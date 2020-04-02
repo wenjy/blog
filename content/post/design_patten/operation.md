@@ -1,6 +1,8 @@
 ---
 url: /2018/10/16/design-patten-operation.html
 title: "设计模式(16)-简单工厂模式"
+keywords: "设计模式,简单工厂模式"
+description: "简单工厂模式"
 date: 2018-10-16T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

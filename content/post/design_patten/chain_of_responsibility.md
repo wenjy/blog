@@ -1,6 +1,8 @@
 ---
 url: /2018/10/05/design-patten-chain-of-responsibility.html
 title: "设计模式(5)-职责链模式"
+keywords: "设计模式,职责链模式"
+description: "职责链模式"
 date: 2018-10-05T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

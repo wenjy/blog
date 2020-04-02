@@ -1,6 +1,8 @@
 ---
 url: /2019/04/01/algorithms-consistent-hash.html
 title: "算法-一致性Hash"
+keywords: "算法,一致性Hash"
+description: "一致性Hash"
 date: 2019-04-01T22:31:57+08:00
 draft: false
 tags: ["PHP", "Algorithms"]

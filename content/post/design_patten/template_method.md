@@ -1,6 +1,8 @@
 ---
 url: /2018/10/22/design-patten-template-method.html
 title: "设计模式(22)-模板方法模式"
+keywords: "设计模式,模板方法模式"
+description: "模板方法模式"
 date: 2018-10-22T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

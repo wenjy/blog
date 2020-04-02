@@ -1,6 +1,8 @@
 ---
 url: /2019/03/01/algorithms-arrangement-combination.html
 title: "算法-排列组合"
+keywords: "算法,排列组合"
+description: "算法排列组合"
 date: 2019-03-01T22:31:57+08:00
 draft: false
 tags: ["PHP", "Algorithms"]

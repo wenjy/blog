@@ -1,6 +1,8 @@
 ---
 url: /2018/10/09/design-patten-facade.html
 title: "设计模式(9)-外观模式"
+keywords: "设计模式,外观模式"
+description: "外观模式"
 date: 2018-10-09T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

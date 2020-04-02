@@ -1,6 +1,8 @@
 ---
 url: /2019/03/01/algorithms-bubble-sort.html
 title: "算法-冒泡排序"
+keywords: "算法,冒泡排序"
+description: "算法冒泡排序"
 date: 2019-03-01T22:31:57+08:00
 draft: false
 tags: ["PHP", "Algorithms"]

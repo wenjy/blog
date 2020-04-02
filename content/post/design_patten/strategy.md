@@ -1,6 +1,8 @@
 ---
 url: /2018/10/21/design-patten-strategy.html
 title: "设计模式(21)-策略模式"
+keywords: "设计模式,策略模式"
+description: "策略模式"
 date: 2018-10-21T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

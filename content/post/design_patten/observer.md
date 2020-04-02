@@ -1,6 +1,8 @@
 ---
 url: /2018/10/15/design-patten-observer.html
 title: "设计模式(15)-观察者模式"
+keywords: "设计模式,观察者模式"
+description: "观察者模式"
 date: 2018-10-15T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

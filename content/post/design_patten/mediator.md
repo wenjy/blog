@@ -1,6 +1,8 @@
 ---
 url: /2018/10/13/design-patten-mediator.html
 title: "设计模式(13)-中介者模式"
+keywords: "设计模式,中介者模式"
+description: "中介者模式"
 date: 2018-10-13T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

@@ -1,6 +1,8 @@
 ---
 url: /2019/10/11/linux-lock-principle.html
 title: "Linux Lock的原理"
+keywords: "Linux,Lock的原理"
+description: "Linux Lock的原理"
 date: 2019-10-11T22:29:21+08:00
 draft: false
 tags: ["Linux"]

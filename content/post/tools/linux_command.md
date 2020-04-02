@@ -1,6 +1,8 @@
 ---
 url: /2020/3/26/linux-command.html
 title: "Linux 常用命令"
+keywords: "Linux 常用命令"
+description: "Linux 常用命令"
 date: 2020-03-26T22:53:12+08:00
 draft: false
 tags: ["Linux"]

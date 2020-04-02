@@ -1,6 +1,8 @@
 ---
 url: /2020/3/26/git-command.html
 title: "Git 常用命令"
+keywords: "Git 常用命令"
+description: "Git 常用命令"
 date: 2020-03-26T22:53:12+08:00
 draft: false
 tags: ["Git"]

@@ -1,6 +1,8 @@
 ---
 url: /2018/10/10/design-patten-factory-method.html
 title: "设计模式(10)-工厂方法模式"
+keywords: "设计模式,工厂方法模式"
+description: "工厂方法模式"
 date: 2018-10-10T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

@@ -1,6 +1,8 @@
 ---
 url: /2018/10/12/design-patten-interpreter.html
 title: "设计模式(12)-解释器模式"
+keywords: "设计模式,解释器模式"
+description: "解释器模式"
 date: 2018-10-12T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

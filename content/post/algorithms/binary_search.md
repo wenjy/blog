@@ -1,6 +1,8 @@
 ---
 url: /2019/03/01/algorithms-binary_search.html
 title: "算法-二分查找"
+keywords: "算法,二分查找"
+description: "算法二分查找"
 date: 2019-03-01T22:31:57+08:00
 draft: false
 tags: ["PHP", "Algorithms"]

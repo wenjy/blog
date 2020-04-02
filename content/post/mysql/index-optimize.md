@@ -1,6 +1,8 @@
 ---
 url: /2019/10/11/mysql-index-optimize.html
 title: "Mysql 索引学习"
+keywords: "Mysql,索引优化"
+description: "Mysql 索引优化"
 date: 2019-10-11T22:30:57+08:00
 draft: false
 tags: ["MySQL"]

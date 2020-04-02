@@ -1,6 +1,8 @@
 ---
 url: /2018/10/08/design-patten-decorator.html
 title: "设计模式(8)-装饰模式"
+keywords: "设计模式,装饰模式"
+description: "装饰模式"
 date: 2018-10-08T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

@@ -1,6 +1,8 @@
 ---
 url: /2018/10/02/design-patten-adapter.html
 title: "设计模式(2)-适配器模式"
+keywords: "设计模式,适配器模式"
+description: "适配器模式"
 date: 2018-10-02T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

@@ -1,6 +1,8 @@
 ---
 url: /2018/10/06/design-patten-command.html
 title: "设计模式(6)-命令模式"
+keywords: "设计模式,命令模式"
+description: "命令模式"
 date: 2018-10-06T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]

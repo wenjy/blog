@@ -1,6 +1,8 @@
 ---
 url: /2018/10/19/design-patten-singleton.html
 title: "设计模式(19)-单例模式"
+keywords: "设计模式,单例模式"
+description: "单例模式"
 date: 2018-10-19T22:31:57+08:00
 draft: false
 tags: ["PHP", "DesignPatten"]
