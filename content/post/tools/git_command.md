@@ -60,6 +60,8 @@ clone远程仓库
 
 `git submodule add https://github.com/wenjy/maupassant-hugo.git themes/maupassant`
 
+`git submodule update --remote` 更新子模块为远程项目的最新版本
+
 ```
 git Submodule 是一个很好的多项目使用共同类库的工具，他允许类库项目做为repository，子项目做为一个单独的git项目存在父项目中，
 子项目可以有自己的独立的commit，push，pull。而父项目以Submodule的形式包含子项目，父项目可以指定子项目header，
@@ -72,7 +74,7 @@ git Submodule 是一个很好的多项目使用共同类库的工具，他允许
 
 ## git add
 
-添加文件至index（暂存区）`
+添加文件至index（暂存区）
 
 `git add xyz ` 添加xyz文件至index
 
@@ -351,7 +353,10 @@ stash 实现思路将我们的修改提交到本地仓库，使用特殊的分�
 
 `git grep "delete from"` 文件中搜索文本“delete from”
 
-参考链接
+参考链接：
+
 [git 命令](https://gist.github.com/guweigang/9848271)
+
 [git 原理](https://blog.coding.net/blog/principle-of-git)
+
 [git官方文档](https://git-scm.com/docs)

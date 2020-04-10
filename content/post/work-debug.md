@@ -291,3 +291,10 @@ function get($key, int $count) : Generator
 ## socket_set_option 参数顺序
 
 SO_REUSEPORT 必须在 bind() 函数之前设置
+
+
+## linux TCP连接失败(不回复SYN,ACK)问题
+
+[参考分析问题1](https://blog.csdn.net/ywq935/article/details/91384854)
+
+[net.ipv4.tcp_tw_recycle参数](https://www.cnblogs.com/cheyunhua/p/9082674.html)
