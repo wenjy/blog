@@ -363,9 +363,74 @@ gdb 调试是命令行交互式的，需要掌握常用的指令。
 
 `sudo -u username pwd` 不加用户参数，默认root
 
+## curl
+基于网络协议，对指定URL进行网络传输
+curl支持的通信协议有DICT, FILE, FTP, FTPS, GOPHER, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, POP3, POP3S, RTMP, RTMPS, RTSP, SCP, SFTP, SMB, SBMS, SMTP, SMTPS, TELNET 和TFTP
+
+`curl --trace-time -v https://www.baidu.com` 可以调试请求时间和具体过程
+
+## ssh
+SSH是一种网络协议，用于计算机之间的加密登录
+
+`ssh-keygen` 创建公钥
+
+`ssh-copy-id user@host` 复制本机公钥到服务器
+
+`ssh -p 2222 user@host` 登录服务器
+
+### 用来传输数据
+
+`cd && tar czv src | ssh user@host 'tar xz'` 将$HOME/src/目录下面的所有文件，复制到远程主机的$HOME/src/目录
+
+`ssh user@host 'tar cz src' | tar xzv` 将远程主机$HOME/src/目录下面的所有文件，复制到用户的当前目录
+
+### 绑定本地端口
+
+可以让那些不加密的网络连接，全部改走SSH连接，从而提高安全性
+
+`ssh -D 8080 user@host` 让8080端口的数据，都通过SSH传向远程主机
+
+SSH会建立一个socket，去监听本地的8080端口。一旦有数据传向那个端口，就自动把它转移到SSH连接上面，发往远程主机。
+可以想象，如果8080端口原来是一个不加密端口，现在将变成一个加密端口
+
+### 本地端口转发
+
+有时，绑定本地端口还不够，还必须指定数据传送的目标主机，从而形成点对点的"端口转发"。
+为了区别后文的"远程端口转发"，我们把这种情况称为"本地端口转发"（Local forwarding）。
+
+假定host1是本地主机，host2是远程主机。由于种种原因，这两台主机之间无法连通。但是，另外还有一台host3，可以同时连通前面两台主机。
+因此，很自然的想法就是，通过host3，将host1连上host2
+
+`ssh -L 2121:host2:21 host3`
+
+命令中的L参数一共接受三个值，分别是"本地端口:目标主机:目标主机端口"，它们之间用冒号分隔。
+这条命令的意思，就是指定SSH绑定本地端口2121，然后指定host3将所有的数据，转发到目标主机host2的21端口（假定host2运行FTP，默认端口为21）
+这样一来，我们只要连接host1的2121端口，就等于连上了host2的21端口
+
+"本地端口转发"使得host1和host3之间仿佛形成一个数据传输的秘密隧道，因此又被称为"SSH隧道"
+
+### 远程端口转发
+
+既然"本地端口转发"是指绑定本地端口的转发，那么"远程端口转发"（remote forwarding）当然是指绑定远程端口的转发。
+
+还是接着看上面那个例子，host1与host2之间无法连通，必须借助host3转发。但是，特殊情况出现了，host3是一台内网机器，它可以连接外网的host1，但是反过来就不行，外网的host1连不上内网的host3。这时，"本地端口转发"就不能用了，怎么办？
+
+解决办法是，既然host3可以连host1，那么就从host3上建立与host1的SSH连接，然后在host1上使用这条连接就可以了
+
+`ssh -R 2121:host2:21 host1`
+
+R参数也是接受三个值，分别是"远程主机端口:目标主机:目标主机端口"。
+这条命令的意思，就是让host1监听它自己的2121端口，然后将所有数据经由host3，转发到host2的21端口。由于对于host3来说，host1是远程主机，所以这种情况就被称为"远程端口绑定"
+
+`ssh -NT -f -D 8080 host`
+
+N参数，表示只连接远程主机，不打开远程shell；T参数，表示不为这个连接分配TTY。这个两个参数可以放在一起用，代表这个SSH连接只用来传数据，不执行远程操作
+f参数，表示SSH连接成功后，转入后台运行。这样一来，就可以在不中断SSH连接的情况下，在本地shell中执行其他操作
 
 参考链接：
 
 [每天一个Linux命令](https://www.cnblogs.com/peida/category/309012.html)
 
 [Swoole文档 工具使用](https://wiki.swoole.com/#/other/tools)
+
+[阮一峰 SSH原理与运用（二）：远程操作与端口转发](http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html)
