@@ -427,6 +427,11 @@ R参数也是接受三个值，分别是"远程主机端口:目标主机:目标�
 N参数，表示只连接远程主机，不打开远程shell；T参数，表示不为这个连接分配TTY。这个两个参数可以放在一起用，代表这个SSH连接只用来传数据，不执行远程操作
 f参数，表示SSH连接成功后，转入后台运行。这样一来，就可以在不中断SSH连接的情况下，在本地shell中执行其他操作
 
+`netcat`
+调试tcp udp
+
+`netcat -u ip port` 调试udp
+
 参考链接：
 
 [每天一个Linux命令](https://www.cnblogs.com/peida/category/309012.html)
