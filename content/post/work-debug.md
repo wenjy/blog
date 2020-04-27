@@ -298,3 +298,57 @@ SO_REUSEPORT 必须在 bind() 函数之前设置
 [参考分析问题1](https://blog.csdn.net/ywq935/article/details/91384854)
 
 [net.ipv4.tcp_tw_recycle参数](https://www.cnblogs.com/cheyunhua/p/9082674.html)
+
+## php socket EVENT扩展 死循环的问题
+
+代码中出现未捕获异常，导致死循环
+
+go 模拟RST
+```go
+package main
+
+import (
+	"flag"
+	"fmt"
+	"net"
+	"os"
+)
+
+var host = flag.String("host", "172.16.1.49", "host")
+var port = flag.String("port", "9999", "port")
+
+func main()  {
+	conn, err := net.Dial("tcp", *host+":"+*port)
+	fmt.Println(*host+":"+*port)
+	if err != nil {
+		fmt.Println("err1")
+		os.Exit(1)
+	}
+
+	defer conn.Close()
+
+	tcpConn, ok := conn.(*net.TCPConn)
+	if !ok {
+		fmt.Println("err2")
+		os.Exit(1)
+	}
+	tcpConn.SetLinger(0)
+}
+```
+
+strace 调试日志
+```
+39070 epoll_wait(6, [{EPOLLIN, {u32=9, u64=9}}], 32, -1) = 1
+39070 accept(9, {sa_family=AF_INET, sin_port=htons(35959), sin_addr=inet_addr("127.0.0.1")}, [16]) = 10
+39070 setsockopt(10, SOL_SOCKET, SO_RCVTIMEO, "\36\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16) = 0
+39070 setsockopt(10, SOL_SOCKET, SO_SNDTIMEO, "\36\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16) = 0
+39070 fcntl(10, F_GETFL)                = 0x2 (flags O_RDWR)
+39070 fcntl(10, F_SETFL, O_RDWR|O_NONBLOCK) = 0
+39070 getpeername(10, 0x7fff585ad500, 0x7fff585ad4b4) = -1 ENOTCONN (Transport endpoint is not connected)
+39070 epoll_wait(6, [{EPOLLIN, {u32=9, u64=9}}], 32, -1) = 1
+39070 epoll_wait(6, [{EPOLLIN, {u32=9, u64=9}}], 32, -1) = 1
+39070 epoll_wait(6, [{EPOLLIN, {u32=9, u64=9}}], 32, -1) = 1
+...死循环
+```
+
+TCP握手成功之后，客户端直接发送RST包断开TCP连接(阿里云负载均衡服务TCP端口健康检查)，socket_getpeername()函数会抛出异常
