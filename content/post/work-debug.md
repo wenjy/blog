@@ -369,3 +369,9 @@ strace 调试日志
 ```
 
 TCP握手成功之后，客户端直接发送RST包断开TCP连接(阿里云负载均衡服务TCP端口健康检查)，socket_getpeername()函数会抛出异常
+
+## socket_read 非阻塞模式 EAGAIN处理不正确
+
+非阻塞模式下，我们对EAGAIN处理不正确造成（Resource temporarily unavailable）我们继续读时，造成段错误（SIGSEGV 段非法错误 (内存引用无效)​）worker exit，发送RST
+
+由于我们实现的read 错误的返回了false thrift_protocol_read_binary_after_message_begin() 段错误，需改为空字符

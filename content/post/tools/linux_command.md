@@ -315,6 +315,10 @@ secure copy的简写，用于在Linux下进行远程拷贝文件的命令，和�
 
 `tcpdump -i lo -Xnlps0 tcp port 9999` 抓lo网卡，tcp协议，端口9999 通信的数据内容
 
+`tcpdump host 127.0.0.1` 指定IP
+
+[命令详解](https://www.cnblogs.com/ggjucheng/archive/2012/01/14/2322659.html)
+
 ## strace
 可以跟踪系统调用的执行情况，在程序发生问题后，可以用 strace 分析和跟踪问题。
 
