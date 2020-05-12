@@ -15,7 +15,7 @@ categoryes_weight: 100
 
 `git init` 创建普通库
 
-`git init --bear` 创建裸库
+`git init --bare` 创建裸库
 ```
 当你创建一个普通库时，在工作目录下，除了.git目录之外，你还可以看到库中所包含的所有源文件。
 你拥有了一个可以进行浏览和修改（add, commit, delete等）的本地库
