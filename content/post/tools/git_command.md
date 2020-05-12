@@ -25,6 +25,28 @@ categoryes_weight: 100
 项目团队里面的每个人都可以clone这个库，然后完成本地修改之后，往这个库中push自己的代码。
 ```
 
+示例：在www用户的home目录创建裸仓库并clone，提交一次
+
+服务器：
+```
+mkdir git_test && cd git_test && git init --bare
+```
+
+客户端：
+```
+ssh-copy-id www@ip
+
+git clone ssh://www@ip/~/git_test
+
+touch readme.md
+
+git add .
+
+git commit -m "first commit"
+
+git push
+```
+
 ## git config
 配置git的一些参数
 
