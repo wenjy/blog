@@ -10,6 +10,18 @@ var t=postToc.offset().top-20,a={start:{position:"absolute",top:t},process:{posi
 当你创建一个裸库时，在工作目录下，只有一个.git目录，而没有类似于本地库那样的文件结构可供你直接进行浏览和修改。
 一般来说，一个裸库往往被创建用于作为大家一起工作的共享库，每一个人都可以往里面push自己的本地修改。
 项目团队里面的每个人都可以clone这个库，然后完成本地修改之后，往这个库中push自己的代码。
+</code></pre><p>示例：在www用户的home目录创建裸仓库并clone，提交一次</p><p>服务器：</p><pre><code>mkdir git_test &amp;&amp; cd git_test &amp;&amp; git init --bare
+</code></pre><p>客户端：</p><pre><code>ssh-copy-id www@ip
+
+git clone ssh://www@ip/~/git_test
+
+touch readme.md
+
+git add .
+
+git commit -m &quot;first commit&quot;
+
+git push
 </code></pre><h2 id=git-config>git config</h2><p>配置git的一些参数</p><p><code>git config user.name "xxx"</code> 配置用户名</p><p><code>git config user.email "xxx@xxx.com"</code> 配置邮箱</p><p><code>git config --global color.ui true</code> git status等命令自动着色</p><p>git对CRLF的处理配置</p><p><code>git config --global core.autocrlf true</code> 提交时转换为LF，检出时转换为CRLF</p><p><code>git config --global core.autocrlf input</code> 提交时转换为LF，检出时不转换</p><p><code>git config --global core.autocrlf false</code> 提交检出均不转换</p><p><code>git config --global core.safecrlf true</code> 拒绝提交包含混合换行符的文件</p><p><code>git config --global core.safecrlf false</code> 允许提交包含混合换行符的文件</p><p><code>git config --global core.safecrlf warn</code> 提交包含混合换行符的文件时给出警告</p><p>加上 <code>--global</code> 表示全局配置，不加表示仅该仓库配置</p><h2 id=git-clone>git clone</h2><p>clone远程仓库</p><p><code>git clone git+ssh://git@192.168.53.168/VT.git</code></p><h2 id=git-submodule>git submodule</h2><p><code>git submodule add https://github.com/wenjy/maupassant-hugo.git themes/maupassant</code></p><p><code>git submodule update --remote</code> 更新子模块为远程项目的最新版本</p><pre><code>git Submodule 是一个很好的多项目使用共同类库的工具，他允许类库项目做为repository，子项目做为一个单独的git项目存在父项目中，
 子项目可以有自己的独立的commit，push，pull。而父项目以Submodule的形式包含子项目，父项目可以指定子项目header，
 父项目中会的提交信息包含Submodule的信息，再clone父项目的时候可以把Submodule初始化。
