@@ -375,3 +375,13 @@ TCP握手成功之后，客户端直接发送RST包断开TCP连接(阿里云负�
 非阻塞模式下，我们对EAGAIN处理不正确造成（Resource temporarily unavailable）我们继续读时，造成段错误（SIGSEGV 段非法错误 (内存引用无效)​）worker exit，发送RST
 
 由于我们实现的read 错误的返回了false thrift_protocol_read_binary_after_message_begin() 段错误，需改为空字符
+
+## 阿里云redis lua 检查的问题
+
+HMSET key field value [field value …]
+
+因为直接使用table先组装好了field value
+执行 script load 脚本时，会检查不成功，从而load失败，因为它判断这里少了一个参数
+```
+redis.call('hmset', KEYS[1], unpack(data))
+```
