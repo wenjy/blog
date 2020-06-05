@@ -1,0 +1,134 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><title>一次Redis read error on connection 错误调试 | 江湖义气的博客</title><meta property="og:title" content="一次Redis read error on connection 错误调试 - 江湖义气的博客"><meta property="og:type" content="article"><meta property="article:published_time" content="2020-06-04T22:53:12+08:00"><meta property="article:modified_time" content="2020-06-04T22:53:12+08:00"><meta name=Keywords content="[Redis Linux]"><meta name=description content="Redis read error on connection 错误调试"><meta name=author content="江湖义气"><meta property="og:url" content="https://blog.wenjy.top/2020/06/04/redis-read-error-on-connection.html"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=stylesheet href=/css/normalize.css><link rel=stylesheet href=/css/style.css><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js></script></head><body><header id=header class=clearfix><div class=container><div class=col-group><div class=site-name><a id=logo href=https://blog.wenjy.top>江湖义气的博客</a><p class=description>专注PHP开发。愿回首往事，不会因为虚度年华而悔恨，也不会因为碌碌无为而感到羞愧。</p></div><div><nav id=nav-menu class=clearfix><a class=current href=https://blog.wenjy.top>首页</a>
+<a href=https://blog.wenjy.top/tools/ title=工具>工具</a>
+<a href=https://blog.wenjy.top/archives/ title=归档>归档</a>
+<a href=https://blog.wenjy.top/about/ title=关于>关于</a></nav></div></div></div></header><div id=body><div class=container><div class=col-group><div class=col-8 id=main><div class=res-cons><style type=text/css>.post-toc{position:fixed;width:200px;margin-left:-210px;padding:5px 10px;font-family:Athelas,STHeiti,Microsoft Yahei,serif;font-size:12px;border:1px solid rgba(0,0,0,.07);border-radius:5px;background-color:rgba(255,255,255,.98);background-clip:padding-box;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,.125);box-shadow:1px 1px 2px rgba(0,0,0,.125);word-wrap:break-word;white-space:nowrap;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:999;cursor:pointer;max-height:70%;overflow-y:auto;overflow-x:hidden}.post-toc .post-toc-title{width:100%;margin:0 auto;font-size:20px;font-weight:400;text-transform:uppercase;text-align:center}.post-toc .post-toc-content{font-size:15px}.post-toc .post-toc-content>nav>ul{margin:10px 0}.post-toc .post-toc-content ul{padding-left:20px;list-style:square;margin:.5em;line-height:1.8em}.post-toc .post-toc-content ul ul{padding-left:15px;display:none}@media print,screen and (max-width:1057px){.post-toc{display:none}}</style><div class=post-toc style=position:absolute;top:188px><h2 class=post-toc-title>文章目录</h2><div class=post-toc-content><nav id=TableOfContents><ul><li><a href=#故事之初>故事之初</a></li><li><a href=#网上查资料>网上查资料</a></li><li><a href=#重现并调试>重现并调试</a></li><li><a href=#总结>总结</a></li></ul></nav></div></div><script type=text/javascript>$(document).ready(function(){var postToc=$(".post-toc");if(postToc.length){var leftPos=$("#main").offset().left;if(leftPos<220){postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})}
+var t=postToc.offset().top-20,a={start:{position:"absolute",top:t},process:{position:"fixed",top:20},};$(window).scroll(function(){var e=$(window).scrollTop();e<t?postToc.css(a.start):postToc.css(a.process)})}})</script><article class=post><header><h1 class=post-title>一次Redis read error on connection 错误调试</h1></header><date class="post-meta meta-date">2020年6月4日</date><div class=post-meta><span>|</span>
+<span class=meta-category><a href=https://blog.wenjy.top/categories/Redis>Redis</a></span></div><div class=post-meta><span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
+阅读</span></span></div><div class=post-content><h2 id=故事之初>故事之初</h2><p>一次重启SOA服务后，突然发现有报错<code>read error on connection to 127.0.0.1:6379</code></p><p>下面是SOA服务中环境和依赖的包版本</p><p>PHP 7.2.25</p><p>使用 PCNTL POSIX 来管理进程</p><p><a href=https://pecl.php.net/get/redis-5.2.1.tgz>ext-phpredis 5.2.1</a></p><p><a href=https://pecl.php.net/get/event-2.5.4.tgz>ext-event 2.5.4</a></p><p>laravel 6.18.14</p><p>SOA是基于event 写的一个多进程服务 使用laravel command来启动和停止进程</p><p>由master 进程 fork 多个work进程处理业务</p><p><code>ps -ef|grep Soa</code></p><pre><code>root      31614      1  0 Jun04 ?        00:00:00 Soa master server
+www       31615  31614  0 Jun04 ?        00:00:01 Soa worker server
+www       31616  31614  0 Jun04 ?        00:00:01 Soa worker server
+</code></pre><h2 id=网上查资料>网上查资料</h2><p>按照报错，应该是连接被关闭然后再发请求造成的</p><p><a href=https://www.jianshu.com/p/6d6a09db55e8>参考 Redis：排查 read error on connection 小记</a></p><p>感觉可能是超时时间引起的</p><p>于是设置<code>phpredis</code> read_timeout 为-1，重启SOA调试，错误依旧</p><p>我们redis客户端是启用 persistent 的，使用的 pconnect</p><p>看一下redis扩展的配置</p><pre><code>redis.pconnect.pooling_enabled =&gt; 1 =&gt; 1
+redis.pconnect.connection_limit =&gt; 0 =&gt; 0
+</code></pre><p>配置没什么问题</p><p>也去<a href=https://github.com/phpredis/phpredis>phpredis</a> 源码搜索这个错误，和上面所说的一样</p><h2 id=重现并调试>重现并调试</h2><p>既然能稳定重现 那用 <code>strace -p $pid</code> 看看系统调用（开始也使用tcpdump gdb 调试，没发现导致的错误的原因）</p><pre><code>13414 epoll_wait(8, [{EPOLLIN, {u32=11, u64=11}}], 32, -1) = 1
+13414 accept(11, {sa_family=AF_INET, sin_port=htons(9342), sin_addr=inet_addr(&quot;127.0.0.1&quot;)}, [16]) = 12
+13414 setsockopt(12, SOL_SOCKET, SO_RCVTIMEO, &quot;2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0&quot;, 16) = 0
+13414 setsockopt(12, SOL_SOCKET, SO_SNDTIMEO, &quot;2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0&quot;, 16) = 0
+13414 fcntl(12, F_GETFL)                = 0x2 (flags O_RDWR)
+13414 fcntl(12, F_SETFL, O_RDWR|O_NONBLOCK) = 0
+13414 epoll_ctl(8, EPOLL_CTL_ADD, 12, {EPOLLIN, {u32=12, u64=12}}) = 0
+13414 epoll_wait(8, [{EPOLLIN, {u32=12, u64=12}}], 32, -1) = 1
+13414 recvfrom(12, &quot;\200&quot;, 1, 0, NULL, NULL) = 1
+13414 recvfrom(12, &quot;\1\0\1&quot;, 3, 0, NULL, NULL) = 3
+13414 recvfrom(12, &quot;\0\0\0\16&quot;, 4, 0, NULL, NULL) = 4
+13414 recvfrom(12, &quot;Device:offLine&quot;, 14, 0, NULL, NULL) = 14
+13414 recvfrom(12, &quot;\0\0\0\0&quot;, 4, 0, NULL, NULL) = 4
+13414 recvfrom(12, &quot;\v\0\1\0\0\0 d6e820eebbac8b527d721621a&quot;..., 4096, 0, NULL, NULL) = 40
+13414 poll([{fd=7, events=POLLIN|POLLPRI|POLLERR|POLLHUP}], 1, 0) = 0 (Timeout)
+13414 sendto(7, &quot;*3\r\n$4\r\nHGET\r\n$33\r\nproxy_server_&quot;..., 93, MSG_DONTWAIT, NULL, 0) = 93
+13414 poll([{fd=7, events=POLLIN|POLLPRI|POLLERR|POLLHUP}], 1, 0) = 0 (Timeout)
+13414 poll([{fd=7, events=POLLIN|POLLERR|POLLHUP}], 1, 60000) = 1 ([{fd=7, revents=POLLIN}])
+13414 recvfrom(7, 0x32e7d40, 8192, MSG_DONTWAIT, NULL, NULL) = -1 EAGAIN (Resource temporarily unavailable)
+13414 close(7)                          = 0
+13414 write(13, &quot;[2020-06-03 17:36:55] local.ERRO&quot;..., 6179) = 6179
+13414 epoll_wait(8, [{EPOLLIN, {u32=11, u64=11}}], 32, -1) = 1
+13414 accept(11, {sa_family=AF_INET, sin_port=htons(9348), sin_addr=inet_addr(&quot;127.0.0.1&quot;)}, [16]) = 7
+13414 setsockopt(7, SOL_SOCKET, SO_RCVTIMEO, &quot;2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0&quot;, 16) = 0
+13414 setsockopt(7, SOL_SOCKET, SO_SNDTIMEO, &quot;2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0&quot;, 16) = 0
+13414 fcntl(7, F_GETFL)                 = 0x2 (flags O_RDWR)
+13414 fcntl(7, F_SETFL, O_RDWR|O_NONBLOCK) = 0
+13414 epoll_ctl(8, EPOLL_CTL_ADD, 7, {EPOLLIN, {u32=7, u64=7}}) = 0
+13414 epoll_wait(8, [{EPOLLIN, {u32=7, u64=7}}], 32, -1) = 1
+13414 recvfrom(7, &quot;\200&quot;, 1, 0, NULL, NULL) = 1
+13414 recvfrom(7, &quot;\1\0\1&quot;, 3, 0, NULL, NULL) = 3
+13414 recvfrom(7, &quot;\0\0\0\16&quot;, 4, 0, NULL, NULL) = 4
+13414 recvfrom(7, &quot;Device:offLine&quot;, 14, 0, NULL, NULL) = 14
+13414 recvfrom(7, &quot;\0\0\0\0&quot;, 4, 0, NULL, NULL) = 4
+13414 recvfrom(7, &quot;\v\0\1\0\0\0 1e5d42e6117278050b3818af8&quot;..., 4096, 0, NULL, NULL) = 40
+13414 socket(AF_INET, SOCK_STREAM, IPPROTO_IP) = 15
+13414 fcntl(15, F_GETFL)                = 0x2 (flags O_RDWR)
+13414 fcntl(15, F_SETFL, O_RDWR|O_NONBLOCK) = 0
+13414 connect(15, {sa_family=AF_INET, sin_port=htons(6379), sin_addr=inet_addr(&quot;127.0.0.1&quot;)}, 16) = -1 EINPROGRESS (Operation now in progress)
+13414 poll([{fd=15, events=POLLIN|POLLOUT|POLLERR|POLLHUP}], 1, 60000) = 1 ([{fd=15, revents=POLLOUT}])
+13414 getsockopt(15, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
+13414 fcntl(15, F_SETFL, O_RDWR)        = 0
+13414 setsockopt(15, SOL_TCP, TCP_NODELAY, [1], 4) = 0
+13414 setsockopt(15, SOL_SOCKET, SO_KEEPALIVE, [0], 4) = 0
+13414 poll([{fd=15, events=POLLIN|POLLPRI|POLLERR|POLLHUP}], 1, 0) = 0 (Timeout)
+13414 sendto(15, &quot;*3\r\n$4\r\nHGET\r\n$33\r\nproxy_server_&quot;..., 93, MSG_DONTWAIT, NULL, 0) = 93
+13414 poll([{fd=15, events=POLLIN|POLLPRI|POLLERR|POLLHUP}], 1, 0) = 0 (Timeout)
+13414 poll([{fd=15, events=POLLIN|POLLERR|POLLHUP}], 1, 60000) = 1 ([{fd=15, revents=POLLIN}])
+13414 recvfrom(15, &quot;-NOAUTH Authentication required.&quot;..., 8192, MSG_DONTWAIT, NULL, NULL) = 34
+13414 write(13, &quot;[2020-06-03 17:36:55] local.ERRO&quot;..., 6166) = 6166
+13414 epoll_wait(8, [{EPOLLIN, {u32=11, u64=11}}], 32, -1) = 1
+13414 accept(11, {sa_family=AF_INET, sin_port=htons(9344), sin_addr=inet_addr(&quot;127.0.0.1&quot;)}, [16]) = 16
+13414 setsockopt(16, SOL_SOCKET, SO_RCVTIMEO, &quot;2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0&quot;, 16) = 0
+13414 setsockopt(16, SOL_SOCKET, SO_SNDTIMEO, &quot;2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0&quot;, 16) = 0
+13414 fcntl(16, F_GETFL)                = 0x2 (flags O_RDWR)
+13414 fcntl(16, F_SETFL, O_RDWR|O_NONBLOCK) = 0
+13414 epoll_ctl(8, EPOLL_CTL_ADD, 16, {EPOLLIN, {u32=16, u64=16}}) = 0
+13414 epoll_wait(8, [{EPOLLIN, {u32=16, u64=16}}], 32, -1) = 1
+13414 recvfrom(16, &quot;\200&quot;, 1, 0, NULL, NULL) = 1
+13414 recvfrom(16, &quot;\1\0\1&quot;, 3, 0, NULL, NULL) = 3
+13414 recvfrom(16, &quot;\0\0\0\16&quot;, 4, 0, NULL, NULL) = 4
+13414 recvfrom(16, &quot;Device:offLine&quot;, 14, 0, NULL, NULL) = 14
+13414 recvfrom(16, &quot;\0\0\0\0&quot;, 4, 0, NULL, NULL) = 4
+13414 recvfrom(16, &quot;\v\0\1\0\0\0 9eadf923b6dceadd66727a163&quot;..., 4096, 0, NULL, NULL) = 40
+13414 poll([{fd=15, events=POLLIN|POLLPRI|POLLERR|POLLHUP}], 1, 0) = 0 (Timeout)
+13414 sendto(15, &quot;*3\r\n$4\r\nHGET\r\n$33\r\nproxy_server_&quot;..., 93, MSG_DONTWAIT, NULL, 0) = 93
+13414 poll([{fd=15, events=POLLIN|POLLPRI|POLLERR|POLLHUP}], 1, 0) = 0 (Timeout)
+13414 poll([{fd=15, events=POLLIN|POLLERR|POLLHUP}], 1, 60000) = 1 ([{fd=15, revents=POLLIN}])
+13414 recvfrom(15, &quot;-NOAUTH Authentication required.&quot;..., 8192, MSG_DONTWAIT, NULL, NULL) = 34
+13414 write(13, &quot;[2020-06-03 17:36:55] local.ERRO&quot;..., 6166) = 6166
+13414 epoll_wait(8, [{EPOLLIN, {u32=16, u64=16}}], 32, -1) = 1
+13414 recvfrom(16, &quot;&quot;, 1, 0, NULL, NULL) = 0
+13414 epoll_ctl(8, EPOLL_CTL_DEL, 16, 0x7ffe0c36b200) = 0
+13414 shutdown(16, SHUT_RDWR)           = 0
+13414 close(16)                         = 0
+13414 epoll_wait(8, [{EPOLLIN, {u32=12, u64=12}}], 32, -1) = 1
+13414 recvfrom(12, &quot;&quot;, 1, 0, NULL, NULL) = 0
+13414 epoll_ctl(8, EPOLL_CTL_DEL, 12, 0x7ffe0c36b200) = 0
+13414 shutdown(12, SHUT_RDWR)           = 0
+13414 close(12)                         = 0
+13414 epoll_wait(8, [{EPOLLIN, {u32=7, u64=7}}], 32, -1) = 1
+13414 recvfrom(7, &quot;&quot;, 1, 0, NULL, NULL) = 0
+13414 epoll_ctl(8, EPOLL_CTL_DEL, 7, 0x7ffe0c36b200) = 0
+13414 shutdown(7, SHUT_RDWR)            = 0
+13414 close(7)                          = 0
+13414 epoll_wait(8,  &lt;detached ...&gt;
+</code></pre><p>上面的调试 看到了 <code>EAGAIN (Resource temporarily unavailable)</code> 然后关闭了连接</p><p>下一步redis重连了，重连之后没有发送auth，还报了未验证的错误</p><p>去官方看看，重连未验证这个问题已经在<code>phpredis</code> 5.2.2解决，于是升级到了 5.2.2 未验证的问题修复了</p><p>看看具体的redis连接情况 <code>lsof -i:6379</code></p><pre><code>php     17778 root    6u  IPv4 5742941      0t0  TCP 127.0.0.1:7915-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     17778 root    7u  IPv4 5742440      0t0  TCP 127.0.0.1:7917-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     17779  www    6u  IPv4 5742941      0t0  TCP 127.0.0.1:7915-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     17779  www    7u  IPv4 5742440      0t0  TCP 127.0.0.1:7917-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     17780  www    6u  IPv4 5742941      0t0  TCP 127.0.0.1:7915-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     17780  www    7u  IPv4 5742440      0t0  TCP 127.0.0.1:7917-&gt;127.0.0.1:6379 (ESTABLISHED)
+</code></pre><p>每次重启都发现有两个redis连接存在，而且是master进程创建的redis连接</p><p>对比php-fpm的redis连接</p><pre><code>php     57305  www    6u  IPv4 5487078      0t0  TCP 127.0.0.1:31788-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     57305  www    7u  IPv4 5488024      0t0  TCP 127.0.0.1:31790-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     57305  www    8u  IPv4 5486093      0t0  TCP 127.0.0.1:31792-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     57305  www    9u  IPv4 5486094      0t0  TCP 127.0.0.1:31794-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     57313  www    6u  IPv4 5488037      0t0  TCP 127.0.0.1:31798-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     57313  www    7u  IPv4 5488038      0t0  TCP 127.0.0.1:31800-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     57313  www    8u  IPv4 5488043      0t0  TCP 127.0.0.1:31802-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     57313  www    9u  IPv4 5486102      0t0  TCP 127.0.0.1:31804-&gt;127.0.0.1:6379 (ESTABLISHED)
+</code></pre><p>仔细看上面的SOA redis连接，发现work进程共享了master的资源，两个work进程有一样的redis连接</p><p>继续测试果然发现 redis读取的数据是错乱的，每次都是读取到了上一次的数据</p><p>一开始以为laravel加载服务提供者的时候就已经创建了redis连接</p><p>于是 在master进程中调用关闭redis连接，然后再work进程中重新注册redis服务提供者，redis连接依然存在</p><p>因为线上环境也有一台服务器有这样的问题</p><p>于是回到线上环境，线上两台服务器，有一台正常，有一台的问题和我本地环境一样，对比两台服务器的history命令 看看是否和服务启动有关，还是改了什么</p><p>通过对比发现正常的那台服务器 是先restart queue 再 restart soa</p><p>然后在有问题的那台服务器上重新操作一遍，发现问题居然解决了！是queue影响了吗？queue也是使用laravel command来管理</p><p>回到本地测试环境</p><p>一样操作，发现问题居然还在，这就有点神奇了 玄学吗（代码的世界是没有玄学的）</p><p>最后想到到底在哪里创建了redis连接呢？线上已经验证启动SOA时是没有redis连接的，创建redis连接在具体的业务调用里面</p><p>到这里就问题就变成了找到 master 启动时在哪里调用了Redis:connect</p><p>最快的方法是看看调用栈，到 laravel 源码 PhpRedisConnector 出直接抛个Exception 看看是哪里调用了 Redis::connect</p><p>最后发现是 app/Console/Commands/ProxyUserUsedMigrate 这个文件</p><p>然后看看代码，原来我在这类的_ _construct 调用了 redis:connect</p><p>而且Commands里面的类 是laravel初始化的时候就全部加载的，这就导致了启动SOA时master已经连接redis了</p><p>问题已经明确：</p><p>并发测试时，<code>EAGAIN (Resource temporarily unavailable)</code> 导致连接被断开，其它子进程还在使用此连接</p><p>最终导致了<code>read error on connection to 127.0.0.1:6379</code></p><p>至此找到了问题的所在（上面laravel注册服务提供者时，是没有创建redis连接的）</p><p>删除这个命令文件 重启soa服务，一切正常了</p><h2 id=总结>总结</h2><p>这次的bug是新增代码影响的，而且新增的代码只是临时执行需要，开始没有考虑到这新增的代码会影响到SOA</p><p>laravel Commands __construct 里面不要做redis操作 或者其他的连接操作 这样会影响soa master</p><p>像这样的问题，还是得先仔细看看最近修改、增加了那些代码，这样比较容易发现问题的所在</p><p>从这次调试中也加深了对phpredis的熟悉</p></div><div class=post-archive><ul class=post-copyright><li><strong>原文作者：</strong><a rel=author href=https://blog.wenjy.top>江湖义气</a></li><li style=word-break:break-all><strong>原文链接：</strong><a href=https://blog.wenjy.top/2020/06/04/redis-read-error-on-connection.html>https://blog.wenjy.top/2020/06/04/redis-read-error-on-connection.html</a></li><li><strong>版权声明：</strong>本作品采用<a rel=license href=https://creativecommons.org/licenses/by-nc-nd/4.0/>知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li></ul></div><br><div class=post-archive><h2>See Also</h2><ul class=listing><li><a href=/2020/03/26/linux-command.html>Linux 常用命令</a></li><li><a href=/2020/03/29/linux-file-permission.html>Linux文件目录权限</a></li><li><a href=/2019/10/11/linux-lock-principle.html>Linux Lock的原理</a></li></ul></div><div class="post-meta meta-tags"><ul class=clearfix><li><a href=https://blog.wenjy.top/tags/Redis>Redis</a></li><li><a href=https://blog.wenjy.top/tags/Linux>Linux</a></li></ul></div></article><div class="post bg-white"><script src=https://utteranc.es/client.js repo=wenjy/blog issue-term=pathname theme=github-light crossorigin=anonymous async></script></div></div></div><div id=secondary><section class=widget><form id=search action=https://blog.wenjy.top/search/ method=get accept-charset=utf-8 target=_blank _lpchecked=1><input type=text name=q maxlength=20 placeholder=Search>
+<input type=hidden name=sitesearch value=https://blog.wenjy.top>
+<button type=submit class="submit icon-search"></button></form></section><section class=widget><h3 class=widget-title>最近文章</h3><ul class=widget-list><li><a href=https://blog.wenjy.top/2020/06/04/redis-read-error-on-connection.html title="一次Redis read error on connection 错误调试">一次Redis read error on connection 错误调试</a></li><li><a href=https://blog.wenjy.top/2020/05/12/phpstorm-keymap.html title=Phpstorm常用快捷键>Phpstorm常用快捷键</a></li><li><a href=https://blog.wenjy.top/2020/05/12/bitmap.html title=精确算法bitmap>精确算法bitmap</a></li><li><a href=https://blog.wenjy.top/2020/05/12/hyper-log-log.html title=非精确算法HyperLogLog>非精确算法HyperLogLog</a></li><li><a href=https://blog.wenjy.top/2020/05/11/decimal.html title=浮点数精度问题>浮点数精度问题</a></li><li><a href=https://blog.wenjy.top/2020/04/25/nat.html title=NAT原理>NAT原理</a></li><li><a href=https://blog.wenjy.top/2020/04/14/markdown.html title=Markdown语法>Markdown语法</a></li><li><a href=https://blog.wenjy.top/2020/04/14/tls.html title=TLS握手通信>TLS握手通信</a></li><li><a href=https://blog.wenjy.top/2020/04/14/regexp.html title=正则表达式>正则表达式</a></li><li><a href=https://blog.wenjy.top/2020/04/02/tcp-connect-close.html title="TCP 三次握手 四次挥手">TCP 三次握手 四次挥手</a></li></ul></section><section class=widget><h3 class=widget-title style=color:red>福利派送</h3><ul class=widget-list><li><a href target=_blank style=color:red></a></li></ul></section><section class=widget><h3 class=widget-title>分类</h3><ul class=widget-list><li><a href=https://blog.wenjy.top/categories/5G/>5G (1)</a></li><li><a href=https://blog.wenjy.top/categories/Algorithms/>Algorithms (11)</a></li><li><a href=https://blog.wenjy.top/categories/Charset/>Charset (1)</a></li><li><a href=https://blog.wenjy.top/categories/Computer/>Computer (1)</a></li><li><a href=https://blog.wenjy.top/categories/DesignPatten/>DesignPatten (25)</a></li><li><a href=https://blog.wenjy.top/categories/Git/>Git (1)</a></li><li><a href=https://blog.wenjy.top/categories/Http/>Http (1)</a></li><li><a href=https://blog.wenjy.top/categories/Linux/>Linux (3)</a></li><li><a href=https://blog.wenjy.top/categories/Markdown/>Markdown (1)</a></li><li><a href=https://blog.wenjy.top/categories/MySQL/>MySQL (1)</a></li><li><a href=https://blog.wenjy.top/categories/NAT/>NAT (1)</a></li><li><a href=https://blog.wenjy.top/categories/PHP/>PHP (39)</a></li><li><a href=https://blog.wenjy.top/categories/Phpstorm/>Phpstorm (1)</a></li><li><a href=https://blog.wenjy.top/categories/Redis/>Redis (1)</a></li><li><a href=https://blog.wenjy.top/categories/Regexp/>Regexp (1)</a></li><li><a href=https://blog.wenjy.top/categories/TCP/>TCP (1)</a></li><li><a href=https://blog.wenjy.top/categories/TLS/>TLS (1)</a></li></ul></section><section class=widget><h3 class=widget-title>标签</h3><div class=tagcloud><a href=https://blog.wenjy.top/tags/5G/>5G</a>
+<a href=https://blog.wenjy.top/tags/Algorithms/>Algorithms</a>
+<a href=https://blog.wenjy.top/tags/Charset/>Charset</a>
+<a href=https://blog.wenjy.top/tags/DesignPatten/>DesignPatten</a>
+<a href=https://blog.wenjy.top/tags/Git/>Git</a>
+<a href=https://blog.wenjy.top/tags/Http/>Http</a>
+<a href=https://blog.wenjy.top/tags/Linux/>Linux</a>
+<a href=https://blog.wenjy.top/tags/Markdown/>Markdown</a>
+<a href=https://blog.wenjy.top/tags/MySQL/>MySQL</a>
+<a href=https://blog.wenjy.top/tags/NAT/>NAT</a>
+<a href=https://blog.wenjy.top/tags/Network/>Network</a>
+<a href=https://blog.wenjy.top/tags/PHP/>PHP</a>
+<a href=https://blog.wenjy.top/tags/Phpstorm/>Phpstorm</a>
+<a href=https://blog.wenjy.top/tags/RSA/>RSA</a>
+<a href=https://blog.wenjy.top/tags/Redis/>Redis</a>
+<a href=https://blog.wenjy.top/tags/Regexp/>Regexp</a>
+<a href=https://blog.wenjy.top/tags/TCP/>TCP</a>
+<a href=https://blog.wenjy.top/tags/TLS/>TLS</a></div></section><section class=widget><h3 class=widget-title>友情链接</h3><ul class=widget-list><li><a target=_blank href=https://mikelin.cn title="MIKELIN | 关注科技，弘扬互联网精神！">MIKELIN</a></li><li><a target=_blank href=https://blog.wenjy.top title=江湖义气的网络日志>江湖义气的网络日志</a></li></ul></section><section class=widget><h3 class=widget-title>其它</h3><ul class=widget-list><li><a href=https://blog.wenjy.top/index.xml>文章 RSS</a></li></ul></section></div></div></div></div><footer id=footer><div class=container>&copy; 2020 <a href=https://blog.wenjy.top>江湖义气的博客 By 江湖义气</a>.
+Powered by <a rel="nofollow noreferer noopener" href=https://gohugo.io target=_blank>Hugo</a>.
+<a href=https://www.flysnow.org/ target=_blank>Theme</a> based on <a href=https://github.com/flysnow-org/maupassant-hugo target=_blank>maupassant</a>.
+备案号：<a href=http://www.beian.miit.gov.cn target=_blank>桂ICP备17000652号-2</a></div></footer><script type=text/javascript>window.MathJax={tex2jax:{inlineMath:[['$','$']],processEscapes:true}};</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><a id=rocket href=#top></a><script type=text/javascript src="/js/totop.js?v=0.0.0" async></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-161796130-1','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script type=text/javascript src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async></script></body></html>
