@@ -80,6 +80,8 @@ clone远程仓库
 
 ## git submodule
 
+不加参数时查看子模块
+
 `git submodule add https://github.com/wenjy/maupassant-hugo.git themes/maupassant`
 
 `git submodule update --remote` 更新子模块为远程项目的最新版本
