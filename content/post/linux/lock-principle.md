@@ -11,7 +11,7 @@ categories: ["Linux"]
 categoryes_weight: 100
 ---
 
-`《操作系统之哲学原理》-锁`
+《操作系统之哲学原理》-锁
 
 ## 死锁的4个必要条件
 
