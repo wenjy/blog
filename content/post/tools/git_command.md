@@ -56,6 +56,14 @@ git push
 
 `git config --global color.ui true` git status等命令自动着色
 
+```
+git config --global http.proxy 'socks5://127.0.0.1:1080'
+git config --global https.proxy 'socks5://127.0.0.1:1080'
+
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+```
+
 git对CRLF的处理配置
 
 `git config --global core.autocrlf true` 提交时转换为LF，检出时转换为CRLF
