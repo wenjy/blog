@@ -5,9 +5,9 @@ keywords: "设计模式,享元模式"
 description: "享元模式"
 date: 2018-10-11T22:31:57+08:00
 draft: false
-tags: ["PHP", "DesignPatten"]
+tags: ["PHP", "设计模式"]
 tags_weight: 100
-categories: ["PHP", "DesignPatten"]
+categories: ["PHP", "设计模式"]
 categoryes_weight: 100
 ---
 

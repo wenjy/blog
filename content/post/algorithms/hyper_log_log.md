@@ -3,9 +3,9 @@ url: /2020/05/12/hyper-log-log.html
 title: "非精确算法HyperLogLog"
 date: 2020-05-12T18:31:57+08:00
 draft: false
-tags: ["Algorithms"]
+tags: ["算法"]
 tags_weight: 100
-categories: ["Algorithms"]
+categories: ["算法"]
 categoryes_weight: 100
 ---
 

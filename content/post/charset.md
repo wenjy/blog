@@ -3,9 +3,9 @@ url: /2020/05/11/charset.html
 title: "字符集和字符集编码"
 date: 2020-05-12T18:31:57+08:00
 draft: false
-tags: ["Charset"]
+tags: ["字符集编码"]
 tags_weight: 100
-categories: ["Charset"]
+categories: ["字符集编码"]
 categoryes_weight: 100
 type: "reprinted"
 ---

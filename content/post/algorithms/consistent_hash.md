@@ -5,9 +5,9 @@ keywords: "算法,一致性Hash"
 description: "一致性Hash"
 date: 2019-04-01T22:31:57+08:00
 draft: false
-tags: ["PHP", "Algorithms"]
+tags: ["PHP", "算法"]
 tags_weight: 100
-categories: ["PHP", "Algorithms"]
+categories: ["PHP", "算法"]
 categoryes_weight: 100
 ---
 

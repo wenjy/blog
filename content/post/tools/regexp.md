@@ -5,9 +5,9 @@ keywords: "正则表达式"
 description: "正则表达式"
 date: 2020-04-14T22:53:12+08:00
 draft: false
-tags: ["Regexp"]
+tags: ["正则表达式"]
 tags_weight: 100
-categories: ["Regexp"]
+categories: ["正则表达式"]
 categoryes_weight: 100
 ---
 

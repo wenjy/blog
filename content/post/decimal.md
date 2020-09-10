@@ -5,7 +5,7 @@ date: 2020-05-12T12:31:57+08:00
 draft: false
 tags: ["PHP"]
 tags_weight: 100
-categories: ["PHP", "Computer"]
+categories: ["PHP", "计算机杂项"]
 categoryes_weight: 100
 ---
 

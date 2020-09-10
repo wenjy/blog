@@ -5,9 +5,9 @@ keywords: "二叉树"
 description: "二叉树"
 date: 2020-08-18T20:31:57+08:00
 draft: false
-tags: ["Algorithms"]
+tags: ["算法"]
 tags_weight: 100
-categories: ["Algorithms"]
+categories: ["算法"]
 categoryes_weight: 100
 ---
 

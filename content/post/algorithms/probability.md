@@ -5,9 +5,9 @@ keywords: "算法,简单的概率算法"
 description: "简单的概率算法"
 date: 2019-04-01T22:31:57+08:00
 draft: false
-tags: ["PHP", "Algorithms"]
+tags: ["PHP", "算法"]
 tags_weight: 100
-categories: ["PHP", "Algorithms"]
+categories: ["PHP", "算法"]
 categoryes_weight: 100
 ---
 

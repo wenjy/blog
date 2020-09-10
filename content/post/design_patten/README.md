@@ -3,9 +3,9 @@ url: /2018/10/01/design-patten-readme.html
 title: "设计模式-学习《大话设计模式》的整理"
 date: 2018-10-01T22:31:57+08:00
 draft: false
-tags: ["PHP", "DesignPatten"]
+tags: ["PHP", "设计模式"]
 tags_weight: 100
-categories: ["PHP", "DesignPatten"]
+categories: ["PHP", "设计模式"]
 categoryes_weight: 100
 ---
 
