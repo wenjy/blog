@@ -49,6 +49,21 @@ SELECT * FROM INFORMATION_SCHEMA.INNODB_LOCKS;
 SELECT * FROM INFORMATION_SCHEMA.INNODB_LOCK_WAITS;
 ```
 
+## 启用标准InnoDB监视器
+```mysql
+SET GLOBAL innodb_status_output=ON;
+```
+
+## 启用InnoDB锁定监视器
+```mysql
+SET GLOBAL innodb_status_output_locks=ON;
+```
+
+## 显示加锁信息
+```mysql
+SHOW ENGINE INNODB STATUS;
+```
+
 ## 新建用户
 ```mysql
 CREATE USER 'test1'@'127.0.0.1' IDENTIFIED BY '123456';
