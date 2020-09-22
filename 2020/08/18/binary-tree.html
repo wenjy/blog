@@ -148,151 +148,151 @@ var t=postToc.offset().top-20,a={start:{position:"absolute",top:t},process:{posi
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">142
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">143
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">144
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php>/**
- * 表示节点
- */
-class Node
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#d14>/**
+</span><span style=color:#d14> * 表示节点
+</span><span style=color:#d14> */</span>
+<span style=color:#000;font-weight:700>class</span> <span style=color:#458;font-weight:700>Node</span>
 {
-    /**
-     * @var int 表示索引
-     */
-    private $index;
-    /**
-     * @var Node 左节点
-     */
-    private $leftNode;
-    /**
-     * @var Node 又节点
-     */
-    private $rightNode;
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * @var int 表示索引
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>private</span> <span style=color:teal>$index</span>;
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * @var Node 左节点
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>private</span> <span style=color:teal>$leftNode</span>;
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * @var Node 又节点
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>private</span> <span style=color:teal>$rightNode</span>;
 
-    /**
-     * Node constructor.
-     * @param int $index
-     */
-    public function __construct(int $index)
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * Node constructor.
+</span><span style=color:#d14>     * @param int $index
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> __construct(int <span style=color:teal>$index</span>)
     {
-        $this-&gt;index = $index;
+        <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>index</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$index</span>;
     }
 
-    /**
-     * @return int
-     */
-    public function getIndex(): int
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * @return int
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>getIndex</span>()<span style=color:#000;font-weight:700>:</span> int
     {
-        return $this-&gt;index;
+        <span style=color:#000;font-weight:700>return</span> <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>index</span>;
     }
 
-    /**
-     * @return Node
-     */
-    public function getLeftNode(): ?Node
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * @return Node
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>getLeftNode</span>()<span style=color:#000;font-weight:700>:</span> <span style=color:#000;font-weight:700>?</span>Node
     {
-        return $this-&gt;leftNode;
+        <span style=color:#000;font-weight:700>return</span> <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>leftNode</span>;
     }
 
-    /**
-     * @return Node
-     */
-    public function getRightNode(): ?Node
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * @return Node
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>getRightNode</span>()<span style=color:#000;font-weight:700>:</span> <span style=color:#000;font-weight:700>?</span>Node
     {
-        return $this-&gt;rightNode;
+        <span style=color:#000;font-weight:700>return</span> <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>rightNode</span>;
     }
 
-    /**
-     * @param Node $leftNode
-     */
-    public function setLeftNode(Node $leftNode): void
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * @param Node $leftNode
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>setLeftNode</span>(Node <span style=color:teal>$leftNode</span>)<span style=color:#000;font-weight:700>:</span> void
     {
-        $this-&gt;leftNode = $leftNode;
+        <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>leftNode</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$leftNode</span>;
     }
 
-    /**
-     * @param Node $rightNode
-     */
-    public function setRightNode(Node $rightNode): void
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * @param Node $rightNode
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>setRightNode</span>(Node <span style=color:teal>$rightNode</span>)<span style=color:#000;font-weight:700>:</span> void
     {
-        $this-&gt;rightNode = $rightNode;
+        <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>rightNode</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$rightNode</span>;
     }
 }
 
-/**
- * 表示树
- */
-class Tree
+<span style=color:#d14>/**
+</span><span style=color:#d14> * 表示树
+</span><span style=color:#d14> */</span>
+<span style=color:#000;font-weight:700>class</span> <span style=color:#458;font-weight:700>Tree</span>
 {
-    /**
-     * @var Node 树的根节点
-     */
-    private $root;
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * @var Node 树的根节点
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>private</span> <span style=color:teal>$root</span>;
 
-    /**
-     * 插入一个索引节点
-     * @param int $index
-     */
-    public function insert(int $index)
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * 插入一个索引节点
+</span><span style=color:#d14>     * @param int $index
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>insert</span>(int <span style=color:teal>$index</span>)
     {
-        $node = new Node($index);
-        if (is_null($this-&gt;root)) {
-            $this-&gt;root = $node;
-        } else {
-            $current = $this-&gt;root;
-            $parent = null;
-            while (true) {
-                $parent = $current; // 保存当current变为null之前的那一个父节点
-                // 插入左节点
-                if ($index <span style=color:#a61717;background-color:#e3d2d2>&lt;</span> $current-&gt;getIndex()) {
-                    $current = $current-&gt;getLeftNode();
-                    if (is_null($current)) {
-                        $parent-&gt;setLeftNode($node);
-                        return;
+        <span style=color:teal>$node</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> Node(<span style=color:teal>$index</span>);
+        <span style=color:#000;font-weight:700>if</span> (is_null(<span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>root</span>)) {
+            <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>root</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$node</span>;
+        } <span style=color:#000;font-weight:700>else</span> {
+            <span style=color:teal>$current</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>root</span>;
+            <span style=color:teal>$parent</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>null</span>;
+            <span style=color:#000;font-weight:700>while</span> (<span style=color:#000;font-weight:700>true</span>) {
+                <span style=color:teal>$parent</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$current</span>; <span style=color:#998;font-style:italic>// 保存当current变为null之前的那一个父节点
+</span><span style=color:#998;font-style:italic></span>                <span style=color:#998;font-style:italic>// 插入左节点
+</span><span style=color:#998;font-style:italic></span>                <span style=color:#000;font-weight:700>if</span> (<span style=color:teal>$index</span> <span style=color:#000;font-weight:700>&lt;</span> <span style=color:teal>$current</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>getIndex</span>()) {
+                    <span style=color:teal>$current</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$current</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>getLeftNode</span>();
+                    <span style=color:#000;font-weight:700>if</span> (is_null(<span style=color:teal>$current</span>)) {
+                        <span style=color:teal>$parent</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>setLeftNode</span>(<span style=color:teal>$node</span>);
+                        <span style=color:#000;font-weight:700>return</span>;
                     }
-                } else {
-                    $current = $current-&gt;getRightNode();
-                    if (is_null($current)) {
-                        $parent-&gt;setRightNode($node);
-                        return;
+                } <span style=color:#000;font-weight:700>else</span> {
+                    <span style=color:teal>$current</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$current</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>getRightNode</span>();
+                    <span style=color:#000;font-weight:700>if</span> (is_null(<span style=color:teal>$current</span>)) {
+                        <span style=color:teal>$parent</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>setRightNode</span>(<span style=color:teal>$node</span>);
+                        <span style=color:#000;font-weight:700>return</span>;
                     }
                 }
             }
         }
     }
 
-    /**
-     * 查找索引节点
-     * @param int $index
-     * @return Node|null
-     */
-    public function find(int $index): ?Node
+    <span style=color:#d14>/**
+</span><span style=color:#d14>     * 查找索引节点
+</span><span style=color:#d14>     * @param int $index
+</span><span style=color:#d14>     * @return Node|null
+</span><span style=color:#d14>     */</span>
+    <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>find</span>(int <span style=color:teal>$index</span>)<span style=color:#000;font-weight:700>:</span> <span style=color:#000;font-weight:700>?</span>Node
     {
-        $current = $this-&gt;root;
-        if (is_null($current)) {
-            return null;
+        <span style=color:teal>$current</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>root</span>;
+        <span style=color:#000;font-weight:700>if</span> (is_null(<span style=color:teal>$current</span>)) {
+            <span style=color:#000;font-weight:700>return</span> <span style=color:#000;font-weight:700>null</span>;
         }
 
-        while ($current-&gt;getIndex() != $index) {
-            if ($current-&gt;getIndex() &gt; $index) {
-                $current = $current-&gt;getLeftNode();
-            } else {
-                $current = $current-&gt;getRightNode();
+        <span style=color:#000;font-weight:700>while</span> (<span style=color:teal>$current</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>getIndex</span>() <span style=color:#000;font-weight:700>!=</span> <span style=color:teal>$index</span>) {
+            <span style=color:#000;font-weight:700>if</span> (<span style=color:teal>$current</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>getIndex</span>() <span style=color:#000;font-weight:700>&gt;</span> <span style=color:teal>$index</span>) {
+                <span style=color:teal>$current</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$current</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>getLeftNode</span>();
+            } <span style=color:#000;font-weight:700>else</span> {
+                <span style=color:teal>$current</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$current</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>getRightNode</span>();
             }
-            if (is_null($current)) {
-                return null;
+            <span style=color:#000;font-weight:700>if</span> (is_null(<span style=color:teal>$current</span>)) {
+                <span style=color:#000;font-weight:700>return</span> <span style=color:#000;font-weight:700>null</span>;
             }
         }
-        return $current;
+        <span style=color:#000;font-weight:700>return</span> <span style=color:teal>$current</span>;
     }
 }
 
-$tree = new Tree();
-$tree-&gt;insert(3);
-$tree-&gt;insert(2);
-$tree-&gt;insert(6);
-$tree-&gt;insert(4);
-$tree-&gt;insert(5);
-$tree-&gt;insert(1);
-var_dump($tree-&gt;find(1));
-</code></pre></td></tr></table></div></div></div><div class=post-archive><ul class=post-copyright><li><strong>原文作者：</strong><a rel=author href=https://blog.wenjy.top>江湖义气</a></li><li style=word-break:break-all><strong>原文链接：</strong><a href=https://blog.wenjy.top/2020/08/18/binary-tree.html>https://blog.wenjy.top/2020/08/18/binary-tree.html</a></li><li><strong>版权声明：</strong>本作品采用<a rel=license href=https://creativecommons.org/licenses/by-nc-nd/4.0/>知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li></ul></div><br><div class=post-archive><h2>See Also</h2><ul class=listing><li><a href=/2020/05/12/hyper-log-log.html>非精确算法HyperLogLog</a></li><li><a href=/2020/05/12/bitmap.html>精确算法bitmap</a></li><li><a href=/2019/04/01/algorithms-probability.html>算法-简单的概率算法</a></li><li><a href=/2019/04/01/algorithms-circuit-breaker.html>算法-简易模拟熔断器</a></li><li><a href=/2019/04/01/algorithms-consistent-hash.html>算法-一致性Hash</a></li></ul></div><div class="post-meta meta-tags"><ul class=clearfix><li><a href=https://blog.wenjy.top/tags/%E7%AE%97%E6%B3%95>算法</a></li></ul></div></article><div class="post bg-white"><script src=https://utteranc.es/client.js repo=wenjy/blog issue-term=pathname theme=github-light crossorigin=anonymous async></script></div></div><footer id=footer><div>&copy; 2020 <a href=https://blog.wenjy.top>江湖义气的博客 By 江湖义气</a>
+<span style=color:teal>$tree</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> Tree();
+<span style=color:teal>$tree</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>insert</span>(<span style=color:#099>3</span>);
+<span style=color:teal>$tree</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>insert</span>(<span style=color:#099>2</span>);
+<span style=color:teal>$tree</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>insert</span>(<span style=color:#099>6</span>);
+<span style=color:teal>$tree</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>insert</span>(<span style=color:#099>4</span>);
+<span style=color:teal>$tree</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>insert</span>(<span style=color:#099>5</span>);
+<span style=color:teal>$tree</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>insert</span>(<span style=color:#099>1</span>);
+var_dump(<span style=color:teal>$tree</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>find</span>(<span style=color:#099>1</span>));
+</code></pre></td></tr></table></div></div></div><div class=post-archive><ul class=post-copyright><li><strong>原文作者：</strong><a rel=author href=https://blog.wenjy.top>江湖义气</a></li><li style=word-break:break-all><strong>原文链接：</strong><a href=https://blog.wenjy.top/2020/08/18/binary-tree.html>https://blog.wenjy.top/2020/08/18/binary-tree.html</a></li><li><strong>版权声明：</strong>本作品采用<a rel=license href=https://creativecommons.org/licenses/by-nc-nd/4.0/>知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li></ul></div><br><div class=post-archive><h2>See Also</h2><ul class=listing><li><a href=/2020/05/12/bitmap.html>精确算法bitmap</a></li><li><a href=/2020/05/12/hyper-log-log.html>非精确算法HyperLogLog</a></li><li><a href=/2019/04/01/algorithms-circuit-breaker.html>算法-简易模拟熔断器</a></li><li><a href=/2019/04/01/algorithms-probability.html>算法-简单的概率算法</a></li><li><a href=/2019/04/01/algorithms-consistent-hash.html>算法-一致性Hash</a></li></ul></div><div class="post-meta meta-tags"><ul class=clearfix><li><a href=https://blog.wenjy.top/tags/%E7%AE%97%E6%B3%95>算法</a></li></ul></div></article><div class="post bg-white"><script src=https://utteranc.es/client.js repo=wenjy/blog issue-term=pathname theme=github-light crossorigin=anonymous async></script></div></div><footer id=footer><div>&copy; 2020 <a href=https://blog.wenjy.top>江湖义气的博客 By 江湖义气</a>
 | <a rel=nofollow target=_blank href=http://www.beian.miit.gov.cn/>桂ICP备17000652号-2</a></div><br><div><div class=github-badge><a href=https://gohugo.io/ target=_black rel=nofollow><span class=badge-subject>Powered by</span><span class="badge-value bg-blue">Hugo</span></a></div><div class=github-badge><a href=https://www.flysnow.org/ target=_black><span class=badge-subject>Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a></div><div class=github-badge><a href=https://github.com/flysnow-org/maupassant-hugo target=_black><span class=badge-subject>Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a></div></div></footer><script type=text/javascript>window.MathJax={tex2jax:{inlineMath:[['$','$']],processEscapes:true}};</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><a id=rocket href=#top></a><script type=text/javascript src="/js/totop.js?v=0.0.0" async></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-161796130-1','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script type=text/javascript src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async></script></div><div id=secondary><section class=widget><form id=search action=https://blog.wenjy.top/search/ method=get accept-charset=utf-8 target=_blank _lpchecked=1><input type=text name=q maxlength=20 placeholder=Search>
 <input type=hidden name=sitesearch value=https://blog.wenjy.top>
 <button type=submit class="submit icon-search"></button></form></section><section class=widget><h3 class=widget-title>最近文章</h3><ul class=widget-list><li><a href=https://blog.wenjy.top/2020/08/18/binary-tree.html title=二叉搜索树>二叉搜索树</a></li><li><a href=https://blog.wenjy.top/2020/08/02/mysql-common-sql.html title="Mysql 常用的查询">Mysql 常用的查询</a></li><li><a href=https://blog.wenjy.top/2020/06/07/linux-stdin.html title="Linux 输出重定向">Linux 输出重定向</a></li><li><a href=https://blog.wenjy.top/2020/06/04/redis-read-error-on-connection.html title="一次Redis read error on connection 错误调试">一次Redis read error on connection 错误调试</a></li><li><a href=https://blog.wenjy.top/2020/05/12/phpstorm-keymap.html title=Phpstorm常用快捷键>Phpstorm常用快捷键</a></li><li><a href=https://blog.wenjy.top/2020/05/12/bitmap.html title=精确算法bitmap>精确算法bitmap</a></li><li><a href=https://blog.wenjy.top/2020/05/12/hyper-log-log.html title=非精确算法HyperLogLog>非精确算法HyperLogLog</a></li><li><a href=https://blog.wenjy.top/2020/05/11/decimal.html title=浮点数精度问题>浮点数精度问题</a></li><li><a href=https://blog.wenjy.top/2020/04/25/nat.html title=NAT原理>NAT原理</a></li><li><a href=https://blog.wenjy.top/2020/04/14/markdown.html title=Markdown语法>Markdown语法</a></li></ul></section><section class=widget><h3 class=widget-title style=color:red>福利派送</h3><ul class=widget-list><li><a href target=_blank style=color:red></a></li></ul></section><section class=widget><h3 class=widget-title>分类</h3><ul class=widget-list><li><a href=https://blog.wenjy.top/categories/5G/>5G (1)</a></li><li><a href=https://blog.wenjy.top/categories/Git/>Git (1)</a></li><li><a href=https://blog.wenjy.top/categories/Http/>Http (1)</a></li><li><a href=https://blog.wenjy.top/categories/Linux/>Linux (4)</a></li><li><a href=https://blog.wenjy.top/categories/Markdown/>Markdown (1)</a></li><li><a href=https://blog.wenjy.top/categories/MySQL/>MySQL (2)</a></li><li><a href=https://blog.wenjy.top/categories/NAT/>NAT (1)</a></li><li><a href=https://blog.wenjy.top/categories/PHP/>PHP (39)</a></li><li><a href=https://blog.wenjy.top/categories/Phpstorm/>Phpstorm (1)</a></li><li><a href=https://blog.wenjy.top/categories/Redis/>Redis (1)</a></li><li><a href=https://blog.wenjy.top/categories/TCP/>TCP (1)</a></li><li><a href=https://blog.wenjy.top/categories/TLS/>TLS (1)</a></li><li><a href=https://blog.wenjy.top/categories/%E5%9B%BD%E7%B2%B9/>国粹 (1)</a></li><li><a href=https://blog.wenjy.top/categories/%E5%AD%97%E7%AC%A6%E9%9B%86%E7%BC%96%E7%A0%81/>字符集编码 (1)</a></li><li><a href=https://blog.wenjy.top/categories/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/>正则表达式 (1)</a></li><li><a href=https://blog.wenjy.top/categories/%E7%AE%97%E6%B3%95/>算法 (12)</a></li><li><a href=https://blog.wenjy.top/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%9D%82%E9%A1%B9/>计算机杂项 (1)</a></li><li><a href=https://blog.wenjy.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/>设计模式 (25)</a></li></ul></section><section class=widget><h3 class=widget-title>标签</h3><div class=tagcloud><a href=https://blog.wenjy.top/tags/5G/>5G</a>

@@ -26,11 +26,11 @@ worker 将自动退出，进程退出后会释放所有内存和资源。</li></
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php>    $it = null;
-    $redis-&gt;setOption(\Redis::OPT_SCAN, \Redis::SCAN_RETRY);
-    while($device_fds = $redis-&gt;client()-&gt;hScan(Link::getFdMapKey(), $it, &#39;&#39;, 1000)) {
-        foreach($device_fds as $device_unique_mark =&gt; $fd) {
-             echo $device_unique_mark . PHP_EOL;
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php>    <span style=color:teal>$it</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>null</span>;
+    <span style=color:teal>$redis</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>setOption</span>(\Redis<span style=color:#000;font-weight:700>::</span><span style=color:teal>OPT_SCAN</span>, \Redis<span style=color:#000;font-weight:700>::</span><span style=color:teal>SCAN_RETRY</span>);
+    <span style=color:#000;font-weight:700>while</span>(<span style=color:teal>$device_fds</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$redis</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>client</span>()<span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>hScan</span>(Link<span style=color:#000;font-weight:700>::</span><span style=color:teal>getFdMapKey</span>(), <span style=color:teal>$it</span>, <span style=color:#d14>&#39;&#39;</span>, <span style=color:#099>1000</span>)) {
+        <span style=color:#000;font-weight:700>foreach</span>(<span style=color:teal>$device_fds</span> <span style=color:#000;font-weight:700>as</span> <span style=color:teal>$device_unique_mark</span> <span style=color:#000;font-weight:700>=&gt;</span> <span style=color:teal>$fd</span>) {
+             <span style=color:#000;font-weight:700>echo</span> <span style=color:teal>$device_unique_mark</span> <span style=color:#000;font-weight:700>.</span> PHP_EOL;
         }
     }
 </code></pre></td></tr></table></div></div><p>laravel框架封装的问题，需要调用$redis->client(),而不是直接使用phpredis，$it 需要引用，PhpRedisConnection 使用 __call 调用存在bug</p><h2 id=数组参数签名前最好使用-ksort-排序>数组参数签名前，最好使用 ksort 排序</h2><p>##laravel queue redis</p><p>因为设置了 &ndash;sleep=3 并且没有配置队列 block_for 导致队列延时执行
@@ -40,9 +40,9 @@ block_for：将任务重新放入 Redis 数据库以及处理器轮询之前阻�
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php> public static function make($items = [])
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php> <span style=color:#000;font-weight:700>public</span> <span style=color:#000;font-weight:700>static</span> <span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>make</span>(<span style=color:teal>$items</span> <span style=color:#000;font-weight:700>=</span> [])
  {
-     return new static($items);
+     <span style=color:#000;font-weight:700>return</span> <span style=color:#000;font-weight:700>new</span> <span style=color:#000;font-weight:700>static</span>(<span style=color:teal>$items</span>);
  }
 </code></pre></td></tr></table></div></div><h2 id=php-mockerymock>PHP Mockery::mock</h2><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
@@ -53,34 +53,34 @@ block_for：将任务重新放入 Redis 数据库以及处理器轮询之前阻�
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php>// 需先赋值
-$request = Mockery::mock(CurlRequest::class);
-// 这里不能连续调用，因为后面返回的不是 $request
-$request-&gt;shouldReceive(&#39;post&#39;)
-        -&gt;once()
-        -&gt;andReturn([
-            &#39;status&#39; =&gt; 1,
-            &#39;msg&#39;    =&gt; &#39;请求成功&#39;
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#998;font-style:italic>// 需先赋值
+</span><span style=color:#998;font-style:italic></span><span style=color:teal>$request</span> <span style=color:#000;font-weight:700>=</span> Mockery<span style=color:#000;font-weight:700>::</span><span style=color:teal>mock</span>(CurlRequest<span style=color:#000;font-weight:700>::</span><span style=color:teal>class</span>);
+<span style=color:#998;font-style:italic>// 这里不能连续调用，因为后面返回的不是 $request
+</span><span style=color:#998;font-style:italic></span><span style=color:teal>$request</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>shouldReceive</span>(<span style=color:#d14>&#39;post&#39;</span>)
+        <span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>once</span>()
+        <span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>andReturn</span>([
+            <span style=color:#d14>&#39;status&#39;</span> <span style=color:#000;font-weight:700>=&gt;</span> <span style=color:#099>1</span>,
+            <span style=color:#d14>&#39;msg&#39;</span>    <span style=color:#000;font-weight:700>=&gt;</span> <span style=color:#d14>&#39;请求成功&#39;</span>
         ]);
 </code></pre></td></tr></table></div></div><h2 id=2019711-小数精度问题>2019.7.11 小数精度问题</h2><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php>echo 16.33 * 100; // 1633
-echo intval(16.33 * 100); // 1632
-echo intval(strval(16.33 * 100)); // 1633
-echo (int)(16.33 * 100); // 1632
-</code></pre></td></tr></table></div></div><h2 id=laravel-configcache-的问题>laravel config:cache 的问题</h2><p>如果在部署过程中执行 config:cache 命令，那你应该确保只从配置文件内部调用 env 函数。一旦配置被缓存，.env 文件将不再被加载，所有对 env 函数的调用都将返回 null</p><h3 id=php-mb_strlen>php mb_strlen</h3><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#000;font-weight:700>echo</span> <span style=color:#099>16.33</span> <span style=color:#000;font-weight:700>*</span> <span style=color:#099>100</span>; <span style=color:#998;font-style:italic>// 1633
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>echo</span> intval(<span style=color:#099>16.33</span> <span style=color:#000;font-weight:700>*</span> <span style=color:#099>100</span>); <span style=color:#998;font-style:italic>// 1632
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>echo</span> intval(strval(<span style=color:#099>16.33</span> <span style=color:#000;font-weight:700>*</span> <span style=color:#099>100</span>)); <span style=color:#998;font-style:italic>// 1633
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>echo</span> (int)(<span style=color:#099>16.33</span> <span style=color:#000;font-weight:700>*</span> <span style=color:#099>100</span>); <span style=color:#998;font-style:italic>// 1632
+</span></code></pre></td></tr></table></div></div><h2 id=laravel-configcache-的问题>laravel config:cache 的问题</h2><p>如果在部署过程中执行 config:cache 命令，那你应该确保只从配置文件内部调用 env 函数。一旦配置被缓存，.env 文件将不再被加载，所有对 env 函数的调用都将返回 null</p><h3 id=php-mb_strlen>php mb_strlen</h3><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php>echo mb_strlen(&#39;测试&#39;); // 2 默认编码UTF-8
-mb_strlen(&#39;测试&#39;, &#39;UTF-8&#39;); // 2
-mb_strlen(&#39;测试&#39;, &#39;8bit&#39;); // 6
-strlen(&#39;测试&#39;); // 6
-// 8bit是php独有解析的, 8bit并不是一个字符集, 只是php引擎可以解析它而已. 顾名思义, 一个字节等于八个位, 1byte=8bit
-</code></pre></td></tr></table></div></div><p>PHP支持mbstring.func_overload, 用于解决原生substr无法有效应对多字节编码字符串问题
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#000;font-weight:700>echo</span> mb_strlen(<span style=color:#d14>&#39;测试&#39;</span>); <span style=color:#998;font-style:italic>// 2 默认编码UTF-8
+</span><span style=color:#998;font-style:italic></span>mb_strlen(<span style=color:#d14>&#39;测试&#39;</span>, <span style=color:#d14>&#39;UTF-8&#39;</span>); <span style=color:#998;font-style:italic>// 2
+</span><span style=color:#998;font-style:italic></span>mb_strlen(<span style=color:#d14>&#39;测试&#39;</span>, <span style=color:#d14>&#39;8bit&#39;</span>); <span style=color:#998;font-style:italic>// 6
+</span><span style=color:#998;font-style:italic></span>strlen(<span style=color:#d14>&#39;测试&#39;</span>); <span style=color:#998;font-style:italic>// 6
+</span><span style=color:#998;font-style:italic>// 8bit是php独有解析的, 8bit并不是一个字符集, 只是php引擎可以解析它而已. 顾名思义, 一个字节等于八个位, 1byte=8bit
+</span></code></pre></td></tr></table></div></div><p>PHP支持mbstring.func_overload, 用于解决原生substr无法有效应对多字节编码字符串问题
 启用时php runtime状态是未知的， 所以在计算字符长度时， 用mb_strlen 8bit来保证计算字符串长度的正确性（按照1byte = 8bit）</p><p>##PHP 一个if判断变量的速度问题，类型转换</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
@@ -93,33 +93,33 @@ strlen(&#39;测试&#39;); // 6
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php>$array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:teal>$array</span> <span style=color:#000;font-weight:700>=</span> [<span style=color:#099>1</span>, <span style=color:#099>2</span>, <span style=color:#099>3</span>, <span style=color:#099>4</span>, <span style=color:#099>5</span>, <span style=color:#099>6</span>, <span style=color:#099>7</span>, <span style=color:#099>8</span>, <span style=color:#099>9</span>, <span style=color:#099>10</span>];
 
-$start = microtime(true);
-for ($i = 0; $i &lt; <span style=color:navy>1000000</span><span style=color:#a61717;background-color:#e3d2d2>;</span> <span style=color:#a61717;background-color:#e3d2d2>$</span><span style=color:teal>i</span><span style=color:#a61717;background-color:#e3d2d2>++)</span> <span style=color:#a61717;background-color:#e3d2d2>{</span>
-<span style=color:#a61717;background-color:#e3d2d2>//</span>    <span style=color:teal>if</span> <span style=color:#a61717;background-color:#e3d2d2>(</span><span style=color:teal>count</span><span style=color:#a61717;background-color:#e3d2d2>($</span><span style=color:teal>array</span><span style=color:#a61717;background-color:#e3d2d2>))</span> <span style=color:#a61717;background-color:#e3d2d2>{}</span> <span style=color:#a61717;background-color:#e3d2d2>//</span> <span style=color:teal>0</span><span style=color:#a61717;background-color:#e3d2d2>.</span><span style=color:teal>01805305480957</span>
-<span style=color:#a61717;background-color:#e3d2d2>//</span>    <span style=color:teal>if</span> <span style=color:#a61717;background-color:#e3d2d2>(</span><span style=color:teal>is_null</span><span style=color:#a61717;background-color:#e3d2d2>($</span><span style=color:teal>array</span><span style=color:#a61717;background-color:#e3d2d2>))</span> <span style=color:#a61717;background-color:#e3d2d2>{}</span> <span style=color:#a61717;background-color:#e3d2d2>//</span> <span style=color:teal>0</span><span style=color:#a61717;background-color:#e3d2d2>.</span><span style=color:teal>013534784317017</span>
-<span style=color:#a61717;background-color:#e3d2d2>//</span>    <span style=color:teal>if</span> <span style=color:#a61717;background-color:#e3d2d2>(</span><span style=color:teal>empty</span><span style=color:#a61717;background-color:#e3d2d2>($</span><span style=color:teal>array</span><span style=color:#a61717;background-color:#e3d2d2>))</span> <span style=color:#a61717;background-color:#e3d2d2>{}</span> <span style=color:#a61717;background-color:#e3d2d2>//</span> <span style=color:teal>0</span><span style=color:#a61717;background-color:#e3d2d2>.</span><span style=color:teal>014011859893799</span>
-    <span style=color:teal>if</span> <span style=color:#a61717;background-color:#e3d2d2>(!$</span><span style=color:teal>array</span><span style=color:#a61717;background-color:#e3d2d2>)</span> <span style=color:#a61717;background-color:#e3d2d2>{}</span> <span style=color:#a61717;background-color:#e3d2d2>//</span> <span style=color:teal>0</span><span style=color:#a61717;background-color:#e3d2d2>.</span><span style=color:teal>016890048980713</span>
-<span style=color:#a61717;background-color:#e3d2d2>}</span>
-<span style=color:#a61717;background-color:#e3d2d2>$</span><span style=color:teal>end </span><span style=color:#000;font-weight:700>=</span> <span style=color:#d14>microtime(true);</span>
-<span style=color:teal>echo</span> <span style=color:#a61717;background-color:#e3d2d2>&#34;</span><span style=color:teal>1:</span> <span style=color:#a61717;background-color:#e3d2d2>&#34;</span> <span style=color:#a61717;background-color:#e3d2d2>.</span> <span style=color:#a61717;background-color:#e3d2d2>($</span><span style=color:teal>end</span> <span style=color:teal>-</span> <span style=color:#a61717;background-color:#e3d2d2>$</span><span style=color:teal>start</span><span style=color:#a61717;background-color:#e3d2d2>)</span> <span style=color:#a61717;background-color:#e3d2d2>.</span> <span style=color:#a61717;background-color:#e3d2d2>&#34;\</span><span style=color:teal>n</span><span style=color:#a61717;background-color:#e3d2d2>&#34;;</span>
-<span style=color:teal>echo</span> <span style=color:teal>memory_get_usage</span><span style=color:#a61717;background-color:#e3d2d2>()</span> <span style=color:#a61717;background-color:#e3d2d2>.</span> <span style=color:#a61717;background-color:#e3d2d2>&#34;\</span><span style=color:teal>n</span><span style=color:#a61717;background-color:#e3d2d2>&#34;;</span> <span style=color:#a61717;background-color:#e3d2d2>//</span> <span style=color:teal>389032</span>
-</code></pre></td></tr></table></div></div><h2 id=laravel-phpredis-subscribe-因为使用了redis前缀-channel-返回时需要去掉前缀>laravel phpredis subscribe 因为使用了redis前缀 channel 返回时需要去掉前缀</h2><h2 id=php多进程编程pcntl-posix-event发现grpc扩展会导致进程无法-kill--15>php多进程编程，pcntl posix event，发现grpc扩展会导致进程无法 kill -15</h2><h2 id=php-apcu扩展需要开启-apcenable_cli-才能使用apcu_fetch之类的函数>php apcu扩展需要开启 apc.enable_cli 才能使用apcu_fetch之类的函数</h2><h2 id=php-composer---ignore-platform-reqs>php composer &ndash;ignore-platform-reqs</h2><p>可忽略平台约束 例如win下升级 而composer.json require 一些win没有的扩展</p><h2 id=http-https-代理解析协议端口时-需要解析-connect-host-的端口>http https 代理解析协议端口时 需要解析 CONNECT HOST 的端口</h2><h2 id=php-apcu-ttl-在cli下不过期的问题需要设置apcuse_request_time0>php apcu ttl 在cli下不过期的问题，需要设置apc.use_request_time=0</h2><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+<span style=color:teal>$start</span> <span style=color:#000;font-weight:700>=</span> microtime(<span style=color:#000;font-weight:700>true</span>);
+<span style=color:#000;font-weight:700>for</span> (<span style=color:teal>$i</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; <span style=color:teal>$i</span> <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>1000000</span>; <span style=color:teal>$i</span><span style=color:#000;font-weight:700>++</span>) {
+<span style=color:#998;font-style:italic>//    if (count($array)) {} // 0.01805305480957
+</span><span style=color:#998;font-style:italic>//    if (is_null($array)) {} // 0.013534784317017
+</span><span style=color:#998;font-style:italic>//    if (empty($array)) {} // 0.014011859893799
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#000;font-weight:700>if</span> (<span style=color:#000;font-weight:700>!</span><span style=color:teal>$array</span>) {} <span style=color:#998;font-style:italic>// 0.016890048980713
+</span><span style=color:#998;font-style:italic></span>}
+<span style=color:teal>$end</span> <span style=color:#000;font-weight:700>=</span> microtime(<span style=color:#000;font-weight:700>true</span>);
+<span style=color:#000;font-weight:700>echo</span> <span style=color:#d14>&#34;1: &#34;</span> <span style=color:#000;font-weight:700>.</span> (<span style=color:teal>$end</span> <span style=color:#000;font-weight:700>-</span> <span style=color:teal>$start</span>) <span style=color:#000;font-weight:700>.</span> <span style=color:#d14>&#34;</span><span style=color:#d14>\n</span><span style=color:#d14>&#34;</span>;
+<span style=color:#000;font-weight:700>echo</span> memory_get_usage() <span style=color:#000;font-weight:700>.</span> <span style=color:#d14>&#34;</span><span style=color:#d14>\n</span><span style=color:#d14>&#34;</span>; <span style=color:#998;font-style:italic>// 389032
+</span></code></pre></td></tr></table></div></div><h2 id=laravel-phpredis-subscribe-因为使用了redis前缀-channel-返回时需要去掉前缀>laravel phpredis subscribe 因为使用了redis前缀 channel 返回时需要去掉前缀</h2><h2 id=php多进程编程pcntl-posix-event发现grpc扩展会导致进程无法-kill--15>php多进程编程，pcntl posix event，发现grpc扩展会导致进程无法 kill -15</h2><h2 id=php-apcu扩展需要开启-apcenable_cli-才能使用apcu_fetch之类的函数>php apcu扩展需要开启 apc.enable_cli 才能使用apcu_fetch之类的函数</h2><h2 id=php-composer---ignore-platform-reqs>php composer &ndash;ignore-platform-reqs</h2><p>可忽略平台约束 例如win下升级 而composer.json require 一些win没有的扩展</p><h2 id=http-https-代理解析协议端口时-需要解析-connect-host-的端口>http https 代理解析协议端口时 需要解析 CONNECT HOST 的端口</h2><h2 id=php-apcu-ttl-在cli下不过期的问题需要设置apcuse_request_time0>php apcu ttl 在cli下不过期的问题，需要设置apc.use_request_time=0</h2><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php>// cli 下运行
-$bar = date(&#39;Y-m-d H:i:s&#39;);
-var_dump(apcu_store(&#39;foo&#39;, $bar, 3));
-sleep(4);
-var_dump(apcu_fetch(&#39;foo&#39;));
-// apc.use_request_time=1 不过期
-// 使用请求时间来淘汰缓存
-</code></pre></td></tr></table></div></div><h2 id=reids-scan-命令在数据量比较少时例如count指定的返回偏差较大大数据集时count相差不大>reids scan 命令在数据量比较少时例如count指定的返回偏差较大，大数据集时count相差不大</h2><p>可使用yield遍历整个数据集</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#998;font-style:italic>// cli 下运行
+</span><span style=color:#998;font-style:italic></span><span style=color:teal>$bar</span> <span style=color:#000;font-weight:700>=</span> date(<span style=color:#d14>&#39;Y-m-d H:i:s&#39;</span>);
+var_dump(apcu_store(<span style=color:#d14>&#39;foo&#39;</span>, <span style=color:teal>$bar</span>, <span style=color:#099>3</span>));
+sleep(<span style=color:#099>4</span>);
+var_dump(apcu_fetch(<span style=color:#d14>&#39;foo&#39;</span>));
+<span style=color:#998;font-style:italic>// apc.use_request_time=1 不过期
+</span><span style=color:#998;font-style:italic>// 使用请求时间来淘汰缓存
+</span></code></pre></td></tr></table></div></div><h2 id=reids-scan-命令在数据量比较少时例如count指定的返回偏差较大大数据集时count相差不大>reids scan 命令在数据量比较少时例如count指定的返回偏差较大，大数据集时count相差不大</h2><p>可使用yield遍历整个数据集</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
@@ -136,21 +136,21 @@ var_dump(apcu_fetch(&#39;foo&#39;));
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php>$key = &#39;test_set_111222&#39;;
-$items = [];
-for ($i = 0; $i &lt; <span style=color:navy>1000</span><span style=color:#a61717;background-color:#e3d2d2>;</span> <span style=color:#a61717;background-color:#e3d2d2>$</span><span style=color:teal>i</span><span style=color:#a61717;background-color:#e3d2d2>++)</span> <span style=color:#a61717;background-color:#e3d2d2>{</span>
-    <span style=color:#a61717;background-color:#e3d2d2>$</span><span style=color:teal>items</span><span style=color:#a61717;background-color:#e3d2d2>[]</span> <span style=color:#a61717;background-color:#e3d2d2>=</span> <span style=color:#a61717;background-color:#e3d2d2>$</span><span style=color:teal>i</span><span style=color:#a61717;background-color:#e3d2d2>;</span>
-<span style=color:#a61717;background-color:#e3d2d2>}</span>
-<span style=color:#a61717;background-color:#e3d2d2>$</span><span style=color:teal>this-</span>&gt;redis-&gt;sAdd($key, ...$items);
-foreach ($this-&gt;get($key, 20) as $item) {
-    var_dump($item);
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:teal>$key</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#d14>&#39;test_set_111222&#39;</span>;
+<span style=color:teal>$items</span> <span style=color:#000;font-weight:700>=</span> [];
+<span style=color:#000;font-weight:700>for</span> (<span style=color:teal>$i</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; <span style=color:teal>$i</span> <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>1000</span>; <span style=color:teal>$i</span><span style=color:#000;font-weight:700>++</span>) {
+    <span style=color:teal>$items</span>[] <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$i</span>;
 }
-function get($key, int $count) : Generator
+<span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>redis</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>sAdd</span>(<span style=color:teal>$key</span>, <span style=color:#000;font-weight:700>...</span><span style=color:teal>$items</span>);
+<span style=color:#000;font-weight:700>foreach</span> (<span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>get</span>(<span style=color:teal>$key</span>, <span style=color:#099>20</span>) <span style=color:#000;font-weight:700>as</span> <span style=color:teal>$item</span>) {
+    var_dump(<span style=color:teal>$item</span>);
+}
+<span style=color:#000;font-weight:700>function</span> <span style=color:#900;font-weight:700>get</span>(<span style=color:teal>$key</span>, int <span style=color:teal>$count</span>) <span style=color:#000;font-weight:700>:</span> Generator
 {
-    $this-&gt;redis-&gt;setOption(\Redis::OPT_SCAN, \Redis::SCAN_RETRY);
-    $it = null;
-    while ($item = $this-&gt;redis-&gt;client()-&gt;sScan($key, $it, &#39;*&#39;, $count)) {
-        yield $item;
+    <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>redis</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>setOption</span>(\Redis<span style=color:#000;font-weight:700>::</span><span style=color:teal>OPT_SCAN</span>, \Redis<span style=color:#000;font-weight:700>::</span><span style=color:teal>SCAN_RETRY</span>);
+    <span style=color:teal>$it</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>null</span>;
+    <span style=color:#000;font-weight:700>while</span> (<span style=color:teal>$item</span> <span style=color:#000;font-weight:700>=</span> <span style=color:teal>$this</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>redis</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>client</span>()<span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>sScan</span>(<span style=color:teal>$key</span>, <span style=color:teal>$it</span>, <span style=color:#d14>&#39;*&#39;</span>, <span style=color:teal>$count</span>)) {
+        <span style=color:#000;font-weight:700>yield</span> <span style=color:teal>$item</span>;
     }
 }
 </code></pre></td></tr></table></div></div><h2 id=下载文件可以使用-header-x-accel-redirect-来实现nginx层下载控制速度减少io>下载文件可以使用 header X-Accel-Redirect 来实现nginx层下载，控制速度，减少IO</h2><h2 id=wireshark卡死的原因居然是-有道词典的取词功能造成的>Wireshark卡死的原因居然是 有道词典的取词功能造成的</h2><p><a href=https://segmentfault.com/a/1190000019913529>wireshark为什么会卡死？</a></p><h2 id=socket_set_option-参数顺序>socket_set_option 参数顺序</h2><p>SO_REUSEPORT 必须在 bind() 函数之前设置</p><h2 id=linux-tcp连接失败不回复synack问题>linux TCP连接失败(不回复SYN,ACK)问题</h2><p><a href=https://blog.csdn.net/ywq935/article/details/91384854>参考分析问题1</a></p><p><a href=https://www.cnblogs.com/cheyunhua/p/9082674.html>net.ipv4.tcp_tw_recycle参数</a></p><h2 id=php-socket-event扩展-死循环的问题>php socket EVENT扩展 死循环的问题</h2><p>代码中出现未捕获异常，导致死循环</p><p>go 模拟RST</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1

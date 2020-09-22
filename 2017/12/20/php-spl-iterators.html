@@ -82,7 +82,7 @@ var t=postToc.offset().top-20,a={start:{position:"absolute",top:t},process:{posi
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">75
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">76
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">77
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#000;font-weight:700>&lt;?</span>php
 <span style=color:#000;font-weight:700>class</span> <span style=color:#458;font-weight:700>MyIterator</span> <span style=color:#000;font-weight:700>implements</span> Iterator
 {
     <span style=color:#000;font-weight:700>private</span> <span style=color:teal>$array</span> <span style=color:#000;font-weight:700>=</span> [];
@@ -151,12 +151,12 @@ var t=postToc.offset().top-20,a={start:{position:"absolute",top:t},process:{posi
 <span style=color:teal>$it</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> MyIterator(<span style=color:teal>$array</span>);
 
 <span style=color:#000;font-weight:700>foreach</span> (<span style=color:teal>$it</span> <span style=color:#000;font-weight:700>as</span> <span style=color:teal>$key</span> <span style=color:#000;font-weight:700>=&gt;</span> <span style=color:teal>$value</span>) {
-    <span style=color:#000;font-weight:700>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>{</span>$key<span style=color:#d14>}</span><span style=color:#d14>=&gt;</span><span style=color:#d14>{</span>$value<span style=color:#d14>}</span><span style=color:#d14>\n</span><span style=color:#d14>&#34;</span>;
+    <span style=color:#000;font-weight:700>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>{</span><span style=color:teal>$key</span><span style=color:#d14>}</span><span style=color:#d14>=&gt;</span><span style=color:#d14>{</span><span style=color:teal>$value</span><span style=color:#d14>}</span><span style=color:#d14>\n</span><span style=color:#d14>&#34;</span>;
 }
 
 <span style=color:teal>$it</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>rewind</span>();
 <span style=color:#000;font-weight:700>while</span> (<span style=color:teal>$it</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>valid</span>()) {
-    <span style=color:#000;font-weight:700>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>{</span>$it-&gt;key()<span style=color:#d14>}</span><span style=color:#d14>=&gt;</span><span style=color:#d14>{</span>$it-&gt;current()<span style=color:#d14>}</span><span style=color:#d14>\n</span><span style=color:#d14>&#34;</span>;
+    <span style=color:#000;font-weight:700>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>{</span><span style=color:teal>$it</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>key</span>()<span style=color:#d14>}</span><span style=color:#d14>=&gt;</span><span style=color:#d14>{</span><span style=color:teal>$it</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>current</span>()<span style=color:#d14>}</span><span style=color:#d14>\n</span><span style=color:#d14>&#34;</span>;
     <span style=color:teal>$it</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>next</span>();
 }
 </code></pre></td></tr></table></div></div><h2 id=countable>Countable</h2><p>实现统计接口</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
@@ -173,7 +173,7 @@ var t=postToc.offset().top-20,a={start:{position:"absolute",top:t},process:{posi
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#000;font-weight:700>&lt;?</span>php
 <span style=color:#000;font-weight:700>class</span> <span style=color:#458;font-weight:700>MyCountable</span> <span style=color:#000;font-weight:700>implements</span> Countable
 {
     <span style=color:#000;font-weight:700>private</span> <span style=color:teal>$myCount</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#099>3</span>;
@@ -201,7 +201,7 @@ var_dump(count(<span style=color:teal>$countable</span>));
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#000;font-weight:700>&lt;?</span>php
 
 <span style=color:teal>$arrayIteratorOne</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> ArrayIterator([<span style=color:#d14>&#39;a&#39;</span>, <span style=color:#d14>&#39;b&#39;</span>, <span style=color:#d14>&#39;c&#39;</span>]);
 <span style=color:teal>$arrayIteratorTwo</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> ArrayIterator([<span style=color:#d14>&#39;d&#39;</span>, <span style=color:#d14>&#39;e&#39;</span>, <span style=color:#d14>&#39;f&#39;</span>]);
@@ -300,7 +300,7 @@ var_dump(count(<span style=color:teal>$countable</span>));
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">83
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">84
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">85
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#000;font-weight:700>&lt;?</span>php
 
 <span style=color:#000;font-weight:700>class</span> <span style=color:#458;font-weight:700>MyArrayAccess</span> <span style=color:#000;font-weight:700>implements</span> ArrayAccess, IteratorAggregate
 {
@@ -397,7 +397,7 @@ var_dump(<span style=color:teal>$obj</span>[<span style=color:#d14>&#34;title&#3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#000;font-weight:700>&lt;?</span>php
 
 <span style=color:teal>$array</span> <span style=color:#000;font-weight:700>=</span> [<span style=color:#d14>&#39;a&#39;</span>, <span style=color:#d14>&#39;b&#39;</span>, <span style=color:#d14>&#39;c&#39;</span>, <span style=color:#d14>&#39;d&#39;</span>];
 
@@ -428,7 +428,7 @@ var_dump(<span style=color:teal>$obj</span>[<span style=color:#d14>&#34;title&#3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#000;font-weight:700>&lt;?</span>php
 
 <span style=color:teal>$array</span> <span style=color:#000;font-weight:700>=</span> [<span style=color:#d14>&#39;a&#39;</span>, <span style=color:#d14>&#39;b&#39;</span>, <span style=color:#d14>&#39;c&#39;</span>, <span style=color:#d14>&#39;d&#39;</span>];
 
@@ -459,7 +459,7 @@ var_dump(<span style=color:teal>$obj</span>[<span style=color:#d14>&#34;title&#3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#000;font-weight:700>&lt;?</span>php
 
 <span style=color:teal>$array</span> <span style=color:#000;font-weight:700>=</span> [<span style=color:#d14>&#39;a&#39;</span>, <span style=color:#d14>&#39;b&#39;</span>, <span style=color:#d14>&#39;c&#39;</span>, <span style=color:#d14>&#39;d&#39;</span>];
 
@@ -506,7 +506,7 @@ var_dump(<span style=color:teal>$obj</span>[<span style=color:#d14>&#34;title&#3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#000;font-weight:700>&lt;?</span>php
 
 <span style=color:#000;font-weight:700>try</span> {
     <span style=color:#000;font-weight:700>foreach</span> (<span style=color:#000;font-weight:700>new</span> DirectoryIterator(<span style=color:teal>__DIR__</span>) <span style=color:#000;font-weight:700>as</span> <span style=color:teal>$item</span>) {
@@ -567,7 +567,7 @@ var_dump(<span style=color:teal>$obj</span>[<span style=color:#d14>&#34;title&#3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#000;font-weight:700>&lt;?</span>php
 
 <span style=color:teal>$animals</span> <span style=color:#000;font-weight:700>=</span> [<span style=color:#d14>&#39;koala&#39;</span>, <span style=color:#d14>&#39;kangaroo&#39;</span>, <span style=color:#d14>&#39;wombat&#39;</span>, <span style=color:#d14>&#39;wallaby&#39;</span>, <span style=color:#d14>&#39;emu&#39;</span>, <span style=color:#d14>&#39;NZ&#39;</span> <span style=color:#000;font-weight:700>=&gt;</span> <span style=color:#d14>&#39;kiwi&#39;</span>, <span style=color:#d14>&#39;kookaburra&#39;</span>, <span style=color:#d14>&#39;platypus&#39;</span>];
 
@@ -627,7 +627,7 @@ var_dump(<span style=color:teal>$obj</span>[<span style=color:#d14>&#34;title&#3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#000;font-weight:700>&lt;?</span>php
 <span style=color:#000;font-weight:700>class</span> <span style=color:#458;font-weight:700>MyIteratorAggregate</span> <span style=color:#000;font-weight:700>implements</span> IteratorAggregate
 {
     <span style=color:#000;font-weight:700>public</span> <span style=color:teal>$property1</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#d14>&#34;Public property one&#34;</span>;
@@ -686,30 +686,30 @@ var_dump(<span style=color:teal>$obj</span>[<span style=color:#d14>&#34;title&#3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php>/*** the offset value ***/
-$offset = 3;
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#d14>/*** the offset value ***/</span>
+<span style=color:teal>$offset</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#099>3</span>;
 
-/*** the limit of records to show ***/
-$limit = 2;
+<span style=color:#d14>/*** the limit of records to show ***/</span>
+<span style=color:teal>$limit</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#099>2</span>;
 
-$array = [&#39;koala&#39;, &#39;kangaroo&#39;, &#39;wombat&#39;, &#39;wallaby&#39;, &#39;emu&#39;, &#39;kiwi&#39;, &#39;kookaburra&#39;, &#39;platypus&#39;];
+<span style=color:teal>$array</span> <span style=color:#000;font-weight:700>=</span> [<span style=color:#d14>&#39;koala&#39;</span>, <span style=color:#d14>&#39;kangaroo&#39;</span>, <span style=color:#d14>&#39;wombat&#39;</span>, <span style=color:#d14>&#39;wallaby&#39;</span>, <span style=color:#d14>&#39;emu&#39;</span>, <span style=color:#d14>&#39;kiwi&#39;</span>, <span style=color:#d14>&#39;kookaburra&#39;</span>, <span style=color:#d14>&#39;platypus&#39;</span>];
 
-$it = new LimitIterator(new ArrayIterator($array), $offset, $limit);
+<span style=color:teal>$it</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> LimitIterator(<span style=color:#000;font-weight:700>new</span> ArrayIterator(<span style=color:teal>$array</span>), <span style=color:teal>$offset</span>, <span style=color:teal>$limit</span>);
 
-foreach ($it as $k =&gt; $v) {
-    //echo $it-&gt;getPosition() . PHP_EOL;
-    echo $k .&#39;=&gt;&#39;.$v . PHP_EOL;
+<span style=color:#000;font-weight:700>foreach</span> (<span style=color:teal>$it</span> <span style=color:#000;font-weight:700>as</span> <span style=color:teal>$k</span> <span style=color:#000;font-weight:700>=&gt;</span> <span style=color:teal>$v</span>) {
+    <span style=color:#998;font-style:italic>//echo $it-&gt;getPosition() . PHP_EOL;
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#000;font-weight:700>echo</span> <span style=color:teal>$k</span> <span style=color:#000;font-weight:700>.</span><span style=color:#d14>&#39;=&gt;&#39;</span><span style=color:#000;font-weight:700>.</span><span style=color:teal>$v</span> <span style=color:#000;font-weight:700>.</span> PHP_EOL;
 }
 
-$array = [&#39;koala&#39;, &#39;kangaroo&#39;, &#39;wombat&#39;, &#39;wallaby&#39;, &#39;emu&#39;, &#39;kiwi&#39;, &#39;kookaburra&#39;, &#39;platypus&#39;];
+<span style=color:teal>$array</span> <span style=color:#000;font-weight:700>=</span> [<span style=color:#d14>&#39;koala&#39;</span>, <span style=color:#d14>&#39;kangaroo&#39;</span>, <span style=color:#d14>&#39;wombat&#39;</span>, <span style=color:#d14>&#39;wallaby&#39;</span>, <span style=color:#d14>&#39;emu&#39;</span>, <span style=color:#d14>&#39;kiwi&#39;</span>, <span style=color:#d14>&#39;kookaburra&#39;</span>, <span style=color:#d14>&#39;platypus&#39;</span>];
 
-$it = new LimitIterator(new ArrayIterator($array));
+<span style=color:teal>$it</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> LimitIterator(<span style=color:#000;font-weight:700>new</span> ArrayIterator(<span style=color:teal>$array</span>));
 
-try {
-    $it-&gt;seek(5);
-    echo $it-&gt;current();
-} catch (OutOfBoundsException $e) {
-    echo $e-&gt;getMessage() . PHP_EOL;
+<span style=color:#000;font-weight:700>try</span> {
+    <span style=color:teal>$it</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>seek</span>(<span style=color:#099>5</span>);
+    <span style=color:#000;font-weight:700>echo</span> <span style=color:teal>$it</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>current</span>();
+} <span style=color:#000;font-weight:700>catch</span> (OutOfBoundsException <span style=color:teal>$e</span>) {
+    <span style=color:#000;font-weight:700>echo</span> <span style=color:teal>$e</span><span style=color:#000;font-weight:700>-&gt;</span><span style=color:teal>getMessage</span>() <span style=color:#000;font-weight:700>.</span> PHP_EOL;
 }
 </code></pre></td></tr></table></div></div><h2 id=recursiveiteratoriterator>RecursiveIteratorIterator</h2><p>递归迭代器</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
@@ -721,7 +721,7 @@ try {
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#000;font-weight:700>&lt;?</span>php
 <span style=color:teal>$array</span> <span style=color:#000;font-weight:700>=</span> [
     [<span style=color:#d14>&#39;name&#39;</span> <span style=color:#000;font-weight:700>=&gt;</span> <span style=color:#d14>&#39;butch&#39;</span>, <span style=color:#d14>&#39;sex&#39;</span> <span style=color:#000;font-weight:700>=&gt;</span> <span style=color:#d14>&#39;m&#39;</span>, <span style=color:#d14>&#39;breed&#39;</span> <span style=color:#000;font-weight:700>=&gt;</span> <span style=color:#d14>&#39;boxer&#39;</span>],
     [<span style=color:#d14>&#39;name&#39;</span> <span style=color:#000;font-weight:700>=&gt;</span> <span style=color:#d14>&#39;fido&#39;</span>, <span style=color:#d14>&#39;sex&#39;</span> <span style=color:#000;font-weight:700>=&gt;</span> <span style=color:#d14>&#39;m&#39;</span>, <span style=color:#d14>&#39;breed&#39;</span> <span style=color:#000;font-weight:700>=&gt;</span> <span style=color:#d14>&#39;doberman&#39;</span>],
@@ -787,7 +787,7 @@ try {
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#999;font-weight:700;font-style:italic>&lt;?php</span>
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#000;font-weight:700>&lt;?</span>php
 
 <span style=color:#d14>/*** a simple xml tree ***/</span>
 <span style=color:teal>$xmlstring</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#d14>&lt;&lt;&lt;</span><span style=color:#d14>XML</span><span style=color:#d14>
