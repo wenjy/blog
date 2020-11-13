@@ -1,0 +1,1158 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Redis Linux">
+    <meta name="description" content="愿回首往事，不会因为虚度年华而悔恨，也不会因为碌碌无为而感到羞愧。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-161796130-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'UA-161796130-1');
+</script>
+
+
+    <title>一次Redis read error on connection 错误调试 | 江湖义气的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="江湖义气的博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">江湖义气的博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">江湖义气的博客</div>
+        <div class="logo-desc">
+            
+            愿回首往事，不会因为虚度年华而悔恨，也不会因为碌碌无为而感到羞愧。
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">一次Redis read error on connection 错误调试</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Redis/">
+                                <span class="chip bg-color">Redis</span>
+                            </a>
+                        
+                            <a href="/tags/Linux/">
+                                <span class="chip bg-color">Linux</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Redis/" class="post-category">
+                                Redis
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-06-04
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="故事之初"><a href="#故事之初" class="headerlink" title="故事之初"></a>故事之初</h2><p>一次重启SOA服务后，突然发现有报错<code>read error on connection to 127.0.0.1:6379</code></p>
+<p>下面是SOA服务中环境和依赖的包版本</p>
+<p>PHP 7.2.25</p>
+<p>使用 PCNTL POSIX 来管理进程</p>
+<p><a target="_blank" rel="noopener" href="https://pecl.php.net/get/redis-5.2.1.tgz">ext-phpredis 5.2.1</a></p>
+<p><a target="_blank" rel="noopener" href="https://pecl.php.net/get/event-2.5.4.tgz">ext-event 2.5.4</a></p>
+<p>laravel 6.18.14</p>
+<p>SOA是基于event 写的一个多进程服务 使用laravel command来启动和停止进程</p>
+<p>由master 进程 fork 多个work进程处理业务</p>
+<p><code>ps -ef|grep Soa</code></p>
+<pre><code>root      31614      1  0 Jun04 ?        00:00:00 Soa master server
+www       31615  31614  0 Jun04 ?        00:00:01 Soa worker server
+www       31616  31614  0 Jun04 ?        00:00:01 Soa worker server</code></pre>
+<h2 id="网上查资料"><a href="#网上查资料" class="headerlink" title="网上查资料"></a>网上查资料</h2><p>按照报错，应该是连接被关闭然后再发请求造成的</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/6d6a09db55e8">参考 Redis：排查 read error on connection 小记</a></p>
+<p>感觉可能是超时时间引起的</p>
+<p>于是设置<code>phpredis</code> read_timeout 为-1，重启SOA调试，错误依旧</p>
+<p>我们redis客户端是启用 persistent 的，使用的 pconnect</p>
+<p>看一下redis扩展的配置</p>
+<pre><code>redis.pconnect.pooling_enabled =&gt; 1 =&gt; 1
+redis.pconnect.connection_limit =&gt; 0 =&gt; 0</code></pre>
+<p>配置没什么问题</p>
+<p>也去<a target="_blank" rel="noopener" href="https://github.com/phpredis/phpredis">phpredis</a> 源码搜索这个错误，和上面所说的一样</p>
+<h2 id="重现并调试"><a href="#重现并调试" class="headerlink" title="重现并调试"></a>重现并调试</h2><p>既然能稳定重现 那用 <code>strace -p $pid</code> 看看系统调用（开始也使用tcpdump gdb 调试，没发现导致的错误的原因）</p>
+<pre><code>13414 epoll_wait(8, [&#123;EPOLLIN, &#123;u32=11, u64=11&#125;&#125;], 32, -1) = 1
+13414 accept(11, &#123;sa_family=AF_INET, sin_port=htons(9342), sin_addr=inet_addr(&quot;127.0.0.1&quot;)&#125;, [16]) = 12
+13414 setsockopt(12, SOL_SOCKET, SO_RCVTIMEO, &quot;2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0&quot;, 16) = 0
+13414 setsockopt(12, SOL_SOCKET, SO_SNDTIMEO, &quot;2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0&quot;, 16) = 0
+13414 fcntl(12, F_GETFL)                = 0x2 (flags O_RDWR)
+13414 fcntl(12, F_SETFL, O_RDWR|O_NONBLOCK) = 0
+13414 epoll_ctl(8, EPOLL_CTL_ADD, 12, &#123;EPOLLIN, &#123;u32=12, u64=12&#125;&#125;) = 0
+13414 epoll_wait(8, [&#123;EPOLLIN, &#123;u32=12, u64=12&#125;&#125;], 32, -1) = 1
+13414 recvfrom(12, &quot;\200&quot;, 1, 0, NULL, NULL) = 1
+13414 recvfrom(12, &quot;\1\0\1&quot;, 3, 0, NULL, NULL) = 3
+13414 recvfrom(12, &quot;\0\0\0\16&quot;, 4, 0, NULL, NULL) = 4
+13414 recvfrom(12, &quot;Device:offLine&quot;, 14, 0, NULL, NULL) = 14
+13414 recvfrom(12, &quot;\0\0\0\0&quot;, 4, 0, NULL, NULL) = 4
+13414 recvfrom(12, &quot;\v\0\1\0\0\0 d6e820eebbac8b527d721621a&quot;..., 4096, 0, NULL, NULL) = 40
+13414 poll([&#123;fd=7, events=POLLIN|POLLPRI|POLLERR|POLLHUP&#125;], 1, 0) = 0 (Timeout)
+13414 sendto(7, &quot;*3\r\n$4\r\nHGET\r\n$33\r\nproxy_server_&quot;..., 93, MSG_DONTWAIT, NULL, 0) = 93
+13414 poll([&#123;fd=7, events=POLLIN|POLLPRI|POLLERR|POLLHUP&#125;], 1, 0) = 0 (Timeout)
+13414 poll([&#123;fd=7, events=POLLIN|POLLERR|POLLHUP&#125;], 1, 60000) = 1 ([&#123;fd=7, revents=POLLIN&#125;])
+13414 recvfrom(7, 0x32e7d40, 8192, MSG_DONTWAIT, NULL, NULL) = -1 EAGAIN (Resource temporarily unavailable)
+13414 close(7)                          = 0
+13414 write(13, &quot;[2020-06-03 17:36:55] local.ERRO&quot;..., 6179) = 6179
+13414 epoll_wait(8, [&#123;EPOLLIN, &#123;u32=11, u64=11&#125;&#125;], 32, -1) = 1
+13414 accept(11, &#123;sa_family=AF_INET, sin_port=htons(9348), sin_addr=inet_addr(&quot;127.0.0.1&quot;)&#125;, [16]) = 7
+13414 setsockopt(7, SOL_SOCKET, SO_RCVTIMEO, &quot;2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0&quot;, 16) = 0
+13414 setsockopt(7, SOL_SOCKET, SO_SNDTIMEO, &quot;2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0&quot;, 16) = 0
+13414 fcntl(7, F_GETFL)                 = 0x2 (flags O_RDWR)
+13414 fcntl(7, F_SETFL, O_RDWR|O_NONBLOCK) = 0
+13414 epoll_ctl(8, EPOLL_CTL_ADD, 7, &#123;EPOLLIN, &#123;u32=7, u64=7&#125;&#125;) = 0
+13414 epoll_wait(8, [&#123;EPOLLIN, &#123;u32=7, u64=7&#125;&#125;], 32, -1) = 1
+13414 recvfrom(7, &quot;\200&quot;, 1, 0, NULL, NULL) = 1
+13414 recvfrom(7, &quot;\1\0\1&quot;, 3, 0, NULL, NULL) = 3
+13414 recvfrom(7, &quot;\0\0\0\16&quot;, 4, 0, NULL, NULL) = 4
+13414 recvfrom(7, &quot;Device:offLine&quot;, 14, 0, NULL, NULL) = 14
+13414 recvfrom(7, &quot;\0\0\0\0&quot;, 4, 0, NULL, NULL) = 4
+13414 recvfrom(7, &quot;\v\0\1\0\0\0 1e5d42e6117278050b3818af8&quot;..., 4096, 0, NULL, NULL) = 40
+13414 socket(AF_INET, SOCK_STREAM, IPPROTO_IP) = 15
+13414 fcntl(15, F_GETFL)                = 0x2 (flags O_RDWR)
+13414 fcntl(15, F_SETFL, O_RDWR|O_NONBLOCK) = 0
+13414 connect(15, &#123;sa_family=AF_INET, sin_port=htons(6379), sin_addr=inet_addr(&quot;127.0.0.1&quot;)&#125;, 16) = -1 EINPROGRESS (Operation now in progress)
+13414 poll([&#123;fd=15, events=POLLIN|POLLOUT|POLLERR|POLLHUP&#125;], 1, 60000) = 1 ([&#123;fd=15, revents=POLLOUT&#125;])
+13414 getsockopt(15, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
+13414 fcntl(15, F_SETFL, O_RDWR)        = 0
+13414 setsockopt(15, SOL_TCP, TCP_NODELAY, [1], 4) = 0
+13414 setsockopt(15, SOL_SOCKET, SO_KEEPALIVE, [0], 4) = 0
+13414 poll([&#123;fd=15, events=POLLIN|POLLPRI|POLLERR|POLLHUP&#125;], 1, 0) = 0 (Timeout)
+13414 sendto(15, &quot;*3\r\n$4\r\nHGET\r\n$33\r\nproxy_server_&quot;..., 93, MSG_DONTWAIT, NULL, 0) = 93
+13414 poll([&#123;fd=15, events=POLLIN|POLLPRI|POLLERR|POLLHUP&#125;], 1, 0) = 0 (Timeout)
+13414 poll([&#123;fd=15, events=POLLIN|POLLERR|POLLHUP&#125;], 1, 60000) = 1 ([&#123;fd=15, revents=POLLIN&#125;])
+13414 recvfrom(15, &quot;-NOAUTH Authentication required.&quot;..., 8192, MSG_DONTWAIT, NULL, NULL) = 34
+13414 write(13, &quot;[2020-06-03 17:36:55] local.ERRO&quot;..., 6166) = 6166
+13414 epoll_wait(8, [&#123;EPOLLIN, &#123;u32=11, u64=11&#125;&#125;], 32, -1) = 1
+13414 accept(11, &#123;sa_family=AF_INET, sin_port=htons(9344), sin_addr=inet_addr(&quot;127.0.0.1&quot;)&#125;, [16]) = 16
+13414 setsockopt(16, SOL_SOCKET, SO_RCVTIMEO, &quot;2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0&quot;, 16) = 0
+13414 setsockopt(16, SOL_SOCKET, SO_SNDTIMEO, &quot;2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0&quot;, 16) = 0
+13414 fcntl(16, F_GETFL)                = 0x2 (flags O_RDWR)
+13414 fcntl(16, F_SETFL, O_RDWR|O_NONBLOCK) = 0
+13414 epoll_ctl(8, EPOLL_CTL_ADD, 16, &#123;EPOLLIN, &#123;u32=16, u64=16&#125;&#125;) = 0
+13414 epoll_wait(8, [&#123;EPOLLIN, &#123;u32=16, u64=16&#125;&#125;], 32, -1) = 1
+13414 recvfrom(16, &quot;\200&quot;, 1, 0, NULL, NULL) = 1
+13414 recvfrom(16, &quot;\1\0\1&quot;, 3, 0, NULL, NULL) = 3
+13414 recvfrom(16, &quot;\0\0\0\16&quot;, 4, 0, NULL, NULL) = 4
+13414 recvfrom(16, &quot;Device:offLine&quot;, 14, 0, NULL, NULL) = 14
+13414 recvfrom(16, &quot;\0\0\0\0&quot;, 4, 0, NULL, NULL) = 4
+13414 recvfrom(16, &quot;\v\0\1\0\0\0 9eadf923b6dceadd66727a163&quot;..., 4096, 0, NULL, NULL) = 40
+13414 poll([&#123;fd=15, events=POLLIN|POLLPRI|POLLERR|POLLHUP&#125;], 1, 0) = 0 (Timeout)
+13414 sendto(15, &quot;*3\r\n$4\r\nHGET\r\n$33\r\nproxy_server_&quot;..., 93, MSG_DONTWAIT, NULL, 0) = 93
+13414 poll([&#123;fd=15, events=POLLIN|POLLPRI|POLLERR|POLLHUP&#125;], 1, 0) = 0 (Timeout)
+13414 poll([&#123;fd=15, events=POLLIN|POLLERR|POLLHUP&#125;], 1, 60000) = 1 ([&#123;fd=15, revents=POLLIN&#125;])
+13414 recvfrom(15, &quot;-NOAUTH Authentication required.&quot;..., 8192, MSG_DONTWAIT, NULL, NULL) = 34
+13414 write(13, &quot;[2020-06-03 17:36:55] local.ERRO&quot;..., 6166) = 6166
+13414 epoll_wait(8, [&#123;EPOLLIN, &#123;u32=16, u64=16&#125;&#125;], 32, -1) = 1
+13414 recvfrom(16, &quot;&quot;, 1, 0, NULL, NULL) = 0
+13414 epoll_ctl(8, EPOLL_CTL_DEL, 16, 0x7ffe0c36b200) = 0
+13414 shutdown(16, SHUT_RDWR)           = 0
+13414 close(16)                         = 0
+13414 epoll_wait(8, [&#123;EPOLLIN, &#123;u32=12, u64=12&#125;&#125;], 32, -1) = 1
+13414 recvfrom(12, &quot;&quot;, 1, 0, NULL, NULL) = 0
+13414 epoll_ctl(8, EPOLL_CTL_DEL, 12, 0x7ffe0c36b200) = 0
+13414 shutdown(12, SHUT_RDWR)           = 0
+13414 close(12)                         = 0
+13414 epoll_wait(8, [&#123;EPOLLIN, &#123;u32=7, u64=7&#125;&#125;], 32, -1) = 1
+13414 recvfrom(7, &quot;&quot;, 1, 0, NULL, NULL) = 0
+13414 epoll_ctl(8, EPOLL_CTL_DEL, 7, 0x7ffe0c36b200) = 0
+13414 shutdown(7, SHUT_RDWR)            = 0
+13414 close(7)                          = 0
+13414 epoll_wait(8,  &lt;detached ...&gt;</code></pre>
+<p>上面的调试 看到了 <code>EAGAIN (Resource temporarily unavailable)</code> 然后关闭了连接</p>
+<p>下一步redis重连了，重连之后没有发送auth，还报了未验证的错误</p>
+<p>去官方看看，重连未验证这个问题已经在<code>phpredis</code> 5.2.2解决，于是升级到了 5.2.2 未验证的问题修复了 </p>
+<p>看看具体的redis连接情况 <code>lsof -i:6379</code></p>
+<pre><code>php     17778 root    6u  IPv4 5742941      0t0  TCP 127.0.0.1:7915-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     17778 root    7u  IPv4 5742440      0t0  TCP 127.0.0.1:7917-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     17779  www    6u  IPv4 5742941      0t0  TCP 127.0.0.1:7915-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     17779  www    7u  IPv4 5742440      0t0  TCP 127.0.0.1:7917-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     17780  www    6u  IPv4 5742941      0t0  TCP 127.0.0.1:7915-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     17780  www    7u  IPv4 5742440      0t0  TCP 127.0.0.1:7917-&gt;127.0.0.1:6379 (ESTABLISHED)</code></pre>
+<p>每次重启都发现有两个redis连接存在，而且是master进程创建的redis连接</p>
+<p>对比php-fpm的redis连接</p>
+<pre><code>php     57305  www    6u  IPv4 5487078      0t0  TCP 127.0.0.1:31788-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     57305  www    7u  IPv4 5488024      0t0  TCP 127.0.0.1:31790-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     57305  www    8u  IPv4 5486093      0t0  TCP 127.0.0.1:31792-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     57305  www    9u  IPv4 5486094      0t0  TCP 127.0.0.1:31794-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     57313  www    6u  IPv4 5488037      0t0  TCP 127.0.0.1:31798-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     57313  www    7u  IPv4 5488038      0t0  TCP 127.0.0.1:31800-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     57313  www    8u  IPv4 5488043      0t0  TCP 127.0.0.1:31802-&gt;127.0.0.1:6379 (ESTABLISHED)
+php     57313  www    9u  IPv4 5486102      0t0  TCP 127.0.0.1:31804-&gt;127.0.0.1:6379 (ESTABLISHED)</code></pre>
+<p>仔细看上面的SOA redis连接，发现work进程共享了master的资源，两个work进程有一样的redis连接</p>
+<p>继续测试果然发现 redis读取的数据是错乱的，每次都是读取到了上一次的数据</p>
+<p>一开始以为laravel加载服务提供者的时候就已经创建了redis连接</p>
+<p>于是 在master进程中调用关闭redis连接，然后再work进程中重新注册redis服务提供者，redis连接依然存在</p>
+<p>因为线上环境也有一台服务器有这样的问题</p>
+<p>于是回到线上环境，线上两台服务器，有一台正常，有一台的问题和我本地环境一样，对比两台服务器的history命令 看看是否和服务启动有关，还是改了什么</p>
+<p>通过对比发现正常的那台服务器 是先restart queue 再 restart soa</p>
+<p>然后在有问题的那台服务器上重新操作一遍，发现问题居然解决了！是queue影响了吗？queue也是使用laravel command来管理</p>
+<p>回到本地测试环境</p>
+<p>一样操作，发现问题居然还在，这就有点神奇了 玄学吗（代码的世界是没有玄学的）</p>
+<p>最后想到到底在哪里创建了redis连接呢？线上已经验证启动SOA时是没有redis连接的，创建redis连接在具体的业务调用里面</p>
+<p>到这里就问题就变成了找到 master 启动时在哪里调用了Redis:connect</p>
+<p>最快的方法是看看调用栈，到 laravel 源码 PhpRedisConnector 出直接抛个Exception 看看是哪里调用了 Redis::connect</p>
+<p>最后发现是 app/Console/Commands/ProxyUserUsedMigrate 这个文件</p>
+<p>然后看看代码，原来我在这类的_ _construct 调用了 redis:connect</p>
+<p>而且Commands里面的类 是laravel初始化的时候就全部加载的，这就导致了启动SOA时master已经连接redis了</p>
+<p>问题已经明确：</p>
+<p>并发测试时，<code>EAGAIN (Resource temporarily unavailable)</code> 导致连接被断开，其它子进程还在使用此连接</p>
+<p>最终导致了<code>read error on connection to 127.0.0.1:6379</code></p>
+<p>至此找到了问题的所在（上面laravel注册服务提供者时，是没有创建redis连接的）</p>
+<p>删除这个命令文件 重启soa服务，一切正常了</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这次的bug是新增代码影响的，而且新增的代码只是临时执行需要，开始没有考虑到这新增的代码会影响到SOA</p>
+<p>laravel Commands __construct 里面不要做redis操作 或者其他的连接操作 这样会影响soa master</p>
+<p>像这样的问题，还是得先仔细看看最近修改、增加了那些代码，这样比较容易发现问题的所在</p>
+<p>从这次调试中也加深了对phpredis的熟悉</p>
+<p>最后讨论和延伸：</p>
+<p>主进程不应该创建任何不需要共享的资源，比如问题中的redis连接</p>
+<p>主进程进行fork子进程，子进程会继承主进程的资源</p>
+<p>两个子进程操作同一个socket，在没有锁的情况下是会出问题的，比如问题中的数据错乱，或者连接关闭了但是信息不同步</p>
+<p>需要共享时 应该做好临界区管理，各种锁或者机制来保证</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">江湖义气</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://blog.wenjy.top/2020/06/04/bug/redis-read-error-on-connection.html">https://blog.wenjy.top/2020/06/04/bug/redis-read-error-on-connection.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">江湖义气</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Redis/">
+                                    <span class="chip bg-color">Redis</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+        <div class="disqus-card card" data-aos="fade-up">
+    <div id="disqus_thread" class="card-content">
+        <noscript>Please enable JavaScript to view the
+            <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+    </div>
+</div>
+
+<script type="text/javascript">
+    disqus_config = function () {
+        this.page.url = 'https://blog.wenjy.top/2020/06/04/bug/redis-read-error-on-connection.html';
+        this.page.identifier = '/2020/06/04/bug/redis-read-error-on-connection.html';
+        this.page.title = '一次Redis read error on connection 错误调试';
+    };
+    let disqus_shortname = 'wenjy';
+
+    (function () { // DON'T EDIT BELOW THIS LINE
+        let d = document, s = d.createElement('script');
+        // 如：s.src = 'https://blinkfox.disqus.com/embed.js';
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/06/07/linux/stdin.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Linux 输出重定向">
+                        
+                        <span class="card-title">Linux 输出重定向</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-07
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/05/24/network/5g.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="5G简介">
+                        
+                        <span class="card-title">5G简介</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-24
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/5G/" class="post-category">
+                                    5G
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/5G/">
+                        <span class="chip bg-color">5G</span>
+                    </a>
+                    
+                    <a href="/tags/Network/">
+                        <span class="chip bg-color">Network</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2020</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">江湖义气</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/wenjy" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:wenjy1314@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

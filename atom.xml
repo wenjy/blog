@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>江湖义气的博客</title>
+  
+  <subtitle>专注PHP Golang开发</subtitle>
+  <link href="https://blog.wenjy.top/atom.xml" rel="self"/>
+  
+  <link href="https://blog.wenjy.top/"/>
+  <updated>2020-11-13T15:40:02.557Z</updated>
+  <id>https://blog.wenjy.top/</id>
+  
+  <author>
+    <name>江湖义气</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="https://blog.wenjy.top/2020/11/13/hello-world.html"/>
+    <id>https://blog.wenjy.top/2020/11/13/hello-world.html</id>
+    <published>2020-11-13T15:40:02.557Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>我能唱的歌</title>
+    <link href="https://blog.wenjy.top/2020/11/01/wo-neng-chang-de-ge.html"/>
+    <id>https://blog.wenjy.top/2020/11/01/wo-neng-chang-de-ge.html</id>
+    <published>2020-11-01T04:29:21.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+    <summary type="html">我能唱的歌</summary>
+    
+    
+    
+    <category term="歌曲" scheme="https://blog.wenjy.top/categories/%E6%AD%8C%E6%9B%B2/"/>
+    
+    
+    <category term="歌曲" scheme="https://blog.wenjy.top/tags/%E6%AD%8C%E6%9B%B2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>最美古诗词</title>
+    <link href="https://blog.wenjy.top/2020/10/10/guo-cui/zui-mei-gu-shi-ci.html"/>
+    <id>https://blog.wenjy.top/2020/10/10/guo-cui/zui-mei-gu-shi-ci.html</id>
+    <published>2020-10-10T23:29:21.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+    <summary type="html">道德经</summary>
+    
+    
+    
+    <category term="国粹" scheme="https://blog.wenjy.top/categories/%E5%9B%BD%E7%B2%B9/"/>
+    
+    
+    <category term="国粹" scheme="https://blog.wenjy.top/tags/%E5%9B%BD%E7%B2%B9/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>平衡二叉树</title>
+    <link href="https://blog.wenjy.top/2020/08/25/algorithms/tree/balanced-binary-tree.html"/>
+    <id>https://blog.wenjy.top/2020/08/25/algorithms/tree/balanced-binary-tree.html</id>
+    <published>2020-08-25T04:31:57.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+    <summary type="html">二叉树</summary>
+    
+    
+    
+    <category term="Algorithms" scheme="https://blog.wenjy.top/categories/Algorithms/"/>
+    
+    
+    <category term="Algorithms" scheme="https://blog.wenjy.top/tags/Algorithms/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>道德经</title>
+    <link href="https://blog.wenjy.top/2020/08/21/guo-cui/dao-de-jing.html"/>
+    <id>https://blog.wenjy.top/2020/08/21/guo-cui/dao-de-jing.html</id>
+    <published>2020-08-21T04:29:21.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+    <summary type="html">道德经</summary>
+    
+    
+    
+    <category term="国粹" scheme="https://blog.wenjy.top/categories/%E5%9B%BD%E7%B2%B9/"/>
+    
+    
+    <category term="国粹" scheme="https://blog.wenjy.top/tags/%E5%9B%BD%E7%B2%B9/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>二叉搜索树</title>
+    <link href="https://blog.wenjy.top/2020/08/18/algorithms/tree/binary-tree.html"/>
+    <id>https://blog.wenjy.top/2020/08/18/algorithms/tree/binary-tree.html</id>
+    <published>2020-08-18T04:31:57.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+    <summary type="html">二叉树</summary>
+    
+    
+    
+    <category term="算法" scheme="https://blog.wenjy.top/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="算法" scheme="https://blog.wenjy.top/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql 常用的查询</title>
+    <link href="https://blog.wenjy.top/2020/08/02/mysql/common.html"/>
+    <id>https://blog.wenjy.top/2020/08/02/mysql/common.html</id>
+    <published>2020-08-02T06:30:57.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+    <summary type="html">Mysql</summary>
+    
+    
+    
+    <category term="MySQL" scheme="https://blog.wenjy.top/categories/MySQL/"/>
+    
+    
+    <category term="MySQL" scheme="https://blog.wenjy.top/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux 输出重定向</title>
+    <link href="https://blog.wenjy.top/2020/06/07/linux/stdin.html"/>
+    <id>https://blog.wenjy.top/2020/06/07/linux/stdin.html</id>
+    <published>2020-06-07T03:29:11.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+    <summary type="html">Linux输出重定向</summary>
+    
+    
+    
+    <category term="Linux" scheme="https://blog.wenjy.top/categories/Linux/"/>
+    
+    
+    <category term="Linux" scheme="https://blog.wenjy.top/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一次Redis read error on connection 错误调试</title>
+    <link href="https://blog.wenjy.top/2020/06/04/bug/redis-read-error-on-connection.html"/>
+    <id>https://blog.wenjy.top/2020/06/04/bug/redis-read-error-on-connection.html</id>
+    <published>2020-06-04T06:53:12.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+    <summary type="html">Redis read error on connection 错误调试</summary>
+    
+    
+    
+    <category term="Redis" scheme="https://blog.wenjy.top/categories/Redis/"/>
+    
+    
+    <category term="Redis" scheme="https://blog.wenjy.top/tags/Redis/"/>
+    
+    <category term="Linux" scheme="https://blog.wenjy.top/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>5G简介</title>
+    <link href="https://blog.wenjy.top/2020/05/24/network/5g.html"/>
+    <id>https://blog.wenjy.top/2020/05/24/network/5g.html</id>
+    <published>2020-05-24T06:53:12.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+    <summary type="html">5G简介</summary>
+    
+    
+    
+    <category term="5G" scheme="https://blog.wenjy.top/categories/5G/"/>
+    
+    
+    <category term="5G" scheme="https://blog.wenjy.top/tags/5G/"/>
+    
+    <category term="Network" scheme="https://blog.wenjy.top/tags/Network/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>字符集和字符集编码</title>
+    <link href="https://blog.wenjy.top/2020/05/12/charset.html"/>
+    <id>https://blog.wenjy.top/2020/05/12/charset.html</id>
+    <published>2020-05-12T02:31:57.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;本文转载自 &lt;a href=&quot;http://cenalulu.github.io/linux/character-encoding/&quot;&gt;cenalulu</summary>
+        
+      
+    
+    
+    
+    <category term="字符集编码" scheme="https://blog.wenjy.top/categories/%E5%AD%97%E7%AC%A6%E9%9B%86%E7%BC%96%E7%A0%81/"/>
+    
+    
+    <category term="字符集编码" scheme="https://blog.wenjy.top/tags/%E5%AD%97%E7%AC%A6%E9%9B%86%E7%BC%96%E7%A0%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>精确算法bitmap</title>
+    <link href="https://blog.wenjy.top/2020/05/12/algorithms/bitmap.html"/>
+    <id>https://blog.wenjy.top/2020/05/12/algorithms/bitmap.html</id>
+    <published>2020-05-12T02:31:57.000Z</published>
+    <updated>2020-11-13T15:40:02.553Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;本文参考：&lt;a href=&quot;https://www.infoq.cn/article/j3b2Eoz_V7Wzm27odwXX&quot;&gt;陶加涛 https://www.infoq.cn/article/j3b2Eoz_V7Wzm27odwXX&lt;/a&gt;&lt;/p&gt;
+&lt;h2</summary>
+        
+      
+    
+    
+    
+    <category term="算法" scheme="https://blog.wenjy.top/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="算法" scheme="https://blog.wenjy.top/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>非精确算法HyperLogLog</title>
+    <link href="https://blog.wenjy.top/2020/05/12/algorithms/hyper-log-log.html"/>
+    <id>https://blog.wenjy.top/2020/05/12/algorithms/hyper-log-log.html</id>
+    <published>2020-05-12T02:31:57.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;本文参考：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.infoq.cn/article/j3b2Eoz_V7Wzm27odwXX&quot;&gt;陶加涛</summary>
+        
+      
+    
+    
+    
+    <category term="算法" scheme="https://blog.wenjy.top/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="算法" scheme="https://blog.wenjy.top/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Phpstorm常用快捷键</title>
+    <link href="https://blog.wenjy.top/2020/05/12/tools/phpstorm-keymap.html"/>
+    <id>https://blog.wenjy.top/2020/05/12/tools/phpstorm-keymap.html</id>
+    <published>2020-05-12T02:31:57.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;本文参考：&lt;a href=&quot;https://learnku.com/laravel/t/5420/your-keyboard-shortcuts-please&quot;&gt;peryiqiao</summary>
+        
+      
+    
+    
+    
+    <category term="Phpstorm" scheme="https://blog.wenjy.top/categories/Phpstorm/"/>
+    
+    
+    <category term="Phpstorm" scheme="https://blog.wenjy.top/tags/Phpstorm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>浮点数精度问题</title>
+    <link href="https://blog.wenjy.top/2020/05/11/decimal.html"/>
+    <id>https://blog.wenjy.top/2020/05/11/decimal.html</id>
+    <published>2020-05-11T20:31:57.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;写PHP遇到问题&quot;&gt;&lt;a href=&quot;#写PHP遇到问题&quot; class=&quot;headerlink&quot; title=&quot;写PHP遇到问题&quot;&gt;&lt;/a&gt;写PHP遇到问题&lt;/h2&gt;&lt;p&gt;开始在计算金额的时候，我一般都使用分来计算，数据库保存也已分为单位（微信支付、支付宝支付</summary>
+        
+      
+    
+    
+    
+    <category term="PHP" scheme="https://blog.wenjy.top/categories/PHP/"/>
+    
+    <category term="计算机杂项" scheme="https://blog.wenjy.top/categories/PHP/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%9D%82%E9%A1%B9/"/>
+    
+    
+    <category term="PHP" scheme="https://blog.wenjy.top/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NAT原理</title>
+    <link href="https://blog.wenjy.top/2020/04/25/network/nat.html"/>
+    <id>https://blog.wenjy.top/2020/04/25/network/nat.html</id>
+    <published>2020-04-25T06:53:12.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+    <summary type="html">NAT原理</summary>
+    
+    
+    
+    <category term="NAT" scheme="https://blog.wenjy.top/categories/NAT/"/>
+    
+    
+    <category term="Network" scheme="https://blog.wenjy.top/tags/Network/"/>
+    
+    <category term="NAT" scheme="https://blog.wenjy.top/tags/NAT/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>TLS握手通信</title>
+    <link href="https://blog.wenjy.top/2020/04/14/network/tls.html"/>
+    <id>https://blog.wenjy.top/2020/04/14/network/tls.html</id>
+    <published>2020-04-14T06:53:12.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+    <summary type="html">TLS握手通信</summary>
+    
+    
+    
+    <category term="TLS" scheme="https://blog.wenjy.top/categories/TLS/"/>
+    
+    
+    <category term="Network" scheme="https://blog.wenjy.top/tags/Network/"/>
+    
+    <category term="TLS" scheme="https://blog.wenjy.top/tags/TLS/"/>
+    
+    <category term="RSA" scheme="https://blog.wenjy.top/tags/RSA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Markdown语法</title>
+    <link href="https://blog.wenjy.top/2020/04/14/tools/markdown.html"/>
+    <id>https://blog.wenjy.top/2020/04/14/tools/markdown.html</id>
+    <published>2020-04-14T06:53:12.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+    <summary type="html">Markdown语法</summary>
+    
+    
+    
+    <category term="Markdown" scheme="https://blog.wenjy.top/categories/Markdown/"/>
+    
+    
+    <category term="Markdown" scheme="https://blog.wenjy.top/tags/Markdown/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>正则表达式</title>
+    <link href="https://blog.wenjy.top/2020/04/14/tools/regexp.html"/>
+    <id>https://blog.wenjy.top/2020/04/14/tools/regexp.html</id>
+    <published>2020-04-14T06:53:12.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+    <summary type="html">正则表达式</summary>
+    
+    
+    
+    <category term="正则表达式" scheme="https://blog.wenjy.top/categories/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    
+    
+    <category term="正则表达式" scheme="https://blog.wenjy.top/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>TCP 三次握手 四次挥手</title>
+    <link href="https://blog.wenjy.top/2020/04/02/network/tcp-connect-close.html"/>
+    <id>https://blog.wenjy.top/2020/04/02/network/tcp-connect-close.html</id>
+    <published>2020-04-02T04:53:12.000Z</published>
+    <updated>2020-11-13T15:40:02.557Z</updated>
+    
+    
+    <summary type="html">TCP 三次握手 四次挥手</summary>
+    
+    
+    
+    <category term="TCP" scheme="https://blog.wenjy.top/categories/TCP/"/>
+    
+    
+    <category term="Network" scheme="https://blog.wenjy.top/tags/Network/"/>
+    
+    <category term="TCP" scheme="https://blog.wenjy.top/tags/TCP/"/>
+    
+  </entry>
+  
+</feed>
