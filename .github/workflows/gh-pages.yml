@@ -38,4 +38,4 @@ jobs:
         env:
           HEXO_ALGOLIA_INDEXING_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
         run: |
-          hexo generate && hexo algolia && hexo deploy
+          hexo generate && hexo deploy
