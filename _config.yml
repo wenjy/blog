@@ -131,6 +131,8 @@ theme_config:
   subtitle:
     sub1: 愿回首往事，不会因为虚度年华而悔恨，也不会因为碌碌无为而感到羞愧。
     sub2: 业精于勤荒于嬉，行成于思毁于随。
+  favicon: /favicon.ico
+  logo: /medias/logo.png
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
