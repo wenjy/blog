@@ -31,11 +31,19 @@ jobs:
           git config --global user.name 'wenjy'
           git config --global user.email 'wenjy1314@gmail.com'
           npm i -g hexo-cli
-          npm i
           npm install
 
-      - name: Deploy
+
+      - name: Deploy Hexo
         env:
           HEXO_ALGOLIA_INDEXING_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
         run: |
-          hexo generate && hexo deploy
+          npm clean && npm build && npm deploy
+
+      - name: Deploy
+          uses: peaceiris/actions-gh-pages@v3
+          with: # peaceiris/actions-gh-pages@v3  v2:env
+            #          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }} #peaceiris/actions-gh-pages@v2
+            deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+            PUBLISH_BRANCH: gh-pages
+            PUBLISH_DIR: ./public
