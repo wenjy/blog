@@ -133,6 +133,10 @@ theme_config:
     sub2: 业精于勤荒于嬉，行成于思毁于随。
   favicon: /favicon.ico
   logo: /medias/logo.png
+  icp:
+    enable: true
+    url: http://www.beian.miit.gov.cn/
+    text: 桂ICP备17000652号-2
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
