@@ -37,7 +37,7 @@ jobs:
         env:
           HEXO_ALGOLIA_INDEXING_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
         run: |
-          npm clean && npm build && npm deploy
+          hexo clean clean && hexo generate && hexo deploy
 
       - name: Deploy gh-pages
         uses: peaceiris/actions-gh-pages@v3
