@@ -15,19 +15,34 @@ jobs:
         with:
           submodules: true
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
+      - name: Setup Hexo
+        uses: actions/setup-node@v2-beta
         with:
-          hugo-version: 'latest'
-          extended: true
+          node-version: '12.x'
 
       - name: Build
-        run: hugo --gc --minify --cleanDestinationDir
+        env:
+          GH_ACTION_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          NEXT_VERSION: v1.3.2
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$GH_ACTION_DEPLOY_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.name 'wenjy'
+          git config --global user.email 'wenjy1314@gmail.com'
+          npm i -g hexo-cli
+          npm i
+          npm i -S hexo-prism-plugin
+          npm install hexo-generator-search --save
+          npm i hexo-permalink-pinyin --save
+          npm i --save hexo-wordcount
+          npm install hexo-generator-feed --save
+          git clone --branch ${NEXT_VERSION} --depth=10  git@github.com:wenjy/hexo-theme-matery.git themes/hexo-theme-matery
+          git checkout -b ${NEXT_VERSION}
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with: # peaceiris/actions-gh-pages@v3  v2:env
-#          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }} #peaceiris/actions-gh-pages@v2
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: ./public
+        env:
+          HEXO_ALGOLIA_INDEXING_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          run: |
+            hexo generate && hexo algolia && hexo deploy
