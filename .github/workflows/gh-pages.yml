@@ -23,7 +23,6 @@ jobs:
       - name: Build
         env:
           GH_ACTION_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          NEXT_VERSION: v1.3.2
         run: |
           mkdir -p ~/.ssh/
           echo "$GH_ACTION_DEPLOY_KEY" > ~/.ssh/id_rsa
@@ -33,13 +32,7 @@ jobs:
           git config --global user.email 'wenjy1314@gmail.com'
           npm i -g hexo-cli
           npm i
-          npm i -S hexo-prism-plugin
-          npm install hexo-generator-search --save
-          npm i hexo-permalink-pinyin --save
-          npm i --save hexo-wordcount
-          npm install hexo-generator-feed --save
-          git clone --branch ${NEXT_VERSION} --depth=10  git@github.com:wenjy/hexo-theme-matery.git themes/hexo-theme-matery
-          git checkout -b ${NEXT_VERSION}
+          npm install
 
       - name: Deploy
         env:
