@@ -33,17 +33,15 @@ jobs:
           npm i -g hexo-cli
           npm install
 
-
       - name: Deploy Hexo
         env:
           HEXO_ALGOLIA_INDEXING_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
         run: |
           npm clean && npm build && npm deploy
 
-      - name: Deploy
+      - name: Deploy gh-pages
           uses: peaceiris/actions-gh-pages@v3
-          with: # peaceiris/actions-gh-pages@v3  v2:env
-            #          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }} #peaceiris/actions-gh-pages@v2
+          with:
             deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
             PUBLISH_BRANCH: gh-pages
             PUBLISH_DIR: ./public
