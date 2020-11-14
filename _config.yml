@@ -138,7 +138,7 @@ theme_config: ## 覆盖主题配置
     url: http://www.beian.miit.gov.cn/
     text: 桂ICP备17000652号-2
   jsDelivr:
-    url: https://cdn.jsdelivr.net/gh/wenjy/blog ## 调试去掉
+    url: https://cdn.jsdelivr.net/gh/wenjy/blog@gh-pages
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
