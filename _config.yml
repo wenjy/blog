@@ -104,7 +104,7 @@ ignore:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: hexo-theme-matery
-theme_config:
+theme_config: ## 覆盖主题配置
   indexbtn:
     url: https://github.com/wenjy
   socialLink:
@@ -137,6 +137,8 @@ theme_config:
     enable: true
     url: http://www.beian.miit.gov.cn/
     text: 桂ICP备17000652号-2
+  jsDelivr:
+    url: https://cdn.jsdelivr.net/gh/wenjy/blog ## 调试去掉
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -168,3 +170,30 @@ feed:
   content_limit: 140
   content_limit_delim: ' '
   order_by: -date
+
+lazyload:
+  enable: true
+  onlypost: false  # 是否只对文章的图片做懒加载
+  loadingImg: #/images/loading.gif
+
+#hexo-neat 优化提速插件（去掉HTML、css、js的blank字符）
+neat_enable: true
+neat_html:
+  enable: true
+  exclude:
+    - '**/*.md'
+neat_css:
+  enable: true
+  exclude:
+    - '**/*.min.css'
+neat_js:
+  enable: true
+  mangle: true
+  output:
+  compress:
+  exclude:
+    - '**/*.min.js'
+    - '**/**/instantpage.js'
+    - '**/matery.js'
+
+baiduPush: true
