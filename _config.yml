@@ -139,6 +139,10 @@ theme_config: ## 覆盖主题配置
     text: 桂ICP备17000652号-2
   jsDelivr:
     url: https://cdn.jsdelivr.net/gh/wenjy/blog@gh-pages
+  background:
+    enable: true
+  ribbon_dynamic:
+    enable: true
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -155,11 +159,11 @@ permalink_pinyin:
 
 postInfo:
   date: true
-  update: false
-  wordCount: false # 设置文章字数统计为 true.
-  totalCount: false # 设置站点文章总字数统计为 true.
-  min2read: false # 阅读时长.
-  readCount: false # 阅读次数.
+  update: true
+  wordCount: true # 设置文章字数统计为 true.
+  totalCount: true # 设置站点文章总字数统计为 true.
+  min2read: true # 阅读时长.
+  readCount: true # 阅读次数.
 
 feed:
   type: atom
