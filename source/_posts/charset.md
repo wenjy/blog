@@ -6,8 +6,7 @@ draft: false
 tags: ["字符集编码"]
 tags_weight: 100
 categories: ["字符集编码"]
-categoryes_weight: 100
-type: "reprinted"
+reprintPolicy: noreprint
 ---
 
 本文转载自 [cenalulu http://cenalulu.github.io/linux/character-encoding/](http://cenalulu.github.io/linux/character-encoding/)
