@@ -116,6 +116,8 @@ theme_config: ## 覆盖主题配置
     title: 你的赏识是我前进的动力
   profile:
     avatar: /images/wenjy.jpeg
+    career: PHP、Golang程序猿
+    introduction: 合抱之木生于毫末，九层之台起于累土，千里之行始于足下。孰能浊以止？静之徐清。
   myProjects:
     enable: false
   myGallery:
@@ -131,8 +133,6 @@ theme_config: ## 覆盖主题配置
   subtitle:
     sub1: 愿回首往事，不会因为虚度年华而悔恨，也不会因为碌碌无为而感到羞愧。
     sub2: 业精于勤荒于嬉，行成于思毁于随。
-    sub3: 合抱之木生于毫末，九层之台起于累土，千里之行始于足下。
-    sub4: 孰能浊以止？静之徐清。
   favicon: /favicon.ico
   logo: /medias/logo.png
   icp:
