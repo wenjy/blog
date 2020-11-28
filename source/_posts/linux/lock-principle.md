@@ -141,6 +141,47 @@ remove noteGang
 
 循环等待
 
+小明
+
+```
+leave noteMing
+// 循环等待
+while (noteGang) {
+    do nothing
+}
+if (noFeed) {
+    feed fish
+}
+remove noteMing
+```
+
+小刚
+
+```
+leave noteGang
+if (no noteMing) {
+    if (noFeed) {
+        feed fish
+    }
+}
+remove noteGang
+```
+
+不过循环等待是一种很大的浪费，还可能造成优先级倒挂。
+
+事实上上面都在鱼缸和鱼这个层面，也就相当于一条条低级的指令，我们必须站在更高一层，把两条低级指令变成原子操作，
+把保护鱼缸和鱼，提高到房鱼缸的房间，如何保证房间一次只有一人呢？那就是给房间加锁。
+
+锁的特性
+
+锁的初始状态是打开的
+
+进临界区前必须获得锁
+
+出临界区时必须打开锁
+
+如果别人持有锁则必须等待
+
 ## 死锁的4个必要条件
 
 1. 死锁发生的必要条件是 资源有限
