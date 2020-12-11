@@ -57,7 +57,7 @@ prism_plugin:
   line_number: false    # default false
   custom_css:
 prismjs:
-  enable: false
+  enable: true
   preprocess: true
   line_number: true
   tab_replace: ''
