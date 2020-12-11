@@ -16,24 +16,23 @@ categoryes_weight: 100
 `git init` 创建普通库
 
 `git init --bare` 创建裸库
-```
-当你创建一个普通库时，在工作目录下，除了.git目录之外，你还可以看到库中所包含的所有源文件。
+
+> 当你创建一个普通库时，在工作目录下，除了.git目录之外，你还可以看到库中所包含的所有源文件。
 你拥有了一个可以进行浏览和修改（add, commit, delete等）的本地库
 
-当你创建一个裸库时，在工作目录下，只有一个.git目录，而没有类似于本地库那样的文件结构可供你直接进行浏览和修改。
+> 当你创建一个裸库时，在工作目录下，只有一个.git目录，而没有类似于本地库那样的文件结构可供你直接进行浏览和修改。
 一般来说，一个裸库往往被创建用于作为大家一起工作的共享库，每一个人都可以往里面push自己的本地修改。
 项目团队里面的每个人都可以clone这个库，然后完成本地修改之后，往这个库中push自己的代码。
-```
 
 示例：在www用户的home目录创建裸仓库并clone，提交一次
 
 服务器：
-```
+```bash
 mkdir git_test && cd git_test && git init --bare
 ```
 
 客户端：
-```
+```bash
 ssh-copy-id www@ip
 
 git clone ssh://www@ip/~/git_test
@@ -56,7 +55,7 @@ git push
 
 `git config --global color.ui true` git status等命令自动着色
 
-```
+```bash
 git config --global http.proxy 'socks5://127.0.0.1:1080'
 git config --global https.proxy 'socks5://127.0.0.1:1080'
 
@@ -94,11 +93,9 @@ clone远程仓库
 
 `git submodule update --remote` 更新子模块为远程项目的最新版本
 
-```
-git Submodule 是一个很好的多项目使用共同类库的工具，他允许类库项目做为repository，子项目做为一个单独的git项目存在父项目中，
+> git Submodule 是一个很好的多项目使用共同类库的工具，他允许类库项目做为repository，子项目做为一个单独的git项目存在父项目中，
 子项目可以有自己的独立的commit，push，pull。而父项目以Submodule的形式包含子项目，父项目可以指定子项目header，
 父项目中会的提交信息包含Submodule的信息，再clone父项目的时候可以把Submodule初始化。
-```
 
 ## git status
                                                 
@@ -177,10 +174,8 @@ git Submodule 是一个很好的多项目使用共同类库的工具，他允许
 ## git reflog                                                
 显示所有提交，包括孤立节点
 
-```
-什么叫孤立节点，git commit id 组成的树是单向链表，当前commit只指向父级的commit，当HEAD指向头指针
+> 什么叫孤立节点，git commit id 组成的树是单向链表，当前commit只指向父级的commit，当HEAD指向头指针
 我们每次commit merge 等操作都有可能出现不能追踪的commit。
-```
 
 ## git tag
 
@@ -264,10 +259,8 @@ git Submodule 是一个很好的多项目使用共同类库的工具，他允许
 
 `git merge origin/master` 合并远程master分支至当前分支
 
-```
-fast-forward方式就是当条件允许的时候，git直接把HEAD指针指向合并分支的头，完成合并。
+> fast-forward方式就是当条件允许的时候，git直接把HEAD指针指向合并分支的头，完成合并。
 属于“快进方式”，不过这种情况如果删除分支，则会丢失分支信息。因为在这个过程中没有创建commit
-```
 
 `git merge --no-ff origin/master` 强行关闭fast-forward方式，不使用fast-forward方式合并，保留分支的commit历史
 
@@ -278,11 +271,11 @@ fast-forward方式就是当条件允许的时候，git直接把HEAD指针指向�
 合并提交
 
 `git cherry-pick ff44785404a8e` 合并提交ff44785404a8e的修改
-```
-可以选择某一个分支中的一个或几个commit(s)来进行操作。
+
+> 可以选择某一个分支中的一个或几个commit(s)来进行操作。
 例如，假设我们有个稳定版本的分支，叫v2.0，另外还有个开发版本的分支v3.0，我们不能直接把两个分支合并，这样会导致稳定版本混乱，
 但是又想增加一个v3.0中的功能到v2.0中，这里就可以使用cherry-pick了,其实也就是对已经存在的commit 进行再次提交。
-```
+
 `git cherry-pick (--continue | --quit | --abort)` 解决冲突使用
 
 `git cherry-pick -x <commit id>` 保留原提交者信息
@@ -290,12 +283,10 @@ fast-forward方式就是当条件允许的时候，git直接把HEAD指针指向�
 `git cherry-pick <start-commit-id>..<end-commit-id>` Git从1.7.2版本开始支持批量cherry-pick，就是一次可以cherry-pick一个区间的commit
 
 `git cherry-pick <start-commit-id>^..<end-commit-id>`
-```
-前者表示把<start-commit-id>到<end-commit-id>之间(左开右闭，不包含start-commit-id)的提交cherry-pick到当前分支；
+
+> 前者表示把<start-commit-id>到<end-commit-id>之间(左开右闭，不包含start-commit-id)的提交cherry-pick到当前分支；
 后者有"^"标志的表示把<start-commit-id>到<end-commit-id>之间(闭区间，包含start-commit-id)的提交cherry-pick到当前分支。
 其中，<start-commit-id>到<end-commit-id>只需要commit-id的前6位即可，并且<start-commit-id>在时间上必须早于<end-commit-id>
-```
-
 
 ## git push
 提交分支修改到远程分支
@@ -331,11 +322,9 @@ fast-forward方式就是当条件允许的时候，git直接把HEAD指针指向�
 
 `git reset HEAD <file>...` 取消暂存的文件
 
-```
-在使用 hard 选项时，一定要确保知道自己在做什么，不要在迷糊的时候使用这条选项。
+> 在使用 hard 选项时，一定要确保知道自己在做什么，不要在迷糊的时候使用这条选项。
 如果真的误操作了，也不要慌，因为只要 git 一般不会主动删除本地仓库中的内容，根据你丢失的情况，可以进行找回，
 比如在丢失后可以使用 git reset --hard ORIG_HEAD 立即恢复，或者使用 git reflog 命令查看之前分支的引用。
-```
 
 `git reset --mixed HEAD` mixed 比 soft 的作用域多了一个 暂存区。实际上 mixed 选项与 soft 只差了一个 add 操作。
 
@@ -343,24 +332,22 @@ fast-forward方式就是当条件允许的时候，git直接把HEAD指针指向�
 
 
 ## git rebase
-```
-rebase 会把从 Merge Base 以来的所有提交，以补丁的形式一个一个重新达到目标分支上。
+
+> rebase 会把从 Merge Base 以来的所有提交，以补丁的形式一个一个重新达到目标分支上。
 这使得目标分支合并该分支的时候会直接 Fast Forward，即不会产生任何冲突。提交历史是一条线。
 rebase 的一个缺点，那就是修改了分支的历史提交。如果已经将分支推送到了远程仓库，会导致无法将修改后的分支推送上去，必须使用 -f 参数（force）强行推送（怕不怕被打？）。
 所以使用 rebase 最好不要在公共分支上进行操作。
-```
 
 ## git revert
 撤销提交
 
 
 `git revert dfb02e6` 撤销提交dfb02e6
-```
-如果我们想要用一个反向提交恢复项目的某个版本，那就需要 revert 来协助我们完成了。
+
+> 如果我们想要用一个反向提交恢复项目的某个版本，那就需要 revert 来协助我们完成了。
 什么是反向提交呢，就是旧版本添加了的内容，要在新版本中删除，旧版本中删除了的内容，要在新版本中添加。
 这在分支已经推送到远程仓库的情境下非常有用。
 revert 也不会修改历史提交记录，实际的操作相当于是检出目标提交的项目快照到工作区与暂存区，然后用一个新的提交完成版本的“回退”。
-```
 
 ## git stash
 暂存当前修改，将所有至为HEAD状态
@@ -371,16 +358,12 @@ revert 也不会修改历史提交记录，实际的操作相当于是检出目�
 
 `git stash apply stash@{0}` 应用第一次暂存
 
-```
-有时，我们在一个分支上做了一些工作，修改了很多代码，而这时需要切换到另一个分支干点别的事。但又不想将只做了一半的工作提交。
+> 有时，我们在一个分支上做了一些工作，修改了很多代码，而这时需要切换到另一个分支干点别的事。但又不想将只做了一半的工作提交。
 在曾经这样做过，将当前的修改做一次提交，message 填写 half of work，然后切换另一个分支去做工作，完成工作后，切换回来使用 reset —soft 或者是 commit amend。
 
-git 为了帮我们解决这种需求，提供了 stash 命令。
-
+> git 为了帮我们解决这种需求，提供了 stash 命令。
 stash 将工作区与暂存区中的内容做一个提交，保存起来，然后使用reset hard选项恢复工作区与暂存区内容。我们可以随时使用 stash apply 将修改应用回来。
-
 stash 实现思路将我们的修改提交到本地仓库，使用特殊的分支指针（.git/refs/stash）引用该提交，然后在恢复的时候，将该提交恢复即可。
-```
 
 ## git grep
 搜索文本
