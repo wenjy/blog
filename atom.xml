@@ -6,7 +6,7 @@
   <link href="https://blog.wenjy.top/atom.xml" rel="self"/>
   
   <link href="https://blog.wenjy.top/"/>
-  <updated>2020-12-26T14:03:29.014Z</updated>
+  <updated>2020-12-27T14:53:36.055Z</updated>
   <id>https://blog.wenjy.top/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>TCP协议</title>
+    <link href="https://blog.wenjy.top/2020/12/27/network/tcp.html"/>
+    <id>https://blog.wenjy.top/2020/12/27/network/tcp.html</id>
+    <published>2020-12-27T04:53:12.000Z</published>
+    <updated>2020-12-27T14:53:36.055Z</updated>
+    
+    
+    <summary type="html">TCP协议</summary>
+    
+    
+    
+    <category term="TCP" scheme="https://blog.wenjy.top/categories/TCP/"/>
+    
+    
+    <category term="Network" scheme="https://blog.wenjy.top/tags/Network/"/>
+    
+    <category term="TCP" scheme="https://blog.wenjy.top/tags/TCP/"/>
+    
+  </entry>
+  
+  <entry>
     <title>最美古文</title>
     <link href="https://blog.wenjy.top/2020/12/25/guo-cui/gu-wen.html"/>
     <id>https://blog.wenjy.top/2020/12/25/guo-cui/gu-wen.html</id>
     <published>2020-12-25T23:29:21.000Z</published>
-    <updated>2020-12-26T14:03:29.014Z</updated>
+    <updated>2020-12-27T14:53:36.059Z</updated>
     
     
     <summary type="html">最美古文</summary>
@@ -40,7 +61,7 @@
     <link href="https://blog.wenjy.top/2020/12/11/guo-cui/cang-yang-jia-cuo.html"/>
     <id>https://blog.wenjy.top/2020/12/11/guo-cui/cang-yang-jia-cuo.html</id>
     <published>2020-12-11T04:29:21.000Z</published>
-    <updated>2020-12-26T14:03:29.014Z</updated>
+    <updated>2020-12-27T14:53:36.059Z</updated>
     
     
     <summary type="html">仓央嘉措的诗词</summary>
@@ -59,7 +80,7 @@
     <link href="https://blog.wenjy.top/2020/11/22/cao-zuo-xi-tong.html"/>
     <id>https://blog.wenjy.top/2020/11/22/cao-zuo-xi-tong.html</id>
     <published>2020-11-22T11:38:47.000Z</published>
-    <updated>2020-12-26T14:03:29.014Z</updated>
+    <updated>2020-12-27T14:53:36.059Z</updated>
     
     
       
@@ -85,7 +106,7 @@
     <link href="https://blog.wenjy.top/2020/11/21/ren-shi-zi-ji.html"/>
     <id>https://blog.wenjy.top/2020/11/21/ren-shi-zi-ji.html</id>
     <published>2020-11-21T14:22:22.000Z</published>
-    <updated>2020-12-26T14:03:29.014Z</updated>
+    <updated>2020-12-27T14:53:36.059Z</updated>
     
     
       
@@ -112,7 +133,7 @@
     <link href="https://blog.wenjy.top/2020/11/15/ban-ruo-bo-luo-mi-duo-xin-jing.html"/>
     <id>https://blog.wenjy.top/2020/11/15/ban-ruo-bo-luo-mi-duo-xin-jing.html</id>
     <published>2020-11-15T07:43:45.000Z</published>
-    <updated>2020-12-26T14:03:29.014Z</updated>
+    <updated>2020-12-27T14:53:36.059Z</updated>
     
     
       
@@ -137,7 +158,7 @@
     <link href="https://blog.wenjy.top/2020/11/01/wo-neng-chang-de-ge.html"/>
     <id>https://blog.wenjy.top/2020/11/01/wo-neng-chang-de-ge.html</id>
     <published>2020-11-01T04:29:21.000Z</published>
-    <updated>2020-12-26T14:03:29.014Z</updated>
+    <updated>2020-12-27T14:53:36.059Z</updated>
     
     
     <summary type="html">我能唱的歌</summary>
@@ -156,7 +177,7 @@
     <link href="https://blog.wenjy.top/2020/10/15/guo-cui/zeng-guang-xian-wen.html"/>
     <id>https://blog.wenjy.top/2020/10/15/guo-cui/zeng-guang-xian-wen.html</id>
     <published>2020-10-15T05:29:21.000Z</published>
-    <updated>2020-12-26T14:03:29.014Z</updated>
+    <updated>2020-12-27T14:53:36.059Z</updated>
     
     
     <summary type="html">增广贤文</summary>
@@ -175,7 +196,7 @@
     <link href="https://blog.wenjy.top/2020/10/10/guo-cui/zui-mei-gu-shi-ci.html"/>
     <id>https://blog.wenjy.top/2020/10/10/guo-cui/zui-mei-gu-shi-ci.html</id>
     <published>2020-10-10T23:29:21.000Z</published>
-    <updated>2020-12-26T14:03:29.014Z</updated>
+    <updated>2020-12-27T14:53:36.059Z</updated>
     
     
     <summary type="html">最美古诗词</summary>
@@ -194,7 +215,7 @@
     <link href="https://blog.wenjy.top/2020/08/25/algorithms/tree/balanced-binary-tree.html"/>
     <id>https://blog.wenjy.top/2020/08/25/algorithms/tree/balanced-binary-tree.html</id>
     <published>2020-08-25T04:31:57.000Z</published>
-    <updated>2020-12-26T14:03:29.010Z</updated>
+    <updated>2020-12-27T14:53:36.055Z</updated>
     
     
     <summary type="html">二叉树</summary>
@@ -213,7 +234,7 @@
     <link href="https://blog.wenjy.top/2020/08/21/guo-cui/dao-de-jing.html"/>
     <id>https://blog.wenjy.top/2020/08/21/guo-cui/dao-de-jing.html</id>
     <published>2020-08-21T04:29:21.000Z</published>
-    <updated>2020-12-26T14:03:29.014Z</updated>
+    <updated>2020-12-27T14:53:36.059Z</updated>
     
     
     <summary type="html">道德经</summary>
@@ -232,7 +253,7 @@
     <link href="https://blog.wenjy.top/2020/08/18/algorithms/tree/binary-tree.html"/>
     <id>https://blog.wenjy.top/2020/08/18/algorithms/tree/binary-tree.html</id>
     <published>2020-08-18T04:31:57.000Z</published>
-    <updated>2020-12-26T14:03:29.010Z</updated>
+    <updated>2020-12-27T14:53:36.055Z</updated>
     
     
     <summary type="html">二叉树</summary>
@@ -251,7 +272,7 @@
     <link href="https://blog.wenjy.top/2020/08/02/mysql/common.html"/>
     <id>https://blog.wenjy.top/2020/08/02/mysql/common.html</id>
     <published>2020-08-02T06:30:57.000Z</published>
-    <updated>2020-12-26T14:03:29.010Z</updated>
+    <updated>2020-12-27T14:53:36.055Z</updated>
     
     
     <summary type="html">Mysql</summary>
@@ -270,7 +291,7 @@
     <link href="https://blog.wenjy.top/2020/06/07/linux/stdin.html"/>
     <id>https://blog.wenjy.top/2020/06/07/linux/stdin.html</id>
     <published>2020-06-07T03:29:11.000Z</published>
-    <updated>2020-12-26T14:03:29.010Z</updated>
+    <updated>2020-12-27T14:53:36.055Z</updated>
     
     
     <summary type="html">Linux输出重定向</summary>
@@ -289,7 +310,7 @@
     <link href="https://blog.wenjy.top/2020/06/04/bug/redis-read-error-on-connection.html"/>
     <id>https://blog.wenjy.top/2020/06/04/bug/redis-read-error-on-connection.html</id>
     <published>2020-06-04T06:53:12.000Z</published>
-    <updated>2020-12-26T14:03:29.010Z</updated>
+    <updated>2020-12-27T14:53:36.055Z</updated>
     
     
     <summary type="html">Redis read error on connection 错误调试</summary>
@@ -310,7 +331,7 @@
     <link href="https://blog.wenjy.top/2020/05/24/network/5g.html"/>
     <id>https://blog.wenjy.top/2020/05/24/network/5g.html</id>
     <published>2020-05-24T06:53:12.000Z</published>
-    <updated>2020-12-26T14:03:29.010Z</updated>
+    <updated>2020-12-27T14:53:36.055Z</updated>
     
     
     <summary type="html">5G简介</summary>
@@ -331,7 +352,7 @@
     <link href="https://blog.wenjy.top/2020/05/12/charset.html"/>
     <id>https://blog.wenjy.top/2020/05/12/charset.html</id>
     <published>2020-05-12T02:31:57.000Z</published>
-    <updated>2020-12-26T14:03:29.010Z</updated>
+    <updated>2020-12-27T14:53:36.055Z</updated>
     
     
       
@@ -356,7 +377,7 @@
     <link href="https://blog.wenjy.top/2020/05/12/algorithms/bitmap.html"/>
     <id>https://blog.wenjy.top/2020/05/12/algorithms/bitmap.html</id>
     <published>2020-05-12T02:31:57.000Z</published>
-    <updated>2020-12-26T14:03:29.010Z</updated>
+    <updated>2020-12-27T14:53:36.055Z</updated>
     
     
       
@@ -382,7 +403,7 @@
     <link href="https://blog.wenjy.top/2020/05/12/algorithms/hyper-log-log.html"/>
     <id>https://blog.wenjy.top/2020/05/12/algorithms/hyper-log-log.html</id>
     <published>2020-05-12T02:31:57.000Z</published>
-    <updated>2020-12-26T14:03:29.010Z</updated>
+    <updated>2020-12-27T14:53:36.055Z</updated>
     
     
       
@@ -408,7 +429,7 @@
     <link href="https://blog.wenjy.top/2020/05/12/tools/phpstorm-keymap.html"/>
     <id>https://blog.wenjy.top/2020/05/12/tools/phpstorm-keymap.html</id>
     <published>2020-05-12T02:31:57.000Z</published>
-    <updated>2020-12-26T14:03:29.014Z</updated>
+    <updated>2020-12-27T14:53:36.059Z</updated>
     
     
       
@@ -425,33 +446,6 @@
     
     
     <category term="Phpstorm" scheme="https://blog.wenjy.top/tags/Phpstorm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>浮点数精度问题</title>
-    <link href="https://blog.wenjy.top/2020/05/11/decimal.html"/>
-    <id>https://blog.wenjy.top/2020/05/11/decimal.html</id>
-    <published>2020-05-11T20:31:57.000Z</published>
-    <updated>2020-12-26T14:03:29.010Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;写PHP遇到问题&quot;&gt;&lt;a href=&quot;#写PHP遇到问题&quot; class=&quot;headerlink&quot; title=&quot;写PHP遇到问题&quot;&gt;&lt;/a&gt;写PHP遇到问题&lt;/h2&gt;&lt;p&gt;开始在计算金额的时候，我一般都使用分来计算，数据库保存也已分为单位（微信支付、支付宝支付</summary>
-        
-      
-    
-    
-    
-    <category term="PHP" scheme="https://blog.wenjy.top/categories/PHP/"/>
-    
-    <category term="计算机杂项" scheme="https://blog.wenjy.top/categories/PHP/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%9D%82%E9%A1%B9/"/>
-    
-    
-    <category term="PHP" scheme="https://blog.wenjy.top/tags/PHP/"/>
     
   </entry>
   
