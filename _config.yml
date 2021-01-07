@@ -145,6 +145,8 @@ theme_config: ## 覆盖主题配置
     enable: true
   ribbon_dynamic:
     enable: true
+  music:
+    enable: false
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
