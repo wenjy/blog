@@ -9,6 +9,7 @@ tags: ["Git"]
 tags_weight: 100
 categories: ["Git"]
 categoryes_weight: 100
+top: true
 ---
 ## git init
 初始化本地git仓库（创建新仓库）

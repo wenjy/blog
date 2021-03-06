@@ -9,6 +9,7 @@ tags: ["Linux"]
 tags_weight: 100
 categories: ["Linux"]
 categoryes_weight: 100
+top: true
 ---
 
 ## ls
