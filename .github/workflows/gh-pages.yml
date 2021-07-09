@@ -31,7 +31,8 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.name 'wenjy'
           git config --global user.email 'wenjy1314@gmail.com'
-          yarn global add hexo-cli --prefix /usr/local
+          mkdir -p ~/.hexo/
+          yarn global add hexo-cli --prefix ~/.hexo
           yarn info hexo-cli
           echo $PATH
           yarn install
@@ -40,7 +41,7 @@ jobs:
         env:
           HEXO_ALGOLIA_INDEXING_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
         run: |
-          hexo clean clean && hexo generate && hexo deploy
+          ~/.hexo/bin/hexo clean && ~/.hexo/bin/hexo generate && ~/.hexo/bin/hexo deploy
 
       - name: Deploy gh-pages
         uses: peaceiris/actions-gh-pages@v3
