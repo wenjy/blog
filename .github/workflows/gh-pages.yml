@@ -34,6 +34,7 @@ jobs:
           yarn global add hexo-cli
           yarn info hexo-cli
           echo $PATH
+          ./bin/hexo version
           yarn install
 
       - name: Deploy Hexo
