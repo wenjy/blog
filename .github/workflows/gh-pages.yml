@@ -32,6 +32,8 @@ jobs:
           git config --global user.name 'wenjy'
           git config --global user.email 'wenjy1314@gmail.com'
           yarn global add hexo-cli
+          whereis hexo
+          echo $PATH
           yarn install
 
       - name: Deploy Hexo
