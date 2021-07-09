@@ -11,14 +11,15 @@ jobs:
     # runs-on: macOS-10.14
     # runs-on: windows-2019
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
         with:
           submodules: true
 
       - name: Setup Hexo
-        uses: actions/setup-node@v2-beta
+        uses: actions/setup-node@v2
         with:
-          node-version: '12.x'
+          node-version: '14'
+          cache: 'yarn'
 
       - name: Build
         env:
@@ -30,8 +31,8 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.name 'wenjy'
           git config --global user.email 'wenjy1314@gmail.com'
-          npm i -g hexo-cli
-          npm install
+          yarn install -g hexo-cli
+          yarn install
 
       - name: Deploy Hexo
         env:
